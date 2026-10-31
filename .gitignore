@@ -19,3 +19,8 @@ __pycache__/
 # OS / secrets
 .DS_Store
 .env
+
+# Processed data: rebuild locally with src/data.py
+data/processed/*
+!data/processed/.gitkeep
+!data/processed/splits.csv
