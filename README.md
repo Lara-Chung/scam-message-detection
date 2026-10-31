@@ -39,4 +39,19 @@ If a model is retrained on train + val after tuning, the threshold chosen on val
 
 ## Data
 
-Download instructions: TBD.
+Raw data sources. Download each dataset into `data/raw/`:
+
+| Dataset | Source | Save as |
+|---|---|---|
+| SMS Phishing Dataset (Mendeley) | https://doi.org/10.17632/f45bkkt8pr.1 (`Dataset_5971.zip`) | `data/raw/mendeley/Dataset_5971.csv` |
+| UCI SMS Spam Collection | https://archive.ics.uci.edu/dataset/228/sms+spam+collection | `data/raw/uci/SMSSpamCollection` |
+| Nazario_5, Nigerian_5, CEAS_08, SpamAssassin | https://doi.org/10.5281/zenodo.8339691 | `data/raw/zenodo/<file name>.csv` |
+| BothBosu/scam-dialogue | Downloaded automatically by `load_bothbosu()` from Hugging Face (pinned revision) | `data/raw/hf_cache/` |
+
+To build the processed data from the raw files, run:
+
+```
+python -m src.splits && python -m src.export
+```
+
+`src.splits` writes `data/processed/splits.csv` and checks for leakage; `src.export` writes the processed files, with a README describing them, to `data/processed/export/`.
