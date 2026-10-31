@@ -9,6 +9,7 @@ is <NA> and never 0. The number of rows removed by each cleaning step is
 stored in df.attrs["cleaning_log"].
 """
 
+import csv
 import html
 import re
 from pathlib import Path
@@ -84,6 +85,58 @@ def clean(df: pd.DataFrame, log: dict) -> pd.DataFrame:
     df = drop_empty(df, log)
     df = drop_conflicting_labels(df, log)
     return drop_duplicates(df, log)
+
+
+# Email artefacts that reveal the source corpus rather than spam (proposal 3.4).
+FOOTER_LINE_RE = re.compile(
+    r"^(_{10,}|-{20,}"               # separator lines
+    r"|-+\s*original message\s*-+"  # start of a forwarded message
+    r"|\S+ mailing list"             # "Python-Dev mailing list" (one-word list name)
+    r"|\S*(listinfo|mailman/)\S*"    # a line that is only a list management URL
+    r"|unsubscribe:.*"
+    r"|this sf\.net email is sponsored by.*)$",
+    re.IGNORECASE,
+)
+LIST_NAME_RE = re.compile(r"^\S+ mailing list$", re.IGNORECASE)
+ADDRESS_RE = re.compile(r"^\S+@\S+$")
+HEADER_LINE_RE = re.compile(
+    r"^(from|sent|to|cc|subject|date|reply-to|message-id):", re.IGNORECASE
+)
+LIST_URL_RE = re.compile(r"\S*(listinfo|mailman/)\S*", re.IGNORECASE)
+# Footers and digest headers inside bodies that have lost their line breaks
+INLINE_FOOTER_RE = re.compile(
+    r"_{10,}[\s>]*\S+ mailing list[\s>]*(\S+@\S+)?"
+    r"|(?s:send \S+ mailing list submissions to.{0,800}?contents of \S+ digest\.*\"?)"
+    r"|send \S+ mailing list submissions to\s*\S+",
+    re.IGNORECASE,
+)
+
+
+def strip_artefacts(text: str) -> str:
+    """Remove mailing-list footers, header lines copied into the body and the signature."""
+    lines = text.split("\n")  # not splitlines(): keep \r and other characters as they are
+    # The signature starts at the last "-- " line (RFC 3676 delimiter, with the
+    # trailing space), if it is within the last 10 lines and is not the first line.
+    # A bare "--" is not used, because spam often uses it as a separator.
+    sig = [i for i, line in enumerate(lines) if line.rstrip("\r") == "-- "]
+    if sig and sig[-1] > 0 and len(lines) - sig[-1] <= 10:
+        lines = lines[:sig[-1]]
+    bare = [line.lstrip("> \t").strip() for line in lines]
+    is_header = [bool(HEADER_LINE_RE.match(b)) for b in bare]
+    kept = []
+    for i, line in enumerate(lines):
+        # A copied header comes as a block (From/Sent/To/Subject); a single
+        # "From: ..." line can be part of the message itself, so it is kept.
+        in_block = is_header[i] and (
+            (i > 0 and is_header[i - 1]) or (i + 1 < len(lines) and is_header[i + 1])
+        )
+        list_address = ADDRESS_RE.match(bare[i]) and i > 0 and LIST_NAME_RE.match(bare[i - 1])
+        if FOOTER_LINE_RE.match(bare[i]) or in_block or list_address:
+            continue
+        kept.append(line)
+    # Some bodies have lost their line breaks; drop footers and list URLs found inline.
+    text = INLINE_FOOTER_RE.sub(" ", "\n".join(kept))
+    return LIST_URL_RE.sub(" ", text).strip()
 
 
 def finalise(df: pd.DataFrame, log: dict) -> pd.DataFrame:
@@ -210,3 +263,82 @@ def load_bothbosu(cache_dir: Path = RAW_DIR / "hf_cache") -> pd.DataFrame:
     df["source"] = "bothbosu"
     df["channel"] = "phone"
     return finalise(df, log)
+
+
+def load_uci(
+    path: Path = RAW_DIR / "uci" / "SMSSpamCollection", keep_duplicates: bool = False
+) -> pd.DataFrame:
+    """UCI SMS Spam Collection (Almeida et al., 2011): ham / spam. Used in E1 only.
+
+    keep_duplicates=True keeps the raw text, file order and duplicates, as in the
+    published 30/70 protocol that E1 replicates.
+    """
+    raw = pd.read_csv(path, sep="\t", header=None, names=["label", "text"],
+                      quoting=csv.QUOTE_NONE)
+    if not set(raw["label"]) <= {"ham", "spam"}:
+        raise ValueError(f"Unexpected UCI labels: {set(raw['label'])}")
+    df = pd.DataFrame({
+        "id": [f"uci_{i}" for i in raw.index],
+        "text": raw["text"],
+        "label_orig": raw["label"],
+    })
+    log = {"raw_rows": len(df)}
+    if keep_duplicates:
+        df = drop_empty(df, log)  # raw text, as published: no unescape, no de-duplication
+    else:
+        df = clean(df, log)
+
+    df["label_spam"] = pd.NA
+    df["label_fraud"] = pd.NA
+    df["subtype"] = pd.NA
+    df["dataset"] = "uci"
+    df["source"] = "uci"
+    df["channel"] = "sms"
+    return finalise(df, log)
+
+
+def load_spam_email(name: str, strip: bool = False,
+                    zenodo_dir: Path = RAW_DIR / "zenodo") -> pd.DataFrame:
+    """CEAS_08 or SpamAssassin from the Zenodo record of Champa et al. (2024). Used in E1 and E4.
+
+    name: "ceas_08" or "spamassassin". Only the email body is used.
+    strip=True returns the text after strip_artefacts. Both versions keep the same
+    rows (cleaning runs on the stripped text), so E4 compares the same emails
+    with and without stripping.
+    label_spam: spam = 1, legitimate = 0. label_fraud: <NA> (spam includes marketing).
+    """
+    file_names = {"ceas_08": "CEAS_08.csv", "spamassassin": "SpamAssasin.csv"}
+    if name not in file_names:
+        raise ValueError(f"name must be one of {sorted(file_names)}, got {name!r}")
+    raw = pd.read_csv(zenodo_dir / file_names[name])
+    if not set(raw["label"]) <= {0, 1}:
+        raise ValueError(f"Unexpected {name} labels: {set(raw['label'])}")
+    df = pd.DataFrame({
+        "id": [f"{name}_{i}" for i in raw.index],
+        "text": raw["body"],
+        "label_orig": raw["label"].map({1: "spam", 0: "legitimate"}),
+    })
+    log = {"raw_rows": len(df)}
+    df["text"] = df["text"].map(html.unescape, na_action="ignore")
+    original = df["text"]
+    df["text"] = df["text"].map(strip_artefacts, na_action="ignore")
+    df = drop_empty(df, log)
+    df = drop_conflicting_labels(df, log)
+    df = drop_duplicates(df, log)
+    # Texts that differ only in line breaks can strip differently; drop those
+    # duplicates of the original text too, so both versions stay de-duplicated.
+    dup_original = original[df.index].map(dedup_key).duplicated()
+    log["duplicates"] += int(dup_original.sum())
+    df = df[~dup_original].copy()
+
+    df["label_spam"] = df["label_orig"].map({"spam": 1, "legitimate": 0})
+    df["label_fraud"] = pd.NA
+    df["subtype"] = pd.NA
+    df["dataset"] = name
+    df["source"] = name
+    df["channel"] = "email"
+    kept_rows = df.index
+    df = finalise(df, log)  # template comes from the stripped text in both versions
+    if not strip:
+        df["text"] = original.loc[kept_rows].values  # finalise keeps the row order
+    return df
