@@ -43,15 +43,33 @@ LOOKALIKES = str.maketrans({
 SPACED_LETTERS_RE = re.compile(r"(?<![A-Za-z])[A-Za-z](?: [A-Za-z]){3,}(?![A-Za-z])")
 
 
-def normalise(text: str) -> str:
-    """Return text with invisible characters, look-alike letters and spaced-out letters undone."""
+def normalise_with_changes(text: str) -> tuple[str, dict]:
+    """Like normalise(), and also count what each step changed.
+
+    The counts are characters removed (invisible_chars), characters replaced
+    (compat_chars, lookalike_letters) and spaced-out letter runs joined
+    (spaced_letters). All zeros means the text was not changed.
+    """
+    changes = {}
     # Invisible format characters (Unicode category Cf), e.g. U+200B, U+00AD, U+200E
-    text = "".join(c for c in text if unicodedata.category(c) != "Cf")
+    kept = [c for c in text if unicodedata.category(c) != "Cf"]
+    changes["invisible_chars"] = len(text) - len(kept)
     # NFKC on letters and spaces only: full-width and math letters become ASCII,
     # a no-break space becomes a space; digits and symbols are not touched
-    text = "".join(
+    compat = [
         unicodedata.normalize("NFKC", c) if unicodedata.category(c)[0] in "LZ" else c
-        for c in text
-    )
+        for c in kept
+    ]
+    changes["compat_chars"] = sum(a != b for a, b in zip(kept, compat))
+    text = "".join(compat)
+    changes["lookalike_letters"] = sum(ord(c) in LOOKALIKES for c in text)
     text = text.translate(LOOKALIKES)
-    return SPACED_LETTERS_RE.sub(lambda m: m.group(0).replace(" ", ""), text)
+    text, changes["spaced_letters"] = SPACED_LETTERS_RE.subn(
+        lambda m: m.group(0).replace(" ", ""), text
+    )
+    return text, changes
+
+
+def normalise(text: str) -> str:
+    """Return text with invisible characters, look-alike letters and spaced-out letters undone."""
+    return normalise_with_changes(text)[0]

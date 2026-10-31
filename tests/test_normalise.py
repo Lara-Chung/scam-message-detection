@@ -1,6 +1,6 @@
 import pytest
 
-from src.normalise import normalise
+from src.normalise import normalise, normalise_with_changes
 
 
 @pytest.mark.parametrize("obfuscated, expected", [
@@ -54,3 +54,18 @@ def test_keeps_entities_digits_and_symbols(text):
 def test_is_idempotent(text):
     once = normalise(text)
     assert normalise(once) == once
+
+
+def test_changes_are_counted_per_step():
+    text = ("ver" + "\u200bify your " + "\u0430" + "cc" + "\u043e" + "unt, " +
+            "\uff46\uff52\uff45\uff45" + " and v e r i f y now")
+    result, changes = normalise_with_changes(text)
+    assert result == normalise(text) == "verify your account, free and verify now"
+    assert changes == {"invisible_chars": 1, "compat_chars": 4,
+                       "lookalike_letters": 2, "spaced_letters": 1}
+
+
+def test_unchanged_text_has_zero_changes():
+    text = "Call 0871 234 5678 within 24 hours"
+    assert normalise_with_changes(text) == (text, {"invisible_chars": 0, "compat_chars": 0,
+                                                   "lookalike_letters": 0, "spaced_letters": 0})
