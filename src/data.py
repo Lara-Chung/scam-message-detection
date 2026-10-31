@@ -160,3 +160,53 @@ def load_email_fraud(zenodo_dir: Path = RAW_DIR / "zenodo") -> pd.DataFrame:
     df["dataset"] = "email_fraud"
     df["channel"] = "email"
     return finalise(df, log)
+
+
+BOTHBOSU_REVISION = "321b961b5ae353e19ed479b960658dcd223d5e06"  # pinned Hub commit
+BOTHBOSU_TYPES = {
+    "ssn", "refund", "support", "reward",                   # scam
+    "delivery", "wrong", "insurance", "telemarketing",      # non-scam
+}
+
+
+def load_bothbosu(cache_dir: Path = RAW_DIR / "hf_cache") -> pd.DataFrame:
+    """BothBosu/scam-dialogue (Hugging Face): synthetic phone dialogues, 8 types.
+
+    The official split is kept in the id ("bothbosu_train_<i>" / "bothbosu_test_<i>").
+    A dialogue found in both splits keeps only its train copy.
+    label_fraud: scam = 1, non-scam = 0; the insurance and telemarketing types are
+    genuine sales calls and get <NA> (left out of the fraud task, proposal 3.3).
+    """
+    from datasets import load_dataset
+
+    data = load_dataset(
+        "BothBosu/scam-dialogue", revision=BOTHBOSU_REVISION, cache_dir=str(cache_dir)
+    )
+    parts = []
+    for split in ["train", "test"]:
+        raw = data[split].to_pandas()
+        if not set(raw["label"]) <= {0, 1}:
+            raise ValueError(f"Unexpected BothBosu labels: {set(raw['label'])}")
+        if not set(raw["type"]) <= BOTHBOSU_TYPES:
+            raise ValueError(f"Unexpected BothBosu types: {set(raw['type']) - BOTHBOSU_TYPES}")
+        parts.append(pd.DataFrame({
+            "id": [f"bothbosu_{split}_{i}" for i in raw.index],
+            "text": raw["dialogue"],
+            "label_orig": raw["label"].map({1: "scam", 0: "non-scam"}),
+            "subtype": raw["type"],
+        }))
+    df = pd.concat(parts, ignore_index=True)
+    # label_fraud depends on subtype, so one dialogue must not carry two subtypes.
+    n_types = df.groupby(df["text"].map(dedup_key))["subtype"].transform("nunique")
+    if (n_types > 1).any():
+        raise ValueError("A BothBosu dialogue appears with more than one type")
+    log = {"raw_rows": len(df)}
+    df = clean(df, log)
+
+    df["label_spam"] = pd.NA
+    sales = df["subtype"].isin(["insurance", "telemarketing"])
+    df["label_fraud"] = df["label_orig"].map({"scam": 1, "non-scam": 0}).astype("Int64").mask(sales)
+    df["dataset"] = "bothbosu"
+    df["source"] = "bothbosu"
+    df["channel"] = "phone"
+    return finalise(df, log)

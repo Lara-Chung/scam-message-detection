@@ -1,7 +1,8 @@
 import pytest
 
 from src.data import (
-    COLUMNS, RAW_DIR, dedup_key, load_email_fraud, load_mendeley, make_template,
+    BOTHBOSU_REVISION, COLUMNS, RAW_DIR, dedup_key, load_bothbosu, load_email_fraud, load_mendeley,
+    make_template,
 )
 
 
@@ -66,3 +67,28 @@ def test_email_fraud_labels_and_counts():
     assert (df["label_fraud"] == (df["label_orig"] == "fraud")).all()
     assert not df["text"].map(dedup_key).duplicated().any()
     assert not (df["text"].str.strip() == "").any()
+
+
+bothbosu_cached = any((RAW_DIR / "hf_cache").rglob("*.arrow"))
+
+
+@pytest.mark.skipif(not bothbosu_cached, reason="BothBosu not downloaded")
+def test_bothbosu_labels_and_split_ids():
+    datasets = pytest.importorskip("datasets")
+    df = load_bothbosu()
+    assert list(df.columns) == COLUMNS
+    assert df["id"].is_unique
+    assert df["id"].str.match(r"^bothbosu_(train|test)_\d+$").all()
+    sales = df["subtype"].isin(["insurance", "telemarketing"])
+    assert df.loc[sales, "label_fraud"].isna().all()
+    assert df.loc[~sales, "label_fraud"].notna().all()
+    assert (df.loc[~sales, "label_fraud"] == (df.loc[~sales, "label_orig"] == "scam")).all()
+    assert not df["text"].map(dedup_key).duplicated().any()
+
+    # A dialogue in both official splits keeps its train copy only.
+    raw = datasets.load_dataset(
+        "BothBosu/scam-dialogue", revision=BOTHBOSU_REVISION, cache_dir=str(RAW_DIR / "hf_cache")
+    )
+    train_keys = {dedup_key(x) for x in raw["train"]["dialogue"]}
+    in_train = df["text"].map(dedup_key).isin(train_keys)
+    assert df.loc[in_train, "id"].str.startswith("bothbosu_train_").all()
