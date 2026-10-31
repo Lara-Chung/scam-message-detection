@@ -1,0 +1,21 @@
+# Raw datasets: download locally, see README
+data/raw/*
+!data/raw/.gitkeep
+
+# Trained models and large artefacts
+models/
+*.pt
+*.h5
+*.keras
+*.joblib
+*.pkl
+
+# Python / Jupyter
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+.venv/
+
+# OS / secrets
+.DS_Store
+.env
