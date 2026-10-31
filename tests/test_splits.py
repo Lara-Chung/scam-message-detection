@@ -78,3 +78,14 @@ def test_saved_splits_match_current_code():
         got = saved[(saved["dataset"] == "mendeley") & (saved["seed"] == seed)]
         assert list(got["id"]) == list(df["id"])
         assert list(got["split"]) == list(expected)
+
+
+def test_large_group_is_not_in_test_for_every_seed():
+    # StratifiedGroupKFold puts the largest groups in the same fold for every seed,
+    # so taking the same fold each time would keep one big campaign in test.
+    df = toy_dataset(n_templates=200)
+    big = pd.DataFrame({"id": [f"big_{i}" for i in range(60)], "text": [f"campaign {i}" for i in range(60)],
+                        "template": "big", "label_orig": "pos", "dataset": "toy"})
+    df = pd.concat([df, big], ignore_index=True)
+    in_test = [(make_split(df, seed)[df["template"] == "big"] == "test").all() for seed in SEEDS]
+    assert not all(in_test)

@@ -25,10 +25,11 @@ COLUMNS = [
 ]
 
 # Also matches links without a scheme, such as "smsg.io/fCVbD" or "jamster.co.uk".
-# The lookbehind skips e-mail domains ("john@gmail.com"); only a "/path" may follow.
+# The lookbehind skips e-mail domains ("john@gmail.com", "john@my-site.com");
+# only a "/path" may follow.
 URL_RE = re.compile(
     r"https?://\S+|www\.\S+"
-    r"|(?<![@\w.])[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|net|org|info|biz|io|ly|uk)\b(?:/\S*)?",
+    r"|(?<![@\w.-])[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|net|org|info|biz|io|ly|uk)\b(?:/\S*)?",
     re.IGNORECASE,
 )
 TAG_RE = re.compile(r"<[^<>]{0,200}>")

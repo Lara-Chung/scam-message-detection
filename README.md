@@ -33,7 +33,7 @@ Using venv instead also works: create an environment with Python 3.11 and run `p
 
 Cross-dataset tests (E3, E4): tune on the source dataset's val split only. Do not use target labels to choose a model or threshold. Before training, call `remove_overlap(source, target)` from `src/splits.py` to drop source rows that also appear in the target test set.
 
-CEAS_08: one spam campaign ("THE DAILY TOP 10 from CNN", 2,930 emails) falls entirely in the test split for every seed and makes up about 39% of it. Report CEAS_08 test results with and without this campaign; its rows are those whose `template` starts with `thedailytop`.
+CEAS_08: one spam campaign ("THE DAILY TOP 10 from CNN", 2,930 emails) is in the test split for seed 0, where it makes up about 39% of it, and in the train split for seeds 1 and 2. Report CEAS_08 seed 0 test results with and without this campaign; its rows are those whose `template` starts with `thedailytop`.
 
 If a model is retrained on train + val after tuning, the threshold chosen on val may no longer fit; re-check it on a held-out part of the training data.
 
@@ -54,4 +54,4 @@ To build the processed data from the raw files, run:
 python -m src.splits && python -m src.export
 ```
 
-`src.splits` writes `data/processed/splits.csv` and checks for leakage; `src.export` writes the processed files, with a README describing them, to `data/processed/export/`.
+`src.splits` writes `data/processed/splits.csv` and checks for leakage; `src.export` writes the processed files to `data/processed/export/`.

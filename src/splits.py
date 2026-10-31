@@ -32,9 +32,15 @@ def split_group(df: pd.DataFrame) -> pd.Series:
 
 
 def take_one_fold(df: pd.DataFrame, seed: int) -> pd.Series:
-    """Boolean mask of one fold out of five (about 20% of df)."""
+    """Boolean mask of one fold out of five (about 20% of df).
+
+    The fold index depends on the seed. StratifiedGroupKFold places large groups
+    in the same fold whatever the seed, so always taking the first fold would
+    put the same large groups in the test set for every seed.
+    """
     sgkf = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=seed)
-    _, fold = next(sgkf.split(df, df["label_orig"], groups=split_group(df)))
+    folds = list(sgkf.split(df, df["label_orig"], groups=split_group(df)))
+    _, fold = folds[seed % len(folds)]
     mask = pd.Series(False, index=df.index)
     mask.iloc[fold] = True
     return mask

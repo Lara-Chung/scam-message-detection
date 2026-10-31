@@ -23,6 +23,7 @@ def test_template_replaces_links_without_scheme():
 def test_template_keeps_non_links():
     # e-mail domains and words joined by a period are not links
     assert make_template("email me at john@gmail.com") == "emailmeatjohngmailcom"
+    assert make_template("mail john@my-site.com") == "mailjohnmysitecom"
     assert make_template("ok.me too") == "okmetoo"
     assert make_template("e.g. meet at 5") == "egmeetat<num>"
 
