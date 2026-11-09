@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.0",
+  "request_id": "3f49f9ac-e101-4b83-9bd6-e707c3587b31",
+  "mode": "agent",
+  "channel": "phone",
+  "status": "ok",
+  "decision": "legitimate",
+  "needs_review": false,
+  "explanation": "Assessment: legitimate. Cited message text: \"caller: Hello, is this 555-1234? receiver: Yes, it is. Who's calling? caller: Hi, I'm trying to reach John Smith. Is he available? receiver: I think you have the wrong number. There's no John Smith here. caller: Oh, I apologize. Can you tell me whose number this is? receiver: This is the Johnson residence. caller: I must have dialed the wrong number. Sorry to bother you. receiver: It's okay, it happens. Have a good day.\". External verification unavailable; quotes require contextual human review.",
+  "views": {
+    "original": "caller: Hello, is this 555-1234? receiver: Yes, it is. Who's calling? caller: Hi, I'm trying to reach John Smith. Is he available? receiver: I think you have the wrong number. There's no John Smith here. caller: Oh, I apologize. Can you tell me whose number this is? receiver: This is the Johnson residence. caller: I must have dialed the wrong number. Sorry to bother you. receiver: It's okay, it happens. Have a good day.",
+    "normalised": null
+  },
+  "input_policy": {
+    "name": "prefix_chars_v1",
+    "max_chars": 8000,
+    "original_chars": 423,
+    "used_chars": 423,
+    "clipped": false,
+    "original_offset": 0
+  },
+  "indicators": [
+    {
+      "kind": "phone",
+      "view": "original",
+      "start": 23,
+      "end": 31,
+      "quote": "555-1234"
+    }
+  ],
+  "evidence": [
+    {
+      "view": "original",
+      "start": 0,
+      "end": 423,
+      "quote": "caller: Hello, is this 555-1234? receiver: Yes, it is. Who's calling? caller: Hi, I'm trying to reach John Smith. Is he available? receiver: I think you have the wrong number. There's no John Smith here. caller: Oh, I apologize. Can you tell me whose number this is? receiver: This is the Johnson residence. caller: I must have dialed the wrong number. Sorry to bother you. receiver: It's okay, it happens. Have a good day."
+    }
+  ],
+  "classifier_results": [
+    {
+      "model_id": "agent_lr_phone_seed0_v1",
+      "provenance": "canonical_train_verified",
+      "original_classes": [
+        0,
+        1
+      ],
+      "predicted_label": "0",
+      "decision": "legitimate",
+      "scores": {
+        "0": 0.956556346296755,
+        "1": 0.04344365370324494
+      },
+      "fraud_score": 0.04344365370324494,
+      "score_kind": "model_probability_uncalibrated",
+      "view": "original",
+      "preprocessing": "Saved pipeline; no fit at inference"
+    }
+  ],
+  "retrieved_cases": [],
+  "tool_trace": [
+    {
+      "tool": "classify_message",
+      "inputs": {
+        "view": "original"
+      },
+      "result": {
+        "model_id": "agent_lr_phone_seed0_v1",
+        "provenance": "canonical_train_verified",
+        "original_classes": [
+          0,
+          1
+        ],
+        "predicted_label": "0",
+        "decision": "legitimate",
+        "scores": {
+          "0": 0.956556346296755,
+          "1": 0.04344365370324494
+        },
+        "fraud_score": 0.04344365370324494,
+        "score_kind": "model_probability_uncalibrated",
+        "view": "original",
+        "preprocessing": "Saved pipeline; no fit at inference"
+      },
+      "elapsed_ms": 6.134,
+      "error": null,
+      "source": "model_tool_call"
+    },
+    {
+      "tool": "extract_indicators",
+      "inputs": {
+        "view": "original"
+      },
+      "result": [
+        {
+          "kind": "phone",
+          "view": "original",
+          "start": 23,
+          "end": 31,
+          "quote": "555-1234"
+        }
+      ],
+      "elapsed_ms": 0.252,
+      "error": null,
+      "source": "model_tool_call"
+    }
+  ],
+  "elapsed_ms": 2407.361,
+  "llm_calls": 2,
+  "usage": {
+    "prompt_tokens": 2373,
+    "completion_tokens": 223,
+    "total_tokens": 2596,
+    "accounting_complete": true
+  },
+  "cost_estimate": null,
+  "provider": {
+    "kind": "deepseek_chat",
+    "model": "deepseek-flash",
+    "mock": false
+  },
+  "stop_reason": "final_answer",
+  "errors": [],
+  "unsupported_claims": []
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "request_id": "3f122c02-ac21-444c-8709-d9a70ad2b197",
+  "mode": "agent",
+  "channel": "sms",
+  "status": "error",
+  "decision": "abstain",
+  "needs_review": true,
+  "explanation": "Technical failure; human review required. See structured errors.",
+  "views": {
+    "original": "Please verify your account immediately.",
+    "normalised": null
+  },
+  "input_policy": {
+    "name": "prefix_chars_v1",
+    "max_chars": 8000,
+    "original_chars": 39,
+    "used_chars": 39,
+    "clipped": false,
+    "original_offset": 0
+  },
+  "indicators": [],
+  "evidence": [],
+  "classifier_results": [],
+  "retrieved_cases": [],
+  "tool_trace": [],
+  "elapsed_ms": 0.043,
+  "llm_calls": 0,
+  "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "accounting_complete": true
+  },
+  "cost_estimate": null,
+  "provider": null,
+  "stop_reason": "provider_not_configured",
+  "errors": [
+    {
+      "code": "provider_not_configured",
+      "message": "Set LLM_API_KEY, LLM_BASE_URL and LLM_MODEL privately in the environment.",
+      "source": "service"
+    }
+  ],
+  "unsupported_claims": []
+}

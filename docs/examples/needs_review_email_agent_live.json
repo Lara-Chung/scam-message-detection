@@ -1,0 +1,267 @@
+{
+  "schema_version": "1.0",
+  "request_id": "5e8aa3d9-fadf-4d75-83e1-46a240e109a2",
+  "mode": "agent",
+  "channel": "email",
+  "status": "needs_review",
+  "decision": "legitimate",
+  "needs_review": true,
+  "explanation": "Assessment: legitimate. Cited message text: \"We would like to inform that WWW server of the Association of Polish \\nGeomorphologists will be officially open since September 27, 1995.\"; \"http://hum.amu.edu.pl/~sgp/welcome.html\"; \"sgp@hum.amu.edu.pl\". External verification unavailable; quotes require contextual human review.",
+  "views": {
+    "original": "We would like to inform that WWW server of the Association of Polish \nGeomorphologists will be officially open since September 27, 1995.\nThe URL address is:\n\n        http://hum.amu.edu.pl/~sgp/welcome.html\n\nOn this server you can find following topics:\n\nThe Constitution\nOrganizational structure\nMembers of Honour\nOrdinary members\nNews\nConferences\nContest of the best Ph.D. Thesis\nPublications\nThe Virtual Geomorphology\nUseful links:\n\tThe Earth Science Site of the Week\n\tGeomorphological organizations\n\tRelated institutions\n\tInformation and data\n\tOn-line publications\n\tLibraries and indexes\n\tPublishers\n\tEducation\n\tNewsgroups\n\tGeoWWWservers\n\tSearch engines\n\nWe would appreciate yours comments, remarks and additions.\n\nHave fun with our WWW Home Page.\n\n\n     President of the APG            General Secretary of the APG\n   Prof. Dr. Stefan Kozarski            Dr. Zbigniew Zwolinski\n(e-mail: kozarski@pozman.edu.pl)     (e-mail: zbzw@hum.amu.edu.pl)\n\n==========================================\nThe Association of Polish Geomorphologists\nFredry 10, 61-701 Poznan, Poland\nphone: +48-61 529327; fax: +48-61 530234\ne-mail: sgp@hum.amu.edu.pl\n==========================================\n\n\n\n\n\n",
+    "normalised": null
+  },
+  "input_policy": {
+    "name": "prefix_chars_v1",
+    "max_chars": 8000,
+    "original_chars": 1185,
+    "used_chars": 1185,
+    "clipped": false,
+    "original_offset": 0
+  },
+  "indicators": [
+    {
+      "kind": "url",
+      "view": "original",
+      "start": 166,
+      "end": 205,
+      "quote": "http://hum.amu.edu.pl/~sgp/welcome.html"
+    },
+    {
+      "kind": "email",
+      "view": "original",
+      "start": 891,
+      "end": 913,
+      "quote": "kozarski@pozman.edu.pl"
+    },
+    {
+      "kind": "email",
+      "view": "original",
+      "start": 928,
+      "end": 947,
+      "quote": "zbzw@hum.amu.edu.pl"
+    },
+    {
+      "kind": "email",
+      "view": "original",
+      "start": 1118,
+      "end": 1136,
+      "quote": "sgp@hum.amu.edu.pl"
+    },
+    {
+      "kind": "phone",
+      "view": "original",
+      "start": 1076,
+      "end": 1089,
+      "quote": "+48-61 529327"
+    },
+    {
+      "kind": "phone",
+      "view": "original",
+      "start": 1096,
+      "end": 1109,
+      "quote": "+48-61 530234"
+    }
+  ],
+  "evidence": [
+    {
+      "view": "original",
+      "start": 0,
+      "end": 136,
+      "quote": "We would like to inform that WWW server of the Association of Polish \nGeomorphologists will be officially open since September 27, 1995."
+    },
+    {
+      "view": "original",
+      "start": 166,
+      "end": 205,
+      "quote": "http://hum.amu.edu.pl/~sgp/welcome.html"
+    },
+    {
+      "view": "original",
+      "start": 1118,
+      "end": 1136,
+      "quote": "sgp@hum.amu.edu.pl"
+    }
+  ],
+  "classifier_results": [
+    {
+      "model_id": "agent_lr_email_seed0_v1",
+      "provenance": "canonical_train_verified",
+      "original_classes": [
+        0,
+        1
+      ],
+      "predicted_label": "0",
+      "decision": "legitimate",
+      "scores": {
+        "0": 0.8441971849353151,
+        "1": 0.15580281506468482
+      },
+      "fraud_score": 0.15580281506468482,
+      "score_kind": "model_probability_uncalibrated",
+      "view": "original",
+      "preprocessing": "Saved pipeline; no fit at inference"
+    }
+  ],
+  "retrieved_cases": [
+    {
+      "case_id": "nigerian_5_1168",
+      "excerpt": "------- Start of forwarded message ------- >Received: from CS.Stanford.EDU (CS.Stanford.EDU [171.64.64.64]) by kilby.Stanford.EDU (8.7.5/8.7.1) with ESMTP id DAA23941 for ; Thu, 3 Apr 1997 03:02:42 -0800 (PST) Date: Thu, 3 Apr 1997 12:46:09 +0200 (MET DST) From: \"CONCUR'97 Conference\"  To: wimmel@uni-koblenz.de, priese@uni-koblenz.de, tony@fi.muni.cz,         rvg@CS.Stanford.EDU, Ahmed.Bouajjani@i",
+      "similarity": 0.1161495145628229,
+      "training_label": "legitimate",
+      "partition": "canonical_seed0_train"
+    },
+    {
+      "case_id": "nigerian_5_5470",
+      "excerpt": "New mathematics & Natural Computing Journal \nby world Scientific Publishing Co.\n\nA new journal to serve you!\n\nPaul\n\n- -- \nProfessor Paul P.Wang\nDepartment of Electrical & Computer Engineering\nPratt School of Engineering\nDuke University,Durham ,NC,27708 ,USA\n\nnki@ee.duke.edu\nvoice:919 660 5259\nfax:919 660 5293\n\n\n\n- ---------- Forwarded message ----------\nDate: Fri, 13 Aug 2004 10:20:44 +0800\nFrom: ",
+      "similarity": 0.09949310782606145,
+      "training_label": "legitimate",
+      "partition": "canonical_seed0_train"
+    },
+    {
+      "case_id": "nazario_5_591",
+      "excerpt": "Hello,\n\nI have been 'lurking' on the list for a while and thought it was about \ntime I introduce myself.\n\nMy name is John Tatarko.  I am with the USDA-ARS Wind Erosion Research \nUnit (sometimes known as The Wind Erosion Lab) in Manhattan, Kansas.\n\nThe Wind Erosion Research Unit is now participating in the development \nof a Wind Erosion Prediction System (WEPS) which is a process based \nreplacement",
+      "similarity": 0.0905723548894541,
+      "training_label": "legitimate",
+      "partition": "canonical_seed0_train"
+    }
+  ],
+  "tool_trace": [
+    {
+      "tool": "classify_message",
+      "inputs": {
+        "view": "original"
+      },
+      "result": {
+        "model_id": "agent_lr_email_seed0_v1",
+        "provenance": "canonical_train_verified",
+        "original_classes": [
+          0,
+          1
+        ],
+        "predicted_label": "0",
+        "decision": "legitimate",
+        "scores": {
+          "0": 0.8441971849353151,
+          "1": 0.15580281506468482
+        },
+        "fraud_score": 0.15580281506468482,
+        "score_kind": "model_probability_uncalibrated",
+        "view": "original",
+        "preprocessing": "Saved pipeline; no fit at inference"
+      },
+      "elapsed_ms": 3.546,
+      "error": null,
+      "source": "model_tool_call"
+    },
+    {
+      "tool": "extract_indicators",
+      "inputs": {
+        "view": "original"
+      },
+      "result": [
+        {
+          "kind": "url",
+          "view": "original",
+          "start": 166,
+          "end": 205,
+          "quote": "http://hum.amu.edu.pl/~sgp/welcome.html"
+        },
+        {
+          "kind": "email",
+          "view": "original",
+          "start": 891,
+          "end": 913,
+          "quote": "kozarski@pozman.edu.pl"
+        },
+        {
+          "kind": "email",
+          "view": "original",
+          "start": 928,
+          "end": 947,
+          "quote": "zbzw@hum.amu.edu.pl"
+        },
+        {
+          "kind": "email",
+          "view": "original",
+          "start": 1118,
+          "end": 1136,
+          "quote": "sgp@hum.amu.edu.pl"
+        },
+        {
+          "kind": "phone",
+          "view": "original",
+          "start": 1076,
+          "end": 1089,
+          "quote": "+48-61 529327"
+        },
+        {
+          "kind": "phone",
+          "view": "original",
+          "start": 1096,
+          "end": 1109,
+          "quote": "+48-61 530234"
+        }
+      ],
+      "elapsed_ms": 0.793,
+      "error": null,
+      "source": "model_tool_call"
+    },
+    {
+      "tool": "retrieve_similar_cases",
+      "inputs": {
+        "view": "original",
+        "k": 3
+      },
+      "result": [
+        {
+          "case_id": "nigerian_5_1168",
+          "excerpt": "------- Start of forwarded message ------- >Received: from CS.Stanford.EDU (CS.Stanford.EDU [171.64.64.64]) by kilby.Stanford.EDU (8.7.5/8.7.1) with ESMTP id DAA23941 for ; Thu, 3 Apr 1997 03:02:42 -0800 (PST) Date: Thu, 3 Apr 1997 12:46:09 +0200 (MET DST) From: \"CONCUR'97 Conference\"  To: wimmel@uni-koblenz.de, priese@uni-koblenz.de, tony@fi.muni.cz,         rvg@CS.Stanford.EDU, Ahmed.Bouajjani@i",
+          "similarity": 0.1161495145628229,
+          "training_label": "legitimate",
+          "partition": "canonical_seed0_train"
+        },
+        {
+          "case_id": "nigerian_5_5470",
+          "excerpt": "New mathematics & Natural Computing Journal \nby world Scientific Publishing Co.\n\nA new journal to serve you!\n\nPaul\n\n- -- \nProfessor Paul P.Wang\nDepartment of Electrical & Computer Engineering\nPratt School of Engineering\nDuke University,Durham ,NC,27708 ,USA\n\nnki@ee.duke.edu\nvoice:919 660 5259\nfax:919 660 5293\n\n\n\n- ---------- Forwarded message ----------\nDate: Fri, 13 Aug 2004 10:20:44 +0800\nFrom: ",
+          "similarity": 0.09949310782606145,
+          "training_label": "legitimate",
+          "partition": "canonical_seed0_train"
+        },
+        {
+          "case_id": "nazario_5_591",
+          "excerpt": "Hello,\n\nI have been 'lurking' on the list for a while and thought it was about \ntime I introduce myself.\n\nMy name is John Tatarko.  I am with the USDA-ARS Wind Erosion Research \nUnit (sometimes known as The Wind Erosion Lab) in Manhattan, Kansas.\n\nThe Wind Erosion Research Unit is now participating in the development \nof a Wind Erosion Prediction System (WEPS) which is a process based \nreplacement",
+          "similarity": 0.0905723548894541,
+          "training_label": "legitimate",
+          "partition": "canonical_seed0_train"
+        }
+      ],
+      "elapsed_ms": 1086.81,
+      "error": null,
+      "source": "model_tool_call"
+    }
+  ],
+  "elapsed_ms": 3830.972,
+  "llm_calls": 2,
+  "usage": {
+    "prompt_tokens": 3626,
+    "completion_tokens": 262,
+    "total_tokens": 3888,
+    "accounting_complete": true
+  },
+  "cost_estimate": null,
+  "provider": {
+    "kind": "deepseek_chat",
+    "model": "deepseek-flash",
+    "mock": false
+  },
+  "stop_reason": "final_answer",
+  "errors": [
+    {
+      "code": "evidence_span_repaired",
+      "source": "validation",
+      "message": "Unique exact quote in original re-anchored from [0,100) to [0,136); review required."
+    }
+  ],
+  "unsupported_claims": []
+}

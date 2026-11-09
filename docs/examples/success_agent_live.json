@@ -1,0 +1,163 @@
+{
+  "schema_version": "1.0",
+  "request_id": "92daa43b-2b2a-4e90-b5bd-31d2501e8a4a",
+  "mode": "agent",
+  "channel": "sms",
+  "status": "ok",
+  "decision": "legitimate",
+  "needs_review": false,
+  "explanation": "Assessment: legitimate. Cited message text: \"chile, please! It's only a  <DECIMAL>  hour drive for me. I come down all the time and will be subletting feb-april for audition season.\". External verification unavailable; quotes require contextual human review.",
+  "views": {
+    "original": "chile, please! It's only a  <DECIMAL>  hour drive for me. I come down all the time and will be subletting feb-april for audition season.",
+    "normalised": null
+  },
+  "input_policy": {
+    "name": "prefix_chars_v1",
+    "max_chars": 8000,
+    "original_chars": 136,
+    "used_chars": 136,
+    "clipped": false,
+    "original_offset": 0
+  },
+  "indicators": [],
+  "evidence": [
+    {
+      "view": "original",
+      "start": 0,
+      "end": 136,
+      "quote": "chile, please! It's only a  <DECIMAL>  hour drive for me. I come down all the time and will be subletting feb-april for audition season."
+    }
+  ],
+  "classifier_results": [
+    {
+      "model_id": "agent_lr_sms_seed0_v1",
+      "provenance": "canonical_train_verified",
+      "original_classes": [
+        0,
+        1
+      ],
+      "predicted_label": "0",
+      "decision": "legitimate",
+      "scores": {
+        "0": 0.8900040633799732,
+        "1": 0.10999593662002685
+      },
+      "fraud_score": 0.10999593662002685,
+      "score_kind": "model_probability_uncalibrated",
+      "view": "original",
+      "preprocessing": "Saved pipeline; no fit at inference"
+    }
+  ],
+  "retrieved_cases": [
+    {
+      "case_id": "mendeley_1283",
+      "excerpt": "That means from february to april i'll be getting a place to stay down there so i don't have to hustle back and forth during audition season as i have since my sister moved away from harlem.",
+      "similarity": 0.16413055619302924,
+      "training_label": "legitimate",
+      "partition": "canonical_seed0_train"
+    },
+    {
+      "case_id": "mendeley_1404",
+      "excerpt": "Aight, sounds good. When do you want me to come down?",
+      "similarity": 0.13571741134968193,
+      "training_label": "legitimate",
+      "partition": "canonical_seed0_train"
+    },
+    {
+      "case_id": "mendeley_1090",
+      "excerpt": "Haf u eaten? Wat time u wan me 2 come?",
+      "similarity": 0.132693442025071,
+      "training_label": "legitimate",
+      "partition": "canonical_seed0_train"
+    }
+  ],
+  "tool_trace": [
+    {
+      "tool": "classify_message",
+      "inputs": {
+        "view": "original"
+      },
+      "result": {
+        "model_id": "agent_lr_sms_seed0_v1",
+        "provenance": "canonical_train_verified",
+        "original_classes": [
+          0,
+          1
+        ],
+        "predicted_label": "0",
+        "decision": "legitimate",
+        "scores": {
+          "0": 0.8900040633799732,
+          "1": 0.10999593662002685
+        },
+        "fraud_score": 0.10999593662002685,
+        "score_kind": "model_probability_uncalibrated",
+        "view": "original",
+        "preprocessing": "Saved pipeline; no fit at inference"
+      },
+      "elapsed_ms": 1.41,
+      "error": null,
+      "source": "model_tool_call"
+    },
+    {
+      "tool": "extract_indicators",
+      "inputs": {
+        "view": "original"
+      },
+      "result": [],
+      "elapsed_ms": 1.412,
+      "error": null,
+      "source": "model_tool_call"
+    },
+    {
+      "tool": "retrieve_similar_cases",
+      "inputs": {
+        "view": "original",
+        "k": 3
+      },
+      "result": [
+        {
+          "case_id": "mendeley_1283",
+          "excerpt": "That means from february to april i'll be getting a place to stay down there so i don't have to hustle back and forth during audition season as i have since my sister moved away from harlem.",
+          "similarity": 0.16413055619302924,
+          "training_label": "legitimate",
+          "partition": "canonical_seed0_train"
+        },
+        {
+          "case_id": "mendeley_1404",
+          "excerpt": "Aight, sounds good. When do you want me to come down?",
+          "similarity": 0.13571741134968193,
+          "training_label": "legitimate",
+          "partition": "canonical_seed0_train"
+        },
+        {
+          "case_id": "mendeley_1090",
+          "excerpt": "Haf u eaten? Wat time u wan me 2 come?",
+          "similarity": 0.132693442025071,
+          "training_label": "legitimate",
+          "partition": "canonical_seed0_train"
+        }
+      ],
+      "elapsed_ms": 40.697,
+      "error": null,
+      "source": "model_tool_call"
+    }
+  ],
+  "elapsed_ms": 2354.721,
+  "llm_calls": 2,
+  "usage": {
+    "prompt_tokens": 2481,
+    "completion_tokens": 199,
+    "total_tokens": 2680,
+    "accounting_complete": true
+  },
+  "cost_estimate": null,
+  "provider": {
+    "kind": "deepseek_chat",
+    "model": "deepseek-flash",
+    "mock": false
+  },
+  "stop_reason": "final_answer",
+  "errors": [],
+  "unsupported_claims": []
+}

@@ -55,3 +55,33 @@ python -m src.splits && python -m src.export
 ```
 
 `src.splits` writes `data/processed/splits.csv` and checks for leakage; `src.export` writes the processed files to `data/processed/export/`.
+
+## Agent backend
+
+The UI-independent entry point is `src.agent.service.ScamAgentService`.
+Use the separate `requirements-agent.txt` environment and existing delivered
+splits; do not combine its sklearn pin with the original training requirements.
+See [frontend setup and JSON contract](docs/agent_frontend_handoff.md),
+[artifact/data audit](docs/agent_integration_audit.md), and
+[executed validation and pending live checks](docs/agent_validation.md).
+
+```sh
+.venv/bin/python -m src.agent.cli --text 'Please verify your account immediately.' --channel sms --mode classifier_only
+```
+
+The `agent`, `direct_llm` and `fixed_workflow` modes require explicitly configured
+`LLM_API_KEY`, `LLM_BASE_URL` and `LLM_MODEL`; otherwise they return a structured
+`provider_not_configured` result. Local inputs, artifacts and evaluation traces
+remain ignored by Git.
+
+A subsequent bounded [real DeepSeek validation](docs/agent_live_validation.md)
+recorded 5 calls and 6,228 tokens on three validation messages: one complete
+Agent answer and two local budget stops. The ignored local macOS profile uses
+Keychain; no API key is stored in source or YAML.
+
+The [budget repair and current acceptance](docs/agent_budget_fix.md) recorded
+three real final responses in 9,164 tokens. SMS/phone passed directly; email
+retains a visible review flag after deterministic correction of a unique exact
+quote's coordinates. Full offline suite: 121 passed, 7 skipped. Run
+`python -m scripts.prepare_agent_tokenizer` to install the pinned official
+counter data before configured live inference.

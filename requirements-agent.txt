@@ -1,0 +1,12 @@
+# Isolated Agent environment; do not combine with the team's requirements.txt.
+# Reuse delivered split columns; never regenerate canonical splits here.
+pandas==2.3.3
+scikit-learn==1.7.2
+numpy==2.5.4
+scipy==1.18.1
+joblib==1.6.0
+PyYAML==6.0.3
+httpx==0.28.1
+jsonschema==4.26.0
+pytest==9.2.0
+tokenizers==0.22.2

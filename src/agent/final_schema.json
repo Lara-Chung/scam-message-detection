@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "properties": {
+    "decision": {
+      "enum": [
+        "fraud",
+        "legitimate",
+        "abstain"
+      ]
+    },
+    "needs_review": {
+      "type": "boolean"
+    },
+    "evidence": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "properties": {
+          "view": {
+            "enum": [
+              "original",
+              "normalised"
+            ]
+          },
+          "start": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "view",
+          "start",
+          "end",
+          "quote"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "decision",
+    "needs_review",
+    "evidence"
+  ],
+  "additionalProperties": false
+}

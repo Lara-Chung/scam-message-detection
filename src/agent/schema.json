@@ -1,0 +1,572 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ee6405:agent:result:1.0",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "needs_review",
+        "error"
+      ]
+    },
+    "decision": {
+      "enum": [
+        "fraud",
+        "legitimate",
+        "abstain"
+      ]
+    },
+    "needs_review": {
+      "type": "boolean"
+    },
+    "explanation": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "views": {
+      "type": "object",
+      "properties": {
+        "original": {
+          "type": "string"
+        },
+        "normalised": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "original",
+        "normalised"
+      ],
+      "additionalProperties": false
+    },
+    "input_policy": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "const": "prefix_chars_v1"
+        },
+        "max_chars": {
+          "type": "integer"
+        },
+        "original_chars": {
+          "type": "integer"
+        },
+        "used_chars": {
+          "type": "integer"
+        },
+        "clipped": {
+          "type": "boolean"
+        },
+        "original_offset": {
+          "const": 0
+        }
+      },
+      "required": [
+        "name",
+        "max_chars",
+        "original_chars",
+        "used_chars",
+        "clipped",
+        "original_offset"
+      ],
+      "additionalProperties": false
+    },
+    "indicators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "view": {
+            "enum": [
+              "original",
+              "normalised"
+            ]
+          },
+          "start": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "kind",
+          "view",
+          "start",
+          "end",
+          "quote"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "properties": {
+          "view": {
+            "enum": [
+              "original",
+              "normalised"
+            ]
+          },
+          "start": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "view",
+          "start",
+          "end",
+          "quote"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "classifier_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "model_id": {
+            "type": "string"
+          },
+          "provenance": {
+            "enum": [
+              "canonical_train_verified",
+              "unverified_integration_only"
+            ]
+          },
+          "original_classes": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "integer",
+                "number"
+              ]
+            }
+          },
+          "predicted_label": {
+            "type": "string"
+          },
+          "decision": {
+            "enum": [
+              "fraud",
+              "legitimate",
+              "abstain"
+            ]
+          },
+          "scores": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "fraud_score": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "score_kind": {
+            "enum": [
+              "model_probability_uncalibrated",
+              "decision_margin",
+              "label_only"
+            ]
+          },
+          "view": {
+            "enum": [
+              "original",
+              "normalised"
+            ]
+          },
+          "preprocessing": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "model_id",
+          "provenance",
+          "original_classes",
+          "predicted_label",
+          "decision",
+          "scores",
+          "fraud_score",
+          "score_kind",
+          "view",
+          "preprocessing"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "retrieved_cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "case_id": {
+            "type": "string"
+          },
+          "excerpt": {
+            "type": "string"
+          },
+          "similarity": {
+            "type": "number"
+          },
+          "training_label": {
+            "enum": [
+              "fraud",
+              "legitimate"
+            ]
+          },
+          "partition": {
+            "const": "canonical_seed0_train"
+          }
+        },
+        "required": [
+          "case_id",
+          "excerpt",
+          "similarity",
+          "training_label",
+          "partition"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "tool_trace": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tool": {
+            "type": "string"
+          },
+          "inputs": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "result": {
+            "type": [
+              "object",
+              "array",
+              "null"
+            ]
+          },
+          "elapsed_ms": {
+            "type": "number"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "source": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "code",
+                  "message",
+                  "source"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "enum": [
+              "model_tool_call",
+              "classifier_only",
+              "fixed_workflow"
+            ]
+          }
+        },
+        "required": [
+          "tool",
+          "inputs",
+          "result",
+          "elapsed_ms",
+          "error",
+          "source"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "elapsed_ms": {
+      "type": "number"
+    },
+    "llm_calls": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "prompt_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "completion_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "accounting_complete": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "prompt_tokens",
+        "completion_tokens",
+        "total_tokens",
+        "accounting_complete"
+      ],
+      "additionalProperties": false
+    },
+    "cost_estimate": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "currency": {
+              "const": "USD"
+            },
+            "amount": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "currency",
+            "amount"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "provider": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "mock": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "model",
+        "mock"
+      ],
+      "additionalProperties": false
+    },
+    "stop_reason": {
+      "type": "string"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "source"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "unsupported_claims": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "request_id",
+    "mode",
+    "channel",
+    "status",
+    "decision",
+    "needs_review",
+    "explanation",
+    "views",
+    "input_policy",
+    "indicators",
+    "evidence",
+    "classifier_results",
+    "retrieved_cases",
+    "tool_trace",
+    "elapsed_ms",
+    "llm_calls",
+    "usage",
+    "cost_estimate",
+    "provider",
+    "stop_reason",
+    "errors",
+    "unsupported_claims"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "error"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "decision": {
+            "const": "abstain"
+          },
+          "needs_review": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "ok"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "decision": {
+            "enum": [
+              "fraud",
+              "legitimate"
+            ]
+          },
+          "needs_review": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "needs_review"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "needs_review": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "ok",
+              "needs_review"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "mode": {
+            "enum": [
+              "classifier_only",
+              "direct_llm",
+              "agent",
+              "fixed_workflow"
+            ]
+          },
+          "channel": {
+            "enum": [
+              "sms",
+              "email",
+              "phone"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

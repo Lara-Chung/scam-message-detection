@@ -1,0 +1,35 @@
+# Paths resolve against this config's project_root, not the caller's working directory.
+project_root: ..
+export_dir: data/processed/export
+models:
+  sms:
+    path: models/agent_seed0/sms.joblib
+    model_id: agent_lr_sms_seed0_v1
+    provenance: canonical_train_verified
+    label_map: {"0": legitimate, "1": fraud}
+  email:
+    path: models/agent_seed0/email.joblib
+    model_id: agent_lr_email_seed0_v1
+    provenance: canonical_train_verified
+    label_map: {"0": legitimate, "1": fraud}
+  phone:
+    path: models/agent_seed0/phone.joblib
+    model_id: agent_lr_phone_seed0_v1
+    provenance: canonical_train_verified
+    label_map: {"0": legitimate, "1": fraud}
+provider:
+  kind: deepseek_chat
+  tokenizer_path: models/agent_tokenizer/tokenizer.json
+  # Read LLM_API_KEY, LLM_BASE_URL and LLM_MODEL from the environment.
+  # No automatic .env loading, provider switching, retries or model defaults.
+limits:
+  llm_turns: 4
+  tool_calls: 6
+  seconds: 60
+  max_input_chars: 8000
+  max_tool_result_chars: 20000
+  max_output_tokens: 700
+  max_message_tokens: 12000
+retrieval: true
+# Optional explicit USD / million token pricing, otherwise cost_estimate is null.
+pricing: null

@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "request_id": "9c048248-6e72-4161-bf92-6cb2d174d729",
+  "mode": "classifier_only",
+  "channel": "sms",
+  "status": "ok",
+  "decision": "fraud",
+  "needs_review": false,
+  "explanation": "Saved classifier predicts 1; score kind: model_probability_uncalibrated. External verification unavailable.",
+  "views": {
+    "original": "Please verify your account immediately.",
+    "normalised": null
+  },
+  "input_policy": {
+    "name": "prefix_chars_v1",
+    "max_chars": 8000,
+    "original_chars": 39,
+    "used_chars": 39,
+    "clipped": false,
+    "original_offset": 0
+  },
+  "indicators": [],
+  "evidence": [],
+  "classifier_results": [
+    {
+      "model_id": "agent_lr_sms_seed0_v1",
+      "provenance": "canonical_train_verified",
+      "original_classes": [
+        0,
+        1
+      ],
+      "predicted_label": "1",
+      "decision": "fraud",
+      "scores": {
+        "0": 0.24924817037981573,
+        "1": 0.7507518296201843
+      },
+      "fraud_score": 0.7507518296201843,
+      "score_kind": "model_probability_uncalibrated",
+      "view": "original",
+      "preprocessing": "Saved pipeline; no fit at inference"
+    }
+  ],
+  "retrieved_cases": [],
+  "tool_trace": [
+    {
+      "tool": "classify_message",
+      "inputs": {
+        "view": "original"
+      },
+      "result": {
+        "model_id": "agent_lr_sms_seed0_v1",
+        "provenance": "canonical_train_verified",
+        "original_classes": [
+          0,
+          1
+        ],
+        "predicted_label": "1",
+        "decision": "fraud",
+        "scores": {
+          "0": 0.24924817037981573,
+          "1": 0.7507518296201843
+        },
+        "fraud_score": 0.7507518296201843,
+        "score_kind": "model_probability_uncalibrated",
+        "view": "original",
+        "preprocessing": "Saved pipeline; no fit at inference"
+      },
+      "elapsed_ms": 139.89,
+      "error": null,
+      "source": "classifier_only"
+    }
+  ],
+  "elapsed_ms": 139.957,
+  "llm_calls": 0,
+  "usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "accounting_complete": true
+  },
+  "cost_estimate": null,
+  "provider": null,
+  "stop_reason": "classifier_complete",
+  "errors": [],
+  "unsupported_claims": []
+}

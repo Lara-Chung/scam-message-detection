@@ -24,3 +24,10 @@ __pycache__/
 data/processed/*
 !data/processed/.gitkeep
 !data/processed/splits.csv
+
+# Local Agent inputs and evaluation outputs
+local_inputs/
+outputs/agent/
+
+# Local provider profiles (credentials live in macOS Keychain)
+configs/*.local.yaml
