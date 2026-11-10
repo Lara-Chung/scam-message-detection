@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "decision": {
+      "enum": [
+        "fraud",
+        "legitimate",
+        "abstain"
+      ]
+    },
+    "assessment_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "action": {
+      "enum": [
+        "finish",
+        "review",
+        "clarify"
+      ]
+    },
+    "question_id": {
+      "enum": [
+        "none",
+        "transaction_initiated",
+        "sender_known",
+        "independent_verification",
+        "missing_body"
+      ]
+    },
+    "evidence_ids": {
+      "type": "array",
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^s[0-9]{4}:e[0-9]+$"
+      }
+    }
+  },
+  "required": [
+    "decision",
+    "assessment_id",
+    "action",
+    "question_id",
+    "evidence_ids"
+  ],
+  "additionalProperties": false
+}

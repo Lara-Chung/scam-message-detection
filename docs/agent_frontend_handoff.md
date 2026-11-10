@@ -1,5 +1,10 @@
 # Agent backend frontend handoff
 
+**Current default:** `configs/agent.yaml` selects `adaptive_agent` with result
+schema 1.3. Start with the [adaptive investigation handoff](adaptive_agent_handoff.md)
+and the integration section below. Earlier sections retain the historical modes
+and their 1.0/1.1/1.2 contracts for reproducibility.
+
 ## Quick start
 
 Run from the actual repository root. Agent setup is isolated from the team's
@@ -213,3 +218,232 @@ Only a unique exact quote can be re-anchored. Absent or ambiguous support still
 abstains. See [the acceptance record](agent_budget_fix.md) for original live
 responses versus offline postprocessing; no extra paid call was used for that
 coordinate repair. Human review routing is part of the frontend contract.
+
+
+## Classifier router extension (result version 1.1)
+
+The original four modes keep their version 1.0 contract. Three new modes expose
+explicit classifier selection:
+
+```python
+service = ScamAgentService.from_config("configs/agent.local.yaml")
+result = service.analyze_message(text=message, channel="sms", mode="agent_router")
+# mode="fixed_model": best global VAL candidate for this channel, no LLM.
+# mode="rule_router": frozen VAL bucket rule, no LLM.
+```
+
+Run `.venv/bin/python -m src.agent.candidates` once to create the ignored unified
+candidate directory and catalog. It refuses to replace an existing directory.
+`routing_catalog_path` in the config names the catalog. Missing candidates or
+provenance/policy mismatches return structured errors, with no fallback score.
+
+`routing.selected_model_id` is one of the aliases word_lr, word_nb, word_svm,
+char_svm; `routing.candidates_called` and tool_trace record what actually ran.
+`classifier_results.model_id` is the channel-qualified artifact identity.
+`routing.selection_reason` and input_features describe the selection. Final
+fraud/legitimate decisions come from the selected called classifier, not an LLM
+label override. Conflicting outputs force review. SVM margins and native
+uncalibrated probabilities remain distinct.
+
+Same-channel allowlisted model IDs are the only routing tool argument. The
+Agent can choose up to two classifier calls and three LLM turns; lower configured
+limits still apply. Model caches are reused per service instance; its existing
+single-request concurrency restriction remains. The local policies do not make
+provider requests and work with the default environment-only offline config.
+The Agent mode needs the explicit configured provider/Keychain profile.
+
+See [the router report](classifier_router_report.md) and
+[an actual live version-1.1 example](examples/agent_router_live.json). The current
+initial 12-case pilot found no accuracy gain over the best fixed model; Agent routing
+is an optional experimental mode, not the recommended default.
+
+## Normalised routing and mandatory boundary checks (result version 1.2)
+
+Select `configs/agent.normalised.yaml` for the new policy. The original config
+retains the earlier router for reproducibility. On this configured local machine,
+`configs/agent.normalised.local.yaml` adds the existing Keychain provider reference;
+it is ignored and contains no literal API key. The public profile reads explicit
+provider environment settings. The original four modes retain their version-1.0
+behavior; this setting affects only the three classifier-routing modes.
+
+```python
+service = ScamAgentService.from_config("configs/agent.normalised.yaml")
+result = service.analyze_message(message, "sms", mode="rule_router")
+# fixed_model: normalise + one VAL-selected model; no LLM or second classifier.
+# rule_router: normalise + VAL profile primary + mandatory boundary check; no LLM.
+# agent_router: LLM selects one primary; backend enforces the same boundary guard.
+```
+
+The same `normalise_with_changes` text is supplied to every actual classifier;
+the Agent sees that view and observable original-text change counts. Each primary
+has a VAL-selected native-distance threshold and distinct secondary model. A
+near-boundary primary must execute that secondary, even when the LLM would not
+request it. There are at most two actual classifier calls and three LLM turns;
+lower configured limits still apply. If a configured limit blocks the required
+check, return a technical error and review rather than silently skipping it.
+
+The LLM receives both actual results through its one tool reply and proposes an
+executed model. The backend applies the frozen VAL conflict policy. Conflicting
+models always require review; insufficient distinct VAL conflict support produces
+`decision="abstain"`, `status="needs_review"`. A supported winner may remain fraud
+or legitimate but still requests review. Agreement is not proof of correctness.
+Margins and uncalibrated probabilities are never shown as calibrated fraud risk.
+
+Version 1.2 adds these fields under `routing`:
+
+| Field | Frontend interpretation |
+|---|---|
+| `preprocessing.classifier_view` | Always `normalised` for this profile |
+| `preprocessing.normalisation_changes` | Actual existing normaliser change counts |
+| `boundary_checks` | Primary ID, native score kind/distance, VAL threshold, near flag, policy-enabled flag, actual secondary execution and resolution |
+| `proposed_model_id` | LLM/local primary proposal before enforced conflict resolution |
+| `selected_model_id` | Actual final called model, or null on abstention/error |
+| `candidates_called` | Actual classifiers executed, in order |
+
+Automatic secondary trace entries have `source="boundary_policy"`; genuine LLM
+tool requests have `source="model_tool_call"`. Do not describe the automatic call
+as an LLM choice. Show original and normalised text with explicit view names. Use
+`needs_review` to route review regardless of whether a binary decision is present.
+See the [real 1.2 review example](examples/agent_router_boundary_live.json).
+
+Build unified TRAIN candidates with `python -m src.agent.candidates`, then build
+the normalised VAL catalog with `python -m scripts.prepare_boundary_router validation`
+using the original `configs/agent.local.yaml` provider profile. That calibration
+step sends no API requests; the current script loads local provider configuration.
+It refuses an existing experiment/catalog. The runtime profile references
+`models/router_normalised_seed0/catalog.json`; missing files return structured
+errors. Do not add the ignored export, catalogs, models or local provider profiles
+to Git. The new public profile is ready to use with the existing local artifacts.
+
+The [independent pilot](normalised_boundary_report.md) excluded 114 prior TEST
+source IDs and scored 12 views from nine new sources. All methods scored 10/12;
+the Agent used 24 requests and 55,177 tokens, with no accuracy gain. VAL calibration
+and the pilot use 4,000-character source prefixes; the runtime ceiling remains
+8,000 to match candidate metadata. Longer runtime inputs have not been validated
+under these thresholds. If a caller clips text before calling the service, it
+must retain and disclose that upstream clipping; the service cannot detect it.
+The pilot's two misses are one million-character email's paired prefixes, mostly
+recipient addresses. All four local candidates missed both views. Do not infer
+that full-message classification was evaluated. The seven raw-data-dependent
+test skips remain; 154 offline tests passed and this new live experiment completed.
+
+## Adaptive investigation integration (schema 1.3)
+
+```python
+from src.agent.service import ScamAgentService
+
+service = ScamAgentService.from_config("configs/agent.yaml")
+result = service.analyze_message(message, channel="email")  # configured adaptive_agent
+# Explicit free baseline:
+local = service.analyze_message(message, channel="email", mode="document_classifier")
+# Explicit fixed-workflow comparison:
+fixed = service.analyze_message(message, channel="email", mode="document_fixed")
+```
+
+Use the existing ignored `configs/agent.local.yaml` on this machine for its
+explicit Keychain provider reference. Missing provider configuration only blocks
+escalated paid investigations; the free path remains usable. Cache one service
+instance and serialize requests; its immediate `service_busy` guard still applies.
+For parallel use, create separate instances. No UI framework or HTTP server is
+required. The original four modes and classifier-router experiments are retained.
+
+New modes require the ignored candidate artifacts and
+`models/triage_seed0/catalog.json`. From a fresh checkout, prepare the supplied
+processed export, run `python -m src.agent.candidates`, then
+`python -m scripts.prepare_document_triage`. Calibration uses canonical VAL only,
+refuses existing outputs and makes no provider request. Historical modes may also
+need the separate `python -m src.agent.baseline` artifacts. Models/catalogs are
+machine-local and must be generated rather than copied into Git.
+
+Default bounds: 2,000,000 source characters, 2,000-character source windows,
+4 LLM turns, 6 total tool attempts including the initial classifier/automatic
+boundary check, 60 seconds and 12,000 tokens per message. A source above the cap
+returns `source_too_large`; it is not silently cropped to its prefix. Provide the
+whole original message when possible so the backend can disclose coverage.
+Character/markup heuristics suggest windows; this does not implement a MIME parser.
+
+Only the following request-bound tools are exposed:
+
+| Tool | Allowlisted arguments | Actual action |
+|---|---|---|
+| `inspect_section` | `section_id` | Read the indexed source window, normalise, classify with fixed primary, extract indicators/evidence IDs |
+| `cross_check` | `section_id` | Run a distinct VAL-selected secondary on an already inspected window |
+| `retrieve_similar_cases` | `section_id`, `k` (1–2) | Same-channel canonical TRAIN retrieval; disabled when retrieval=false |
+| `request_clarification` | `question_id` | Return a caller-supplied boolean answer or a pending question |
+
+The Agent sees the same source index available to the fixed schedule. It chooses
+later actions after actual observations. It cannot supply replacement message
+text, arbitrary file paths, code, model names or URLs to execute. Initial
+observations use `tool_trace.source="triage_gate"`; mandatory initial cross-checks
+use `boundary_policy`; authentic LLM choices use `model_tool_call`. Keep these
+sources distinct in the UI. Fixed-schedule calls use `fixed_workflow`.
+
+Final internal responses use [triage_final_schema.json](../src/agent/triage_final_schema.json).
+The LLM selects an executed assessment and existing evidence IDs; the backend
+copies exact stored quotes/spans and rejects invented IDs or binary label
+overrides. Evidence may span inspected sections, but a binary decision needs
+support from its selected assessment's section. No generated confidence, sender
+verification or free-form factual explanation is accepted. Finalization budget
+is reserved before further exploration; a compact factual state is used to close.
+
+Public schema 1.3 adds `triage`:
+
+| Field | UI meaning |
+|---|---|
+| `path`, `escalation_reasons` | Free versus escalated route and observed triggers |
+| `overview` | Source length/hash, window count, suggested IDs and bounded previews |
+| `read_sections` | Actual source start/end, original/normalised view IDs and normaliser changes |
+| `assessments`, `selected_assessment_id` | Actual model results and grounded final selection |
+| `coverage_complete` | Whether every source window was inspected; not proof of semantic understanding |
+| `clarification`, `context_answers` | Actual pending question and explicitly supplied answers |
+| `next_steps` | Backend-rendered, bounded action guidance |
+| `finalization_compacted` | Whether the final request used a compact observation summary |
+
+`views.original` is the initial source prefix for backward presentation;
+`views.section_0000_original` and `views.section_0000_normalised` (and later IDs)
+are the actual inspected section views. Evidence offsets are Unicode code points
+within their named view. `read_sections.source_start/source_end` locate the raw
+section in the full caller source. Normalised character offsets are not raw-source
+offsets; use the retained original section and change counts. Only bounded views
+are returned, not the full potentially million-character source.
+
+`input_policy.name="document_windows_v1"`; `used_chars` is the sum of distinct
+inspected raw-window lengths, potentially larger than a single `max_chars` window.
+`clipped=true` means some source content remains unread. Negative partial-source
+findings become abstention/review; positive partial findings still require review.
+Conflicts require review. A near-boundary gate is not calibrated error probability.
+
+To continue clarification, retain the same original message and pass explicit
+answers from the user on a new request:
+
+```python
+result = service.analyze_message(
+    message, "email", mode="adaptive_agent",
+    context_answers={"transaction_initiated": False},
+)
+```
+
+Allowed question IDs are transaction_initiated, sender_known,
+independent_verification and missing_body. Values must be booleans. A missing
+answer remains pending; never fill it from the message or an LLM guess. A false
+answer is still a supplied answer. The frontend must collect it; no interactive
+frontend or conversation database is part of this backend.
+
+Pass `allow_paid_calls=False` to disable paid escalation while still permitting
+free classifications. Escalations then return `global_budget_exhausted` with
+zero provider calls and complete zero-token accounting. In the CLI, the default
+batch cap is three paid analyses / 12,000 tokens; free fast paths do not consume
+the paid-message count. Original modes retain their historical batch behavior.
+
+```sh
+.venv/bin/python -m scripts.frontend_agent_example
+.venv/bin/python -m src.agent.cli --text 'Meeting confirmed for tomorrow.' --channel sms --mode document_classifier
+.venv/bin/python -m src.agent.cli --config configs/agent.local.yaml --jsonl messages.jsonl --mode adaptive_agent --max-live-messages 3 --token-budget 12000
+```
+
+An independent paid comparison is intentionally not automatic. The prepared
+`compare_document_triage` runner accepts a frozen canonical manifest and common
+bounds, preserves pending/failure/review results, and requires `--allow-live` plus
+`--allow-live-test` for paid TEST runs. See the [validation record](adaptive_agent_handoff.md)
+for original failures, saved-action revalidation, one fresh constrained-budget
+execution and exact cumulative cost. Performance superiority remains unverified.

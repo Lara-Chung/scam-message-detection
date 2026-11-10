@@ -136,7 +136,7 @@ def test_full_three_channel_offline_replay_fits_shared_budget():
     for row,indices in zip(rows,[[0,1],[2],[3,4]]):
         replay=Replay([exchanges[i]['response'] for i in indices])
         original=row['result']['views']['original']
-        result=ScamAgentService(config,replay).analyze_message(original,row['channel'],token_budget=remaining)
+        result=ScamAgentService(config,replay).analyze_message(original,row['channel'],mode='agent',token_budget=remaining)
         assert result['status']=='ok',(row['channel'],remaining,result['errors'])
         assert result['provider']['mock']
         remaining-=result['usage']['total_tokens']

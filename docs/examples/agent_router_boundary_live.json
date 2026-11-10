@@ -1,0 +1,182 @@
+{
+  "schema_version": "1.2",
+  "request_id": "05f8a8fc-696f-4116-b1ab-a48dcb2fd733",
+  "mode": "agent_router",
+  "channel": "sms",
+  "status": "needs_review",
+  "decision": "fraud",
+  "needs_review": true,
+  "explanation": "Normalised routing selected char_svm; classifier predicts fraud; boundary check char_svm. External verification unavailable.",
+  "views": {
+    "original": "BangBabes Ur order is on the way. U SHOULD receive a Service Msg 2 download UR content. If U do not, GoTo wap. bangb. tv on UR mobile internet/service menu",
+    "normalised": "BangBabes Ur order is on the way. U SHOULD receive a Service Msg 2 download UR content. If U do not, GoTo wap. bangb. tv on UR mobile internet/service menu"
+  },
+  "input_policy": {
+    "name": "prefix_chars_v1",
+    "max_chars": 8000,
+    "original_chars": 155,
+    "used_chars": 155,
+    "clipped": false,
+    "original_offset": 0
+  },
+  "indicators": [],
+  "evidence": [],
+  "classifier_results": [
+    {
+      "model_id": "router_sms_char_svm_seed0_v1",
+      "provenance": "canonical_train_verified",
+      "original_classes": [
+        0,
+        1
+      ],
+      "predicted_label": "1",
+      "decision": "fraud",
+      "scores": {
+        "0": -0.0946153999803363,
+        "1": 0.0946153999803363
+      },
+      "fraud_score": 0.0946153999803363,
+      "score_kind": "decision_margin",
+      "view": "normalised",
+      "preprocessing": "Canonical TRAIN-fitted TF-IDF; common original 8000-character prefix."
+    },
+    {
+      "model_id": "router_sms_word_nb_seed0_v1",
+      "provenance": "canonical_train_verified",
+      "original_classes": [
+        0,
+        1
+      ],
+      "predicted_label": "0",
+      "decision": "legitimate",
+      "scores": {
+        "0": 0.9288373736707105,
+        "1": 0.07116262632928708
+      },
+      "fraud_score": 0.07116262632928708,
+      "score_kind": "model_probability_uncalibrated",
+      "view": "normalised",
+      "preprocessing": "Canonical TRAIN-fitted TF-IDF; common original 8000-character prefix."
+    }
+  ],
+  "retrieved_cases": [],
+  "tool_trace": [
+    {
+      "tool": "classify_message",
+      "inputs": {
+        "model_id": "char_svm"
+      },
+      "result": {
+        "model_id": "router_sms_char_svm_seed0_v1",
+        "provenance": "canonical_train_verified",
+        "original_classes": [
+          0,
+          1
+        ],
+        "predicted_label": "1",
+        "decision": "fraud",
+        "scores": {
+          "0": -0.0946153999803363,
+          "1": 0.0946153999803363
+        },
+        "fraud_score": 0.0946153999803363,
+        "score_kind": "decision_margin",
+        "view": "normalised",
+        "preprocessing": "Canonical TRAIN-fitted TF-IDF; common original 8000-character prefix."
+      },
+      "elapsed_ms": 2.034,
+      "error": null,
+      "source": "model_tool_call"
+    },
+    {
+      "tool": "classify_message",
+      "inputs": {
+        "model_id": "word_nb"
+      },
+      "result": {
+        "model_id": "router_sms_word_nb_seed0_v1",
+        "provenance": "canonical_train_verified",
+        "original_classes": [
+          0,
+          1
+        ],
+        "predicted_label": "0",
+        "decision": "legitimate",
+        "scores": {
+          "0": 0.9288373736707105,
+          "1": 0.07116262632928708
+        },
+        "fraud_score": 0.07116262632928708,
+        "score_kind": "model_probability_uncalibrated",
+        "view": "normalised",
+        "preprocessing": "Canonical TRAIN-fitted TF-IDF; common original 8000-character prefix."
+      },
+      "elapsed_ms": 1.637,
+      "error": null,
+      "source": "boundary_policy"
+    }
+  ],
+  "elapsed_ms": 2636.391,
+  "llm_calls": 2,
+  "usage": {
+    "prompt_tokens": 3703,
+    "completion_tokens": 71,
+    "total_tokens": 3774,
+    "accounting_complete": true
+  },
+  "cost_estimate": {
+    "currency": "USD",
+    "amount": 0.0011960999999999999
+  },
+  "provider": {
+    "kind": "deepseek_chat",
+    "model": "deepseek-flash",
+    "mock": false
+  },
+  "stop_reason": "route_complete",
+  "errors": [],
+  "unsupported_claims": [],
+  "routing": {
+    "strategy": "agent_router",
+    "selected_model_id": "char_svm",
+    "proposed_model_id": "char_svm",
+    "selection_reason": "validation_conflict_policy",
+    "candidates_called": [
+      "char_svm",
+      "word_nb"
+    ],
+    "input_features": {
+      "characters": 155,
+      "bucket": "short",
+      "normalisation_changes": {
+        "invisible_chars": 0,
+        "compat_chars": 0,
+        "lookalike_letters": 0,
+        "spaced_letters": 0
+      },
+      "digit_inside_word": false
+    },
+    "boundary_checks": [
+      {
+        "primary_model": "char_svm",
+        "score_kind": "decision_margin",
+        "distance": 0.0946153999803363,
+        "threshold": 0.6269643223780005,
+        "near_boundary": true,
+        "policy_enabled": true,
+        "secondary_model": "word_nb",
+        "secondary_executed": true,
+        "resolution": "char_svm"
+      }
+    ],
+    "preprocessing": {
+      "classifier_view": "normalised",
+      "normalisation_changes": {
+        "invisible_chars": 0,
+        "compat_chars": 0,
+        "lookalike_letters": 0,
+        "spaced_letters": 0
+      }
+    }
+  }
+}

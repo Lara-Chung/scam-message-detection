@@ -13,7 +13,7 @@ def main():
     source.add_argument('--text')
     source.add_argument('--jsonl', help='UTF-8 JSONL objects with text and channel fields; use - for stdin.')
     parser.add_argument('--channel', default='sms')
-    parser.add_argument('--mode', default='agent', choices=['agent', 'classifier_only', 'direct_llm', 'fixed_workflow'])
+    parser.add_argument('--mode', default=None, choices=['adaptive_agent', 'document_classifier', 'document_fixed', 'agent', 'classifier_only', 'direct_llm', 'fixed_workflow','fixed_model','rule_router','agent_router'])
     parser.add_argument('--token-budget', type=int, default=12000, help='Global token cap for this invocation, not per row.')
     parser.add_argument('--max-live-messages', type=int, default=3, help='Default validation smoke cap; raise explicitly for a planned run.')
     args = parser.parse_args()
@@ -24,17 +24,23 @@ def main():
         return 2
     if args.token_budget <= 0 or args.max_live_messages <= 0:
         parser.error('Budgets must be positive.')
+    args.mode = args.mode or service.config.get('default_mode', 'agent')
     remaining, live, failed = args.token_budget, 0, False
 
     def run(row):
         nonlocal remaining, live, failed
-        if args.mode != 'classifier_only' and service.provider is not None:
+        limited = False
+        if args.mode in ['agent','direct_llm','fixed_workflow','agent_router','adaptive_agent','document_fixed'] and service.provider is not None:
             if live >= args.max_live_messages or remaining <= 0:
-                print(json.dumps({'error': 'global_budget_exhausted', 'message': 'Batch stopped before additional calls.'}), file=sys.stderr)
-                return False
-            live += 1
+                limited = True
+                if args.mode not in ['adaptive_agent', 'document_fixed']:
+                    print(json.dumps({'error': 'global_budget_exhausted', 'message': 'Batch stopped before additional calls.'}), file=sys.stderr)
+                    return False
         result = service.analyze_message(row.get('text'), row.get('channel', args.channel), args.mode,
-                                         token_budget=max(1, remaining))
+                                         token_budget=max(1, remaining), context_answers=row.get('context_answers'),
+                                         allow_paid_calls=not limited)
+        if result['llm_calls']:
+            live += 1
         print(json.dumps(result, ensure_ascii=False, allow_nan=False))
         failed |= result['status'] == 'error'
         remaining -= result['usage']['total_tokens']

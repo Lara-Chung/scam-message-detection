@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.1",
+  "request_id": "d4637bf5-27ef-4a69-89ab-1ea5ee0d9234",
+  "mode": "agent_router",
+  "channel": "sms",
+  "status": "ok",
+  "decision": "legitimate",
+  "needs_review": false,
+  "explanation": "agent_router selected char_svm (cross_check_agreement); saved classifier predicts legitimate. External verification unavailable.",
+  "views": {
+    "original": "Hey you still want to go for yogasana? Coz if we end at cine then can go bathe and hav the steam bath",
+    "normalised": null
+  },
+  "input_policy": {
+    "name": "prefix_chars_v1",
+    "max_chars": 8000,
+    "original_chars": 101,
+    "used_chars": 101,
+    "clipped": false,
+    "original_offset": 0
+  },
+  "indicators": [],
+  "evidence": [],
+  "classifier_results": [
+    {
+      "model_id": "router_sms_char_svm_seed0_v1",
+      "provenance": "canonical_train_verified",
+      "original_classes": [
+        0,
+        1
+      ],
+      "predicted_label": "0",
+      "decision": "legitimate",
+      "scores": {
+        "0": 1.2170575961144257,
+        "1": -1.2170575961144257
+      },
+      "fraud_score": -1.2170575961144257,
+      "score_kind": "decision_margin",
+      "view": "original",
+      "preprocessing": "Canonical TRAIN-fitted TF-IDF; common original 8000-character prefix."
+    },
+    {
+      "model_id": "router_sms_word_svm_seed0_v1",
+      "provenance": "canonical_train_verified",
+      "original_classes": [
+        0,
+        1
+      ],
+      "predicted_label": "0",
+      "decision": "legitimate",
+      "scores": {
+        "0": 1.2954717574476593,
+        "1": -1.2954717574476593
+      },
+      "fraud_score": -1.2954717574476593,
+      "score_kind": "decision_margin",
+      "view": "original",
+      "preprocessing": "Canonical TRAIN-fitted TF-IDF; common original 8000-character prefix."
+    }
+  ],
+  "retrieved_cases": [],
+  "tool_trace": [
+    {
+      "tool": "classify_message",
+      "inputs": {
+        "model_id": "char_svm"
+      },
+      "result": {
+        "model_id": "router_sms_char_svm_seed0_v1",
+        "provenance": "canonical_train_verified",
+        "original_classes": [
+          0,
+          1
+        ],
+        "predicted_label": "0",
+        "decision": "legitimate",
+        "scores": {
+          "0": 1.2170575961144257,
+          "1": -1.2170575961144257
+        },
+        "fraud_score": -1.2170575961144257,
+        "score_kind": "decision_margin",
+        "view": "original",
+        "preprocessing": "Canonical TRAIN-fitted TF-IDF; common original 8000-character prefix."
+      },
+      "elapsed_ms": 2.054,
+      "error": null,
+      "source": "model_tool_call"
+    },
+    {
+      "tool": "classify_message",
+      "inputs": {
+        "model_id": "word_svm"
+      },
+      "result": {
+        "model_id": "router_sms_word_svm_seed0_v1",
+        "provenance": "canonical_train_verified",
+        "original_classes": [
+          0,
+          1
+        ],
+        "predicted_label": "0",
+        "decision": "legitimate",
+        "scores": {
+          "0": 1.2954717574476593,
+          "1": -1.2954717574476593
+        },
+        "fraud_score": -1.2954717574476593,
+        "score_kind": "decision_margin",
+        "view": "original",
+        "preprocessing": "Canonical TRAIN-fitted TF-IDF; common original 8000-character prefix."
+      },
+      "elapsed_ms": 1.198,
+      "error": null,
+      "source": "model_tool_call"
+    }
+  ],
+  "elapsed_ms": 2062.748,
+  "llm_calls": 2,
+  "usage": {
+    "prompt_tokens": 3379,
+    "completion_tokens": 103,
+    "total_tokens": 3482,
+    "accounting_complete": true
+  },
+  "cost_estimate": {
+    "currency": "USD",
+    "amount": 0.0011373
+  },
+  "provider": {
+    "kind": "deepseek_chat",
+    "model": "deepseek-flash",
+    "mock": false
+  },
+  "stop_reason": "route_complete",
+  "errors": [],
+  "unsupported_claims": [],
+  "routing": {
+    "strategy": "agent_router",
+    "selected_model_id": "char_svm",
+    "selection_reason": "cross_check_agreement",
+    "candidates_called": [
+      "char_svm",
+      "word_svm"
+    ],
+    "input_features": {
+      "characters": 101,
+      "bucket": "short",
+      "normalisation_changes": {
+        "invisible_chars": 0,
+        "compat_chars": 0,
+        "lookalike_letters": 0,
+        "spaced_letters": 0
+      },
+      "digit_inside_word": false
+    }
+  }
+}

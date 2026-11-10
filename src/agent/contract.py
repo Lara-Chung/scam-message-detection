@@ -76,3 +76,22 @@ def apply_final_answer(result, final):
                              'External verification unavailable; quotes require contextual human review.')[:2000]
     result['stop_reason'] = 'final_answer'
     return result
+
+
+def new_result(raw, channel, mode, max_chars, views=None, indicators=None, classifiers=None, cases=None):
+    """Shared version 1.0 envelope; route modes add their explicit 1.1 metadata."""
+    import uuid
+    used = raw[:max_chars]
+    views = views if views is not None else {'original':used,'normalised':None}
+    indicators = indicators if indicators is not None else []
+    classifiers = classifiers if classifiers is not None else []
+    cases = cases if cases is not None else []
+    result = {'schema_version': '1.0', 'request_id': str(uuid.uuid4()), 'mode': mode, 'channel': channel,
+            'status': 'error', 'decision': 'abstain', 'needs_review': True, 'explanation': '',
+            'views': views, 'input_policy': {'name': 'prefix_chars_v1', 'max_chars': max_chars,
+                'original_chars': len(raw), 'used_chars': len(used), 'clipped': len(raw)>len(used), 'original_offset': 0},
+            'indicators': indicators, 'evidence': [], 'classifier_results': classifiers,
+            'retrieved_cases': cases, 'tool_trace': [], 'elapsed_ms': 0, 'llm_calls': 0,
+            'usage': {'prompt_tokens': 0, 'completion_tokens': 0, 'total_tokens': 0, 'accounting_complete': True},
+            'cost_estimate': None, 'provider': None, 'stop_reason': '', 'errors': [], 'unsupported_claims': []}
+    return result

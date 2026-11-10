@@ -1,5 +1,26 @@
 # Agent validation record
 
+**Current adaptive investigation update:** the default configuration now uses
+`adaptive_agent` with a free classifier gate and bounded document tools. Final
+suite: **182 passed / 7 raw-data skips**. Three selected VAL sources exercised
+the free and escalated paths. Original budget/evidence failures were preserved;
+repair reexecuted a saved real action with new live finalization, plus a fresh
+remaining-budget request that safely abstained. All attempts combined: **6 real
+requests / 9,744 tokens**, below the original 12,000 cap; accounting complete.
+This is engineering verification, not a fresh held-out effectiveness result.
+See [adaptive_agent_handoff.md](adaptive_agent_handoff.md) for exact scopes,
+failures, correction and current setup.
+
+**Normalised routing update (10 November 2026):** version-1.2 router results now
+record common normalisation and mandatory VAL-calibrated boundary cross-checks.
+The full suite passed **154 tests / 7 skips**. A fresh 12-input challenge excluded
+114 prior TEST sources and produced 10/12 correct for fixed, rule and Agent modes,
+with zero technical failures/abstentions. Actual Agent usage was 24 requests /
+55,177 tokens; accounting is complete and no retries were made. Both misses are
+paired prefixes of one long email. See the [full report](normalised_boundary_report.md)
+for clipping limits, per-case traces, review behavior and cache-aware price estimates.
+The sections below preserve historical acceptance snapshots.
+
 **Current acceptance update:** the budget repair and a subsequent real three-channel
 run recorded 6 calls / 9,164 tokens. All channels reached final responses;
 email's unique literal quote required a visible coordinate correction and review.

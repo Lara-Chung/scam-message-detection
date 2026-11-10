@@ -22,12 +22,14 @@ def prompt_hash():
     return hashlib.sha256((SYSTEM_PROMPT+json.dumps({'final_schema':FINAL_SCHEMA, 'tools':definitions(True)}, sort_keys=True)).encode()).hexdigest()
 
 
-def create_manifest(path: Path, split='val', per_channel=3, sample_seed=0, max_chars=8000):
+def create_manifest(path: Path, split='val', per_channel=3, sample_seed=0, max_chars=8000, balanced=False):
     if path.exists():
         raise FileExistsError('Manifest already exists; use a new filename instead of overwriting.')
     if per_channel < 1 or max_chars < 1 or split not in ['val', 'test']:
         raise ValueError('Manifest requires val/test, positive per-channel count and max chars.')
-    manifest = {'protocol': 'in_domain_canonical_seed0_v1', 'partition': split, 'sample_seed': sample_seed,
+    if balanced and per_channel % 2:
+        raise ValueError('Balanced selection requires an even per-channel sample count.')
+    manifest = {'sampling_policy':'equal_per_class_hash_order' if balanced else 'natural_hash_order', 'protocol': 'in_domain_canonical_seed0_v1', 'partition': split, 'sample_seed': sample_seed,
                 'prompt_version': PROMPT_VERSION, 'prompt_sha256': prompt_hash(),
                 'input_policy': {'name': 'prefix_chars_v1', 'max_chars': max_chars},
                 'dataset_sha256': {}, 'cases': [], 'support': {}}
@@ -36,7 +38,15 @@ def create_manifest(path: Path, split='val', per_channel=3, sample_seed=0, max_c
         df = eligible(load_channel(channel))
         df = df.loc[df.split_seed0 == split].copy()
         df['sample_order'] = df.id.map(lambda i: hashlib.sha256(f'{sample_seed}:{i}'.encode()).hexdigest())
-        rows = df.sort_values(['sample_order', 'id']).head(per_channel)
+        ordered = df.sort_values(['sample_order', 'id'])
+        if balanced:
+            import pandas as pd
+            groups = [ordered.loc[ordered.label_fraud == label].head(per_channel//2) for label in [0,1]]
+            if any(len(group) != per_channel//2 for group in groups):
+                raise ValueError('Insufficient class support for the balanced manifest.')
+            rows = pd.concat(groups)
+        else:
+            rows = ordered.head(per_channel)
         manifest['dataset_sha256'][channel] = file_hash(EXPORT/f'{dataset}.csv.gz')
         manifest['support'][channel] = {'selected': len(rows), 'fraud': int(rows.label_fraud.sum()),
                                         'legitimate': int((rows.label_fraud == 0).sum()),
@@ -98,13 +108,24 @@ def aggregate(records):
     return out
 
 
-def run(manifest_path: Path, output: Path, service, modes, max_cases=None, token_budget=12000, max_live_messages=3, live_test=False):
+def ordered_modes(modes, case_index, policy='fixed'):
+    """Counterbalance paid mode positions without changing selected cases."""
+    if policy == 'fixed':
+        return list(modes)
+    paid = [m for m in modes if m != 'classifier_only']
+    shift = case_index % len(paid) if paid else 0
+    return (['classifier_only'] if 'classifier_only' in modes else []) + paid[shift:] + paid[:shift]
+
+
+def run(manifest_path: Path, output: Path, service, modes, max_cases=None, token_budget=12000, max_live_messages=3, live_test=False, mode_order_policy='fixed'):
     if output.exists():
         raise FileExistsError('Run output already exists; use a new directory.')
     if not modes or len(set(modes)) != len(modes) or not set(modes) <= set(MODES):
         raise ValueError('Unsupported or repeated comparison mode.')
     if token_budget < 1 or max_live_messages < 1 or (max_cases is not None and max_cases < 1):
         raise ValueError('Budgets must be positive.')
+    if mode_order_policy not in ['fixed','rotate_llm']:
+        raise ValueError('Unknown mode-order policy.')
     manifest = json.loads(manifest_path.read_text())
     if (manifest['protocol'] != 'in_domain_canonical_seed0_v1' or manifest['partition'] not in ['val', 'test']
         or manifest['prompt_sha256'] != prompt_hash()
@@ -132,7 +153,7 @@ def run(manifest_path: Path, output: Path, service, modes, max_cases=None, token
     output.mkdir(parents=True)
     run_meta = {'manifest_sha256': file_hash(manifest_path), 'manifest': manifest,
                 'selected_cases': selected, 'modes': modes, 'global_token_budget': token_budget,
-                'max_live_messages': max_live_messages, 'live_test': live_test, 'limits': service.limits, 'prompt_sha256': prompt_hash(),
+                'max_live_messages': max_live_messages, 'live_test': live_test, 'mode_order_policy':mode_order_policy, 'limits': service.limits, 'prompt_sha256': prompt_hash(),
                 'provider': None if service.provider is None else {'kind':service.provider.kind,
                     'model':service.provider.model, 'mock':service.provider.is_mock},
                 'model_policy': service.config.get('models'),
@@ -142,10 +163,11 @@ def run(manifest_path: Path, output: Path, service, modes, max_cases=None, token
     records, remaining = [], token_budget
     live_attempts = 0
     with (output/'predictions.jsonl').open('w') as stream:
-        for case in selected:
+        for case_index, case in enumerate(selected):
+            case_modes = ordered_modes(modes, case_index, mode_order_policy)
             text = lookup[case['channel']].loc[case['case_id'], 'text']
-            for mode in modes:
-                record = {**case, 'mode': mode, 'result': None, 'execution_status': 'pending_budget'}
+            for mode in case_modes:
+                record = {**case, 'mode': mode, 'result': None, 'execution_status': 'pending_budget', 'mode_order':case_modes}
                 if mode == 'classifier_only' or remaining > 0 or service.provider is None:
                     # Default paid scope is <=3 validation messages, including comparison modes.
                     if service.provider is not None and mode != 'classifier_only':
@@ -181,6 +203,7 @@ def main():
     make.add_argument('--per-channel', type=int, default=3)
     make.add_argument('--sample-seed', type=int, default=0)
     make.add_argument('--max-chars', type=int, default=8000)
+    make.add_argument('--balanced', action='store_true')
     compare = sub.add_parser('run')
     compare.add_argument('--manifest', required=True, type=Path)
     compare.add_argument('--output', required=True, type=Path)
@@ -190,13 +213,14 @@ def main():
     compare.add_argument('--token-budget', type=int, default=12000)
     compare.add_argument('--max-live-messages', type=int, default=3)
     compare.add_argument('--live-test', action='store_true', help='Explicitly enable paid test runs after planning their budget.')
+    compare.add_argument('--mode-order-policy',choices=['fixed','rotate_llm'],default='fixed')
     args = parser.parse_args()
     if args.command == 'manifest':
-        manifest = create_manifest(args.output, args.split, args.per_channel, args.sample_seed, args.max_chars)
+        manifest = create_manifest(args.output, args.split, args.per_channel, args.sample_seed, args.max_chars, args.balanced)
         print(json.dumps(manifest['support'], indent=2))
     else:
         summary = run(args.manifest, args.output, ScamAgentService.from_config(args.config), args.modes,
-                      args.max_cases, args.token_budget, args.max_live_messages, args.live_test)
+                      args.max_cases, args.token_budget, args.max_live_messages, args.live_test, args.mode_order_policy)
         print(json.dumps(summary, indent=2))
 
 if __name__ == '__main__':

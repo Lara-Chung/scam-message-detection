@@ -11,7 +11,7 @@ from pathlib import Path
 import yaml
 from jsonschema import ValidationError
 
-from src.agent.contract import FINAL_SCHEMA, FINAL_VALIDATOR, validate_result, apply_final_answer
+from src.agent.contract import FINAL_SCHEMA, FINAL_VALIDATOR, validate_result, apply_final_answer, new_result
 from src.agent.models import AgentError, ModelAdapter
 from src.agent.provider import DeepSeekProvider, bounded_call
 from src.agent.tools import RequestTools, definitions
@@ -53,6 +53,13 @@ class ScamAgentService:
             if (not isinstance(pricing, dict) or set(pricing) != keys or
                 any(type(v) not in (int, float) or not math.isfinite(v) or v < 0 for v in pricing.values())):
                 raise ValueError('Pricing requires finite nonnegative input/output USD per million tokens.')
+        triage = config.get('triage', {})
+        if set(triage) - {'window_chars', 'max_source_chars'}:
+            raise ValueError('Unknown document triage setting.')
+        for key, default, maximum in [('window_chars', 2000, 4000), ('max_source_chars', 2_000_000, 2_000_000)]:
+            value = triage.get(key, default)
+            if type(value) is not int or not 100 <= value <= maximum:
+                raise ValueError(f'Invalid bounded triage setting: {key}')
         self.provider = provider
         self._models, self._model_lock, self._request_lock = {}, threading.Lock(), threading.Lock()
 
@@ -63,6 +70,10 @@ class ScamAgentService:
         root = (config_path.parent/config.get('project_root', '..')).resolve()
         for spec in config.get('models', {}).values():
             spec['path'] = str((root/spec['path']).resolve())
+        if config.get('routing_catalog_path'):
+            config['routing_catalog_path'] = str((root/config['routing_catalog_path']).resolve())
+        if config.get('triage_catalog_path'):
+            config['triage_catalog_path'] = str((root/config['triage_catalog_path']).resolve())
         config['export_dir'] = str((root/config.get('export_dir', 'data/processed/export')).resolve())
         if config.get('provider', {}).get('kind') != 'deepseek_chat':
             raise ValueError('Only deepseek_chat is supported; no provider switching.')
@@ -79,11 +90,22 @@ class ScamAgentService:
                 self._models[channel] = ModelAdapter.load(spec, channel, Path(self.config['export_dir']))
             return self._models[channel]
 
-    def analyze_message(self, text, channel='sms', mode='agent', *, token_budget=None):
+    def analyze_message(self, text, channel='sms', mode=None, *, token_budget=None, context_answers=None, allow_paid_calls=True):
+        mode = self.config.get('default_mode', 'agent') if mode is None else mode
         # Reject concurrent use immediately, so queueing cannot evade the deadline.
         if not self._request_lock.acquire(blocking=False):
             return self._analyze(text, channel, mode, token_budget, busy=True)
         try:
+            if mode in ['adaptive_agent', 'document_fixed', 'document_classifier']:
+                from src.agent.triage import TriageEngine
+                if not hasattr(self, '_triage_engine'):
+                    self._triage_engine = TriageEngine(self)
+                return self._triage_engine.analyze_message(text, channel, mode, token_budget, context_answers, allow_paid_calls)
+            if mode in ['fixed_model','rule_router','agent_router']:
+                from src.agent.routing import RouterEngine
+                if not hasattr(self, '_router_engine'):
+                    self._router_engine = RouterEngine(self.config, self.limits)
+                return self._router_engine.analyze_message(text,channel,mode,self.provider,token_budget)
             return self._analyze(text, channel, mode, token_budget)
         finally:
             self._request_lock.release()
@@ -95,14 +117,8 @@ class ScamAgentService:
         channel = channel if isinstance(channel, str) else ''
         mode = mode if isinstance(mode, str) else ''
         context = RequestTools(used, lambda: self.adapter(channel), self.config.get('retrieval', True))
-        result = {'schema_version': '1.0', 'request_id': str(uuid.uuid4()), 'mode': mode, 'channel': channel,
-            'status': 'error', 'decision': 'abstain', 'needs_review': True, 'explanation': '',
-            'views': context.views, 'input_policy': {'name': 'prefix_chars_v1', 'max_chars': self.limits['max_input_chars'],
-                'original_chars': len(raw), 'used_chars': len(used), 'clipped': len(raw)>len(used), 'original_offset': 0},
-            'indicators': context.indicators, 'evidence': [], 'classifier_results': context.classifiers,
-            'retrieved_cases': context.cases, 'tool_trace': [], 'elapsed_ms': 0, 'llm_calls': 0,
-            'usage': {'prompt_tokens': 0, 'completion_tokens': 0, 'total_tokens': 0, 'accounting_complete': True},
-            'cost_estimate': None, 'provider': None, 'stop_reason': '', 'errors': [], 'unsupported_claims': []}
+        result = new_result(raw, channel, mode, self.limits['max_input_chars'],
+                            context.views, context.indicators, context.classifiers, context.cases)
         deadline = start + self.limits['seconds']
         budget = self.limits['max_message_tokens']
         seen, attempts = set(), 0

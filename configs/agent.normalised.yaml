@@ -1,0 +1,42 @@
+# Normalised routing profile. Offline fixed_model/rule_router need no API key.
+# Set explicit provider environment variables for agent_router; no automatic paid calls.
+# VAL calibration used common 4,000-character source prefixes; longer inputs are unvalidated.
+project_root: ..
+export_dir: data/processed/export
+models:
+  sms:
+    path: models/agent_seed0/sms.joblib
+    model_id: agent_lr_sms_seed0_v1
+    provenance: canonical_train_verified
+    label_map:
+      '0': legitimate
+      '1': fraud
+  email:
+    path: models/agent_seed0/email.joblib
+    model_id: agent_lr_email_seed0_v1
+    provenance: canonical_train_verified
+    label_map:
+      '0': legitimate
+      '1': fraud
+  phone:
+    path: models/agent_seed0/phone.joblib
+    model_id: agent_lr_phone_seed0_v1
+    provenance: canonical_train_verified
+    label_map:
+      '0': legitimate
+      '1': fraud
+provider:
+  kind: deepseek_chat
+  tokenizer_path: models/agent_tokenizer/tokenizer.json
+limits:
+  llm_turns: 3
+  tool_calls: 2
+  seconds: 60
+  max_input_chars: 8000
+  max_tool_result_chars: 20000
+  max_output_tokens: 350
+  max_message_tokens: 18000
+retrieval: true
+pricing: null
+routing_catalog_path: models/router_normalised_seed0/catalog.json
+normalised_boundary_routing: true

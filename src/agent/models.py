@@ -70,7 +70,8 @@ class ModelAdapter:
         except Exception as exc:
             raise AgentError('artifact_incompatible', 'Saved model cannot load in this runtime; use the documented environment.') from exc
         adapter = cls(model, spec.get('model_id', path.stem), spec['label_map'],
-                      'canonical_train_verified' if verified else 'unverified_integration_only')
+                      'canonical_train_verified' if verified else 'unverified_integration_only',
+                      preprocessing=spec.get('preprocessing','Saved pipeline; no fit at inference'))
         if verified and [str(c) for c in meta['classes']] != adapter.classes:
             raise AgentError('provenance_invalid', 'Saved class order differs from metadata.')
         adapter.training_rows = rows

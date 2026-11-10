@@ -1,5 +1,6 @@
 # Paths resolve against this config's project_root, not the caller's working directory.
 project_root: ..
+default_mode: adaptive_agent
 export_dir: data/processed/export
 models:
   sms:
@@ -33,3 +34,9 @@ limits:
 retrieval: true
 # Optional explicit USD / million token pricing, otherwise cost_estimate is null.
 pricing: null
+
+routing_catalog_path: models/router_candidates_seed0/catalog.json
+triage_catalog_path: models/triage_seed0/catalog.json
+triage:
+  window_chars: 2000
+  max_source_chars: 2000000
