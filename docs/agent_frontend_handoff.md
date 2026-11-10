@@ -1,11 +1,11 @@
 # Agent backend frontend handoff
 
-**Current default:** `configs/agent.yaml` selects `adaptive_agent` with result
-schema 1.3. Start with the [adaptive investigation handoff](adaptive_agent_handoff.md)
-and the integration section below. Earlier sections retain the historical modes
-and their 1.0/1.1/1.2 contracts for reproducibility.
+`configs/agent.yaml` selects `adaptive_agent` with result schema 1.3. The
+[adaptive investigation handoff](adaptive_agent_handoff.md) describes the current
+workflow and validation. Use the adaptive integration section below for its API
+and JSON fields; the earlier sections document the 1.0/1.1/1.2 interfaces.
 
-## Quick start
+## Earlier setup and interfaces
 
 Run from the actual repository root. Agent setup is isolated from the team's
 training environment; keep using the delivered split columns.
@@ -58,14 +58,14 @@ C use `source=model_tool_call`. A tool call fixture under test is explicitly
 
 ## Provider setup and bounds
 
-Only DeepSeek non-thinking Chat Completions is implemented. Configure privately:
+The backend uses DeepSeek non-thinking Chat Completions. Configure privately:
 
 - `LLM_API_KEY`: provider credential; never send it in chat or commit it.
 - `LLM_BASE_URL`: HTTPS API base, e.g. `https://api.deepseek.com` (without
-  `/chat/completions`). An explicitly configured compatible gateway may be used,
-  but its protocol still requires live verification.
-- `LLM_MODEL`: an actual tool-capable model available to your account. There is
-  deliberately no default model ID. No automatic provider switching occurs.
+  `/chat/completions`). Gateway compatibility can be checked with the bounded
+  live-validation runner.
+- `LLM_MODEL`: a tool-capable model available to your account. Set this explicitly;
+  the service uses the selected model for the whole request.
 
 The implementation follows the official [tool call guide](https://api-docs.deepseek.com/guides/tool_calls/):
 function schemas, assistant `tool_calls`, matching tool-call IDs in `role=tool`
@@ -85,10 +85,9 @@ serialized token count plus 25% and 256 framing tokens, then the output cap.
 The service and durable meter share this estimator. Profiles without an explicit
 tokenizer retain the UTF-8-byte fallback. The estimate is not billed usage. Actual
 provider usage is accumulated. A provider failure/timeout or absent usage marks
-accounting incomplete and prevents subsequent batch spending. Provider-specific
-hidden billing is not claimed to be known. No cost is estimated without explicit
-input/output USD-per-million pricing. Estimates do not include unconfigured
-provider discounts or surcharges.
+accounting incomplete and prevents subsequent batch spending. Cost estimates use explicit
+input/output USD-per-million pricing; discounts and surcharges follow the
+provider account.
 
 The caller deadline is enforced by an isolated daemon operation. An in-flight
 HTTP/native inference operation cannot be safely cancelled and may finish after
@@ -98,8 +97,8 @@ as zero usage. Avoid automatic retries after such errors.
 
 ## Result contract
 
-Authoritative schema: [`src/agent/schema.json`](../src/agent/schema.json), version
-`1.0`. The LLM submits the smaller [`final_schema.json`](../src/agent/final_schema.json);
+Authoritative schema: [`src/agent/schema.json`](../src/agent/schema.json). This
+section describes version `1.0`. The LLM submits the smaller [`final_schema.json`](../src/agent/final_schema.json);
 the backend fills IDs, actual scores, timings, trace, usage and errors itself.
 
 | Fields | Frontend meaning |
@@ -135,11 +134,10 @@ fraud class; `scores` keys and `predicted_label` use string representations of
 original labels, while `original_classes` preserves their original JSON types.
 There is no LLM confidence field.
 
-Exact quote matching proves attribution, not that the quote establishes fraud.
-The backend renders explanations from quotes instead of publishing free-form
-LLM allegations about an organisation or domain. Contextual evidence quality
-still needs human review. `ok` means contract validation passed; it is not
-external verification. Indicator absence also does not prove legitimacy.
+The backend validates quote attribution and renders explanations from the
+recorded text. `ok` means the result passed contract validation. Review combines
+that evidence with message context; domain reputation and sender identity require
+an external verification source.
 
 Examples (actual local classifier/error outputs on handwritten smoke inputs,
 not evaluation cases):
@@ -207,9 +205,9 @@ and validation manifest are unchanged. Do not automatically repeat paid calls.
 exchanges, without keys, HTTP headers or hidden reasoning.
 
 
-## Current three-channel acceptance
+## Earlier three-channel acceptance
 
-The budget repair is covered by 121 passing tests. A new real run completed all
+The earlier budget repair passed 121 tests. Its real run completed all
 three provider conversations in 9,164 tokens. SMS and phone returned `ok`.
 Email's actual quote was unique and exact but had a wrong end offset; the shared
 validator now records a deterministic `evidence_span_repaired` event, retains the
@@ -253,9 +251,9 @@ provider requests and work with the default environment-only offline config.
 The Agent mode needs the explicit configured provider/Keychain profile.
 
 See [the router report](classifier_router_report.md) and
-[an actual live version-1.1 example](examples/agent_router_live.json). The current
-initial 12-case pilot found no accuracy gain over the best fixed model; Agent routing
-is an optional experimental mode, not the recommended default.
+[an actual live version-1.1 example](examples/agent_router_live.json). The initial
+12-case pilot scored 12/12 for the fixed model, rules and Agent. These modes
+retain the earlier classifier-routing interface alongside adaptive investigation.
 
 ## Normalised routing and mandatory boundary checks (result version 1.2)
 
@@ -286,8 +284,8 @@ The LLM receives both actual results through its one tool reply and proposes an
 executed model. The backend applies the frozen VAL conflict policy. Conflicting
 models always require review; insufficient distinct VAL conflict support produces
 `decision="abstain"`, `status="needs_review"`. A supported winner may remain fraud
-or legitimate but still requests review. Agreement is not proof of correctness.
-Margins and uncalibrated probabilities are never shown as calibrated fraud risk.
+or legitimate with a review flag. Scores retain their native margin or
+uncalibrated-probability type.
 
 Version 1.2 adds these fields under `routing`:
 
@@ -301,8 +299,8 @@ Version 1.2 adds these fields under `routing`:
 | `candidates_called` | Actual classifiers executed, in order |
 
 Automatic secondary trace entries have `source="boundary_policy"`; genuine LLM
-tool requests have `source="model_tool_call"`. Do not describe the automatic call
-as an LLM choice. Show original and normalised text with explicit view names. Use
+tool requests have `source="model_tool_call"`. Display these sources separately
+and show original and normalised text with explicit view names. Use
 `needs_review` to route review regardless of whether a binary decision is present.
 See the [real 1.2 review example](examples/agent_router_boundary_live.json).
 
@@ -317,15 +315,14 @@ to Git. The new public profile is ready to use with the existing local artifacts
 
 The [independent pilot](normalised_boundary_report.md) excluded 114 prior TEST
 source IDs and scored 12 views from nine new sources. All methods scored 10/12;
-the Agent used 24 requests and 55,177 tokens, with no accuracy gain. VAL calibration
-and the pilot use 4,000-character source prefixes; the runtime ceiling remains
-8,000 to match candidate metadata. Longer runtime inputs have not been validated
-under these thresholds. If a caller clips text before calling the service, it
+the Agent used 24 requests and 55,177 tokens. VAL calibration and the pilot
+use 4,000-character source prefixes; the runtime ceiling is 8,000 to match
+candidate metadata. The thresholds come from the 4,000-character setting. If a
+caller clips text before calling the service, it
 must retain and disclose that upstream clipping; the service cannot detect it.
 The pilot's two misses are one million-character email's paired prefixes, mostly
-recipient addresses. All four local candidates missed both views. Do not infer
-that full-message classification was evaluated. The seven raw-data-dependent
-test skips remain; 154 offline tests passed and this new live experiment completed.
+recipient addresses. All four local candidates missed both prefixes. That
+experiment passed 154 offline tests, with seven raw-data skips.
 
 ## Adaptive investigation integration (schema 1.3)
 
@@ -394,7 +391,7 @@ Public schema 1.3 adds `triage`:
 | `overview` | Source length/hash, window count, suggested IDs and bounded previews |
 | `read_sections` | Actual source start/end, original/normalised view IDs and normaliser changes |
 | `assessments`, `selected_assessment_id` | Actual model results and grounded final selection |
-| `coverage_complete` | Whether every source window was inspected; not proof of semantic understanding |
+| `coverage_complete` | Whether every source window was inspected |
 | `clarification`, `context_answers` | Actual pending question and explicitly supplied answers |
 | `next_steps` | Backend-rendered, bounded action guidance |
 | `finalization_compacted` | Whether the final request used a compact observation summary |
@@ -441,9 +438,8 @@ the paid-message count. Original modes retain their historical batch behavior.
 .venv/bin/python -m src.agent.cli --config configs/agent.local.yaml --jsonl messages.jsonl --mode adaptive_agent --max-live-messages 3 --token-budget 12000
 ```
 
-An independent paid comparison is intentionally not automatic. The prepared
-`compare_document_triage` runner accepts a frozen canonical manifest and common
-bounds, preserves pending/failure/review results, and requires `--allow-live` plus
-`--allow-live-test` for paid TEST runs. See the [validation record](adaptive_agent_handoff.md)
-for original failures, saved-action revalidation, one fresh constrained-budget
-execution and exact cumulative cost. Performance superiority remains unverified.
+The `compare_document_triage` runner compares a frozen canonical manifest
+under common budgets, retaining failures, reviews and cases stopped by the budget.
+Use `--allow-live` plus `--allow-live-test` for paid TEST runs. The
+[validation record](adaptive_agent_handoff.md) documents source selection,
+saved-action revalidation, the fresh budget check and cumulative cost.

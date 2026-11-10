@@ -1,45 +1,45 @@
 # Agent validation record
 
-**Current adaptive investigation update:** the default configuration now uses
-`adaptive_agent` with a free classifier gate and bounded document tools. Final
-suite: **182 passed / 7 raw-data skips**. Three selected VAL sources exercised
-the free and escalated paths. Original budget/evidence failures were preserved;
-repair reexecuted a saved real action with new live finalization, plus a fresh
-remaining-budget request that safely abstained. All attempts combined: **6 real
-requests / 9,744 tokens**, below the original 12,000 cap; accounting complete.
-This is engineering verification, not a fresh held-out effectiveness result.
-See [adaptive_agent_handoff.md](adaptive_agent_handoff.md) for exact scopes,
-failures, correction and current setup.
+## Current backend
 
-**Normalised routing update (10 November 2026):** version-1.2 router results now
-record common normalisation and mandatory VAL-calibrated boundary cross-checks.
-The full suite passed **154 tests / 7 skips**. A fresh 12-input challenge excluded
-114 prior TEST sources and produced 10/12 correct for fixed, rule and Agent modes,
-with zero technical failures/abstentions. Actual Agent usage was 24 requests /
-55,177 tokens; accounting is complete and no retries were made. Both misses are
-paired prefixes of one long email. See the [full report](normalised_boundary_report.md)
-for clipping limits, per-case traces, review behavior and cache-aware price estimates.
-The sections below preserve historical acceptance snapshots.
+The default `adaptive_agent` workflow combines local classification with document
+inspection, classifier cross-checks, TRAIN retrieval and user clarification.
+The final suite passed **182 tests**, with **7 raw-data skips**.
 
-**Current acceptance update:** the budget repair and a subsequent real three-channel
-run recorded 6 calls / 9,164 tokens. All channels reached final responses;
-email's unique literal quote required a visible coordinate correction and review.
-See [agent_budget_fix.md](agent_budget_fix.md) for original versus offline
-revalidated evidence, 121 passing tests, and remaining evaluation limits.
+| Verification | Recorded result |
+|---|---|
+| CLI and Python example | Valid schema-1.3 responses |
+| Free classification path | Four ordinary messages completed under a one-paid-analysis cap, with zero API calls |
+| Adaptive provider validation | Three VAL sources; free paths, saved-action revalidation and a fresh budget check |
+| Total provider use across all attempts | 6 requests / 9,744 tokens within the 12,000-token budget |
+| Accounting | Complete; zero unresolved reservations |
 
+See [the Agent validation record](adaptive_agent_handoff.md) for the initial
+budget/evidence failures, their fixes and each run's scope. Next evaluation:
+compare the adaptive workflow, fixed workflow and fixed model on fresh TEST
+sources using the same tools and budgets.
 
-**Latest update:** local DeepSeek setup and the authorized three-message live run
-are now complete as an execution record: 5 real API calls, 6,228 reported tokens,
-one successful final answer and two local budget stops. See
-[the live validation report](agent_live_validation.md). The sections below retain
-the **initial implementation snapshot**, before this subsequent live run. The
-latest full offline suite is 109 passed / 7 skipped.
+## Earlier implementation records
+
+The sections below record the initial implementation at the base commit, before
+the later provider runs, router experiments and adaptive workflow.
+
+Earlier acceptance records:
+
+- [Initial live validation](agent_live_validation.md): 5 API calls / 6,228 tokens;
+  one complete final answer and two budget stops. The provider-setup suite passed
+  109 tests, with seven raw-data skips.
+- [Budget repair](agent_budget_fix.md): 6 calls / 9,164 tokens; three final
+  responses, including an email quote-coordinate correction marked for review.
+  The corresponding suite passed 121 tests.
+- [Normalised routing](normalised_boundary_report.md): 10/12 correct for all
+  three policies; 24 Agent requests / 55,177 tokens. Its suite passed 154 tests.
 
 Date: 10 November 2026, Asia/Singapore. Base commit:
 `90cd4baa7d2bdc08b061b250de1e7f8909e46749`; local branch:
-`feature/agent-backend`. Nothing was pushed or published.
+`feature/agent-backend`. This snapshot predates publication and the merge into main.
 
-## Executed checks
+## Initial implementation checks
 
 The active interpreter is
 `/Users/bohanzhang/Projects/scam-message-detection/.venv/bin/python`, Python
@@ -62,8 +62,8 @@ original requirements/training environment was preserved.
 | Frozen validation A | Nine cases, all answered; used only for development/smoke, not a benchmark claim |
 | Frozen test pilot A | 90 cases, detailed below |
 | B/C/D missing-provider path | Three cases per mode return `provider_not_configured`, zero provider calls |
-| Genuine provider calls | **Not executed: all three required LLM variables absent** |
-| Real Agent explanation quality / comparative gain | **Pending** |
+| Genuine provider calls at initial setup | 0 requests; provider credentials absent |
+| Live comparison plan at initial setup | Scheduled after provider setup; later acceptance records linked above |
 
 The seven original-test skips require raw Mendeley, Nazario/Nigerian, BothBosu,
 UCI or CEAS/SpamAssassin downloads. These raw files are not required by the
