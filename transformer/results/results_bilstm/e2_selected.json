@@ -1,0 +1,6 @@
+{
+  "lr": 0.001,
+  "hidden": 64,
+  "dropout": 0.2,
+  "class_weights": true
+}

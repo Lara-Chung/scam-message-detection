@@ -1,0 +1,199 @@
+{
+  "experiment": "E3",
+  "run": "E3_sms+email_seed1",
+  "source": "sms+email",
+  "seed": 1,
+  "overlap_removed": {
+    "sms->test_email": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    },
+    "sms->test_phone": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    },
+    "email->test_sms": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    },
+    "email->test_phone": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    }
+  },
+  "train_seconds": 306.3,
+  "train_counts": {
+    "legitimate": 5114,
+    "fraud": 3409
+  },
+  "class_weights": [
+    0.833300769329071,
+    1.2500733137130737
+  ],
+  "eval": {
+    "source_val": {
+      "n": 2131,
+      "n_positive": 851,
+      "accuracy": 0.994838104176443,
+      "macro_f1": 0.994614736934,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9937743190661479,
+          "recall": 0.99765625,
+          "f1": 0.9957115009746589,
+          "support": 1280
+        },
+        "fraud": {
+          "precision": 0.9964539007092199,
+          "recall": 0.9905992949471211,
+          "f1": 0.9935179728933412,
+          "support": 851
+        }
+      },
+      "positive_recall": 0.9905992949471211,
+      "positive_false_positive_rate": 0.00234375,
+      "positive_pr_auc": 0.9975704116600574,
+      "confusion_matrix": [
+        [
+          1277,
+          3
+        ],
+        [
+          8,
+          843
+        ]
+      ]
+    },
+    "test_sms": {
+      "n": 1072,
+      "n_positive": 105,
+      "accuracy": 0.9990671641791045,
+      "macro_f1": 0.997371666466436,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 0.9989658738366081,
+          "f1": 0.999482669425763,
+          "support": 967
+        },
+        "fraud": {
+          "precision": 0.9905660377358491,
+          "recall": 1.0,
+          "f1": 0.995260663507109,
+          "support": 105
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.001034126163391934,
+      "positive_pr_auc": 0.9998194497924955,
+      "confusion_matrix": [
+        [
+          966,
+          1
+        ],
+        [
+          0,
+          105
+        ]
+      ]
+    },
+    "test_email": {
+      "n": 1591,
+      "n_positive": 959,
+      "accuracy": 0.9868007542426147,
+      "macro_f1": 0.986237007213306,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9795918367346939,
+          "recall": 0.9873417721518988,
+          "f1": 0.983451536643026,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9916142557651991,
+          "recall": 0.986444212721585,
+          "f1": 0.989022477783586,
+          "support": 959
+        }
+      },
+      "positive_recall": 0.986444212721585,
+      "positive_false_positive_rate": 0.012658227848101266,
+      "positive_pr_auc": 0.9990716174060156,
+      "confusion_matrix": [
+        [
+          624,
+          8
+        ],
+        [
+          13,
+          946
+        ]
+      ]
+    },
+    "test_phone": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 0.7656903765690377,
+      "macro_f1": 0.743010752688172,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.6363636363636364,
+          "recall": 0.7,
+          "f1": 0.6666666666666666,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 0.8410596026490066,
+          "recall": 0.7987421383647799,
+          "f1": 0.8193548387096774,
+          "support": 159
+        }
+      },
+      "positive_recall": 0.7987421383647799,
+      "positive_false_positive_rate": 0.3,
+      "positive_pr_auc": 0.9483725805391198,
+      "confusion_matrix": [
+        [
+          56,
+          24
+        ],
+        [
+          32,
+          127
+        ]
+      ]
+    }
+  }
+}

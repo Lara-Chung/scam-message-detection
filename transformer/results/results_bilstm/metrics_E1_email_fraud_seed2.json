@@ -1,0 +1,96 @@
+{
+  "experiment": "E1",
+  "run": "E1_email_fraud_seed2",
+  "dataset": "email_fraud",
+  "seed": 42,
+  "config": {
+    "lr": 0.001,
+    "hidden": 64,
+    "dropout": 0.2,
+    "class_weights": true
+  },
+  "seq_len": 400,
+  "epochs_run": 6,
+  "best_epoch": 4,
+  "train_seconds": 20.9,
+  "train_counts": {
+    "legitimate": 2021,
+    "fraud": 3070
+  },
+  "class_weights": {
+    "0": 1.2595249876298862,
+    "1": 0.8291530944625407
+  },
+  "eval": {
+    "val": {
+      "n": 1273,
+      "accuracy": 0.9866457187745483,
+      "macro_f1": 0.9861010581076091,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.974757281553398,
+          "recall": 0.9920948616600791,
+          "f1": 0.9833496571988247,
+          "support": 506
+        },
+        "fraud": {
+          "precision": 0.9947229551451188,
+          "recall": 0.9830508474576272,
+          "f1": 0.9888524590163934,
+          "support": 767
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9830508474576272,
+      "positive_false_positive_rate": 0.007905138339920948,
+      "positive_pr_auc": 0.9987082828960955,
+      "confusion_matrix": [
+        [
+          502,
+          4
+        ],
+        [
+          13,
+          754
+        ]
+      ],
+      "truncated_rate": 0.3150039277297722,
+      "predict_ms_per_sample": 0.534
+    },
+    "test": {
+      "n": 1591,
+      "accuracy": 0.9930861093651792,
+      "macro_f1": 0.9927869744323158,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.988976377952756,
+          "recall": 0.9936708860759493,
+          "f1": 0.9913180741910024,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.99581589958159,
+          "recall": 0.9927007299270073,
+          "f1": 0.9942558746736292,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9927007299270073,
+      "positive_false_positive_rate": 0.006329113924050633,
+      "positive_pr_auc": 0.9997473753134325,
+      "confusion_matrix": [
+        [
+          628,
+          4
+        ],
+        [
+          7,
+          952
+        ]
+      ],
+      "truncated_rate": 0.32055311125078567,
+      "predict_ms_per_sample": 0.199
+    }
+  }
+}

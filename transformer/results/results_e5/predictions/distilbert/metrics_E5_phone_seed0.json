@@ -1,0 +1,604 @@
+{
+  "experiment": "E5",
+  "run": "E5_phone_seed0",
+  "source": "phone",
+  "seed": 0,
+  "overlap_removed": {
+    "phone->test_sms": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    },
+    "phone->test_email": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    }
+  },
+  "train_seconds": 28.9,
+  "train_counts": {
+    "legitimate": 248,
+    "fraud": 512
+  },
+  "class_weights": [
+    1.5322580337524414,
+    0.7421875
+  ],
+  "eval": {
+    "source_val": {
+      "n": 199,
+      "n_positive": 128,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 71
+        },
+        "fraud": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 128
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          71,
+          0
+        ],
+        [
+          0,
+          128
+        ]
+      ]
+    },
+    "test_phone_clean": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          80,
+          0
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P1": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 0.99581589958159,
+      "macro_f1": 0.9952879477928274,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 0.9875,
+          "f1": 0.9937106918238994,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 0.99375,
+          "recall": 1.0,
+          "f1": 0.9968652037617555,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0125,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          79,
+          1
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P2": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 0.9748953974895398,
+      "macro_f1": 0.9712602212602213,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 0.925,
+          "f1": 0.961038961038961,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 0.9636363636363636,
+          "recall": 1.0,
+          "f1": 0.9814814814814815,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.075,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          74,
+          6
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P2_space": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 0.9623430962343096,
+      "macro_f1": 0.9564372076067805,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 0.8875,
+          "f1": 0.9403973509933775,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 0.9464285714285714,
+          "recall": 1.0,
+          "f1": 0.9724770642201835,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.1125,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          71,
+          9
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P2_dot": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 0.9874476987447699,
+      "macro_f1": 0.9857729626763498,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 0.9625,
+          "f1": 0.9808917197452229,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 0.9814814814814815,
+          "recall": 1.0,
+          "f1": 0.9906542056074766,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0375,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          77,
+          3
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P3": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          80,
+          0
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P3_lookalike": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 0.9916317991631799,
+      "macro_f1": 0.9905458860759494,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 0.975,
+          "f1": 0.9873417721518988,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 0.9875776397515528,
+          "recall": 1.0,
+          "f1": 0.99375,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.025,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          78,
+          2
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P3_zero_width": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          80,
+          0
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_clean+D1": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          80,
+          0
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P1+D1": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 0.99581589958159,
+      "macro_f1": 0.9952879477928274,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 0.9875,
+          "f1": 0.9937106918238994,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 0.99375,
+          "recall": 1.0,
+          "f1": 0.9968652037617555,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0125,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          79,
+          1
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P2+D1": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 0.99581589958159,
+      "macro_f1": 0.9952879477928274,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 0.9875,
+          "f1": 0.9937106918238994,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 0.99375,
+          "recall": 1.0,
+          "f1": 0.9968652037617555,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0125,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          79,
+          1
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P2_space+D1": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          80,
+          0
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P2_dot+D1": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 0.9874476987447699,
+      "macro_f1": 0.9857729626763498,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 0.9625,
+          "f1": 0.9808917197452229,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 0.9814814814814815,
+          "recall": 1.0,
+          "f1": 0.9906542056074766,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0375,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          77,
+          3
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P3+D1": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          80,
+          0
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P3_lookalike+D1": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          80,
+          0
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    },
+    "test_phone_P3_zero_width+D1": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          80,
+          0
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    }
+  }
+}

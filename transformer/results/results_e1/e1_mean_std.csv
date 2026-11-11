@@ -1,0 +1,9 @@
+,max_length,max_length,val_macro_f1,val_macro_f1,test_macro_f1,test_macro_f1,test_accuracy,test_accuracy,test_pos_recall,test_pos_recall,test_pos_fpr,test_pos_fpr,test_pos_pr_auc,test_pos_pr_auc,test_truncated_rate,test_truncated_rate,train_seconds,train_seconds,test_macro_f1_without_dailytop,test_macro_f1_without_dailytop
+,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std
+dataset,,,,,,,,,,,,,,,,,,,,
+bothbosu,512.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0784,0.0,40.0667,0.1528,,
+ceas_08,512.0,0.0,0.9952,0.0025,0.8556,0.2403,0.8668,0.221,0.7606,0.3998,0.0025,0.0015,0.8985,0.1756,0.2947,0.2223,932.0,5.2678,0.9954,
+email_fraud,512.0,0.0,0.9899,0.0012,0.9917,0.0036,0.992,0.0035,0.9913,0.0054,0.0069,0.0018,0.9997,0.0004,0.3893,0.0038,201.1333,0.4163,,
+spamassassin,512.0,0.0,0.98,0.0061,0.9888,0.0026,0.9908,0.0022,0.9862,0.0075,0.0073,0.0037,0.9978,0.0004,0.3126,0.0114,146.2,0.4,,
+uci,256.0,0.0,0.9788,0.0056,0.9777,0.0096,0.9903,0.0042,0.9534,0.0133,0.0044,0.0029,0.9875,0.0045,0.0,0.0,25.5333,0.7767,,
+uci_replication,256.0,0.0,,,0.9759,0.0003,0.9892,0.0001,0.9464,0.0049,0.0044,0.0008,0.986,0.0008,0.0,0.0,12.8333,0.0577,,

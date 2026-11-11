@@ -1,0 +1,98 @@
+{
+  "dataset": "email_fraud",
+  "run": "split_seed2",
+  "train_seed": 42,
+  "max_length": 512,
+  "train_seconds": 201.6,
+  "train_counts": {
+    "legitimate": 2021,
+    "fraud": 3070
+  },
+  "class_weights": [
+    1.259524941444397,
+    0.8291531205177307
+  ],
+  "train_truncated_rate": 0.4030642309958751,
+  "val": {
+    "n": 1273,
+    "accuracy": 0.9890023566378633,
+    "macro_f1": 0.9885500989386581,
+    "per_class": {
+      "legitimate": {
+        "precision": 0.9785992217898832,
+        "recall": 0.9940711462450593,
+        "f1": 0.9862745098039216,
+        "support": 506
+      },
+      "fraud": {
+        "precision": 0.9960474308300395,
+        "recall": 0.9856584093872229,
+        "f1": 0.9908256880733946,
+        "support": 767
+      }
+    },
+    "positive_label": "fraud",
+    "positive_recall": 0.9856584093872229,
+    "positive_false_positive_rate": 0.005928853754940711,
+    "positive_pr_auc": 0.9989940739898862,
+    "confusion_matrix": {
+      "labels": [
+        "legitimate",
+        "fraud"
+      ],
+      "rows_true_cols_pred": [
+        [
+          503,
+          3
+        ],
+        [
+          11,
+          756
+        ]
+      ]
+    },
+    "truncated_rate": 0.39120188531029065,
+    "predict_ms_per_sample": 5.23
+  },
+  "test": {
+    "n": 1591,
+    "accuracy": 0.994343180389692,
+    "macro_f1": 0.9940920832925898,
+    "per_class": {
+      "legitimate": {
+        "precision": 0.993660855784469,
+        "recall": 0.9920886075949367,
+        "f1": 0.9928741092636579,
+        "support": 632
+      },
+      "fraud": {
+        "precision": 0.9947916666666666,
+        "recall": 0.9958289885297185,
+        "f1": 0.9953100573215217,
+        "support": 959
+      }
+    },
+    "positive_label": "fraud",
+    "positive_recall": 0.9958289885297185,
+    "positive_false_positive_rate": 0.007911392405063292,
+    "positive_pr_auc": 0.9998960087043312,
+    "confusion_matrix": {
+      "labels": [
+        "legitimate",
+        "fraud"
+      ],
+      "rows_true_cols_pred": [
+        [
+          627,
+          5
+        ],
+        [
+          4,
+          955
+        ]
+      ]
+    },
+    "truncated_rate": 0.38529226901319924,
+    "predict_ms_per_sample": 5.32
+  }
+}

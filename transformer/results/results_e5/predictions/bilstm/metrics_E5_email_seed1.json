@@ -1,0 +1,647 @@
+{
+  "experiment": "E5",
+  "run": "E5_email_seed1",
+  "source": "email",
+  "seed": 42,
+  "overlap_removed": {
+    "email->test_sms": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    },
+    "email->test_phone": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    }
+  },
+  "config": {
+    "lr": 0.001,
+    "hidden": 64,
+    "dropout": 0.2,
+    "class_weights": true
+  },
+  "seq_len": 400,
+  "epochs_run": 4,
+  "best_epoch": 2,
+  "train_seconds": 15.5,
+  "train_counts": {
+    "legitimate": 2021,
+    "fraud": 3070
+  },
+  "class_weights": {
+    "0": 1.2595249876298862,
+    "1": 0.8291530944625407
+  },
+  "eval": {
+    "val": {
+      "n": 1273,
+      "accuracy": 0.9890023566378633,
+      "macro_f1": 0.9885274563422786,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.984251968503937,
+          "recall": 0.9881422924901185,
+          "f1": 0.9861932938856016,
+          "support": 506
+        },
+        "fraud": {
+          "precision": 0.9921568627450981,
+          "recall": 0.9895697522816167,
+          "f1": 0.9908616187989556,
+          "support": 767
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9895697522816167,
+      "positive_false_positive_rate": 0.011857707509881422,
+      "positive_pr_auc": 0.9997083733484209,
+      "confusion_matrix": [
+        [
+          500,
+          6
+        ],
+        [
+          8,
+          759
+        ]
+      ],
+      "truncated_rate": 0.3173605655930872,
+      "predict_ms_per_sample": 0.567
+    },
+    "test_email_clean": {
+      "n": 1591,
+      "accuracy": 0.9836580766813325,
+      "macro_f1": 0.9829735914913234,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9734375,
+          "recall": 0.9857594936708861,
+          "f1": 0.9795597484276729,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9905362776025236,
+          "recall": 0.9822732012513035,
+          "f1": 0.9863874345549738,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9822732012513035,
+      "positive_false_positive_rate": 0.014240506329113924,
+      "positive_pr_auc": 0.9986949986042966,
+      "confusion_matrix": [
+        [
+          623,
+          9
+        ],
+        [
+          17,
+          942
+        ]
+      ],
+      "truncated_rate": 0.32809553739786296,
+      "predict_ms_per_sample": 0.206
+    },
+    "test_email_P1": {
+      "n": 1591,
+      "accuracy": 0.9836580766813325,
+      "macro_f1": 0.9829735914913234,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9734375,
+          "recall": 0.9857594936708861,
+          "f1": 0.9795597484276729,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9905362776025236,
+          "recall": 0.9822732012513035,
+          "f1": 0.9863874345549738,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9822732012513035,
+      "positive_false_positive_rate": 0.014240506329113924,
+      "positive_pr_auc": 0.9984156487715763,
+      "confusion_matrix": [
+        [
+          623,
+          9
+        ],
+        [
+          17,
+          942
+        ]
+      ],
+      "truncated_rate": 0.32809553739786296,
+      "predict_ms_per_sample": 0.198
+    },
+    "test_email_P2": {
+      "n": 1591,
+      "accuracy": 0.8937774984286612,
+      "macro_f1": 0.8927194764269644,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.7890137328339576,
+          "recall": 1.0,
+          "f1": 0.8820655966503839,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 1.0,
+          "recall": 0.8237747653806048,
+          "f1": 0.9033733562035449,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.8237747653806048,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 0.9968244174200434,
+      "confusion_matrix": [
+        [
+          632,
+          0
+        ],
+        [
+          169,
+          790
+        ]
+      ],
+      "truncated_rate": 0.46511627906976744,
+      "predict_ms_per_sample": 0.243
+    },
+    "test_email_P2_space": {
+      "n": 1591,
+      "accuracy": 0.5304839723444374,
+      "macro_f1": 0.49531335129036247,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.45830311820159536,
+          "recall": 1.0,
+          "f1": 0.6285430134261561,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 1.0,
+          "recall": 0.2210636079249218,
+          "f1": 0.36208368915456873,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.2210636079249218,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 0.9858165727303878,
+      "confusion_matrix": [
+        [
+          632,
+          0
+        ],
+        [
+          747,
+          212
+        ]
+      ],
+      "truncated_rate": 0.5430546825895664,
+      "predict_ms_per_sample": 0.242
+    },
+    "test_email_P2_dot": {
+      "n": 1591,
+      "accuracy": 0.9836580766813325,
+      "macro_f1": 0.9829735914913234,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9734375,
+          "recall": 0.9857594936708861,
+          "f1": 0.9795597484276729,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9905362776025236,
+          "recall": 0.9822732012513035,
+          "f1": 0.9863874345549738,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9822732012513035,
+      "positive_false_positive_rate": 0.014240506329113924,
+      "positive_pr_auc": 0.9986949986042966,
+      "confusion_matrix": [
+        [
+          623,
+          9
+        ],
+        [
+          17,
+          942
+        ]
+      ],
+      "truncated_rate": 0.32809553739786296,
+      "predict_ms_per_sample": 0.28
+    },
+    "test_email_P3": {
+      "n": 1591,
+      "accuracy": 0.9842866121935889,
+      "macro_f1": 0.983624146263238,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.974960876369327,
+          "recall": 0.9857594936708861,
+          "f1": 0.980330448465775,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.990546218487395,
+          "recall": 0.9833159541188738,
+          "f1": 0.9869178440607012,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9833159541188738,
+      "positive_false_positive_rate": 0.014240506329113924,
+      "positive_pr_auc": 0.9984006106579726,
+      "confusion_matrix": [
+        [
+          623,
+          9
+        ],
+        [
+          16,
+          943
+        ]
+      ],
+      "truncated_rate": 0.32809553739786296,
+      "predict_ms_per_sample": 0.225
+    },
+    "test_email_P3_lookalike": {
+      "n": 1591,
+      "accuracy": 0.9824010056568196,
+      "macro_f1": 0.9816542022205383,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9733542319749217,
+          "recall": 0.9825949367088608,
+          "f1": 0.9779527559055118,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9884575026232949,
+          "recall": 0.9822732012513035,
+          "f1": 0.9853556485355649,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9822732012513035,
+      "positive_false_positive_rate": 0.01740506329113924,
+      "positive_pr_auc": 0.9985332909752018,
+      "confusion_matrix": [
+        [
+          621,
+          11
+        ],
+        [
+          17,
+          942
+        ]
+      ],
+      "truncated_rate": 0.32809553739786296,
+      "predict_ms_per_sample": 0.216
+    },
+    "test_email_P3_zero_width": {
+      "n": 1591,
+      "accuracy": 0.983029541169076,
+      "macro_f1": 0.9822953008793206,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9763779527559056,
+          "recall": 0.9810126582278481,
+          "f1": 0.978689818468824,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9874476987447699,
+          "recall": 0.9843587069864442,
+          "f1": 0.9859007832898172,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9843587069864442,
+      "positive_false_positive_rate": 0.0189873417721519,
+      "positive_pr_auc": 0.9985655134976242,
+      "confusion_matrix": [
+        [
+          620,
+          12
+        ],
+        [
+          15,
+          944
+        ]
+      ],
+      "truncated_rate": 0.32809553739786296,
+      "predict_ms_per_sample": 0.214
+    },
+    "test_email_clean+D1": {
+      "n": 1591,
+      "accuracy": 0.9836580766813325,
+      "macro_f1": 0.9829735914913234,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9734375,
+          "recall": 0.9857594936708861,
+          "f1": 0.9795597484276729,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9905362776025236,
+          "recall": 0.9822732012513035,
+          "f1": 0.9863874345549738,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9822732012513035,
+      "positive_false_positive_rate": 0.014240506329113924,
+      "positive_pr_auc": 0.9986726628634466,
+      "confusion_matrix": [
+        [
+          623,
+          9
+        ],
+        [
+          17,
+          942
+        ]
+      ],
+      "truncated_rate": 0.32809553739786296,
+      "predict_ms_per_sample": 0.203
+    },
+    "test_email_P1+D1": {
+      "n": 1591,
+      "accuracy": 0.9836580766813325,
+      "macro_f1": 0.9829735914913234,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9734375,
+          "recall": 0.9857594936708861,
+          "f1": 0.9795597484276729,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9905362776025236,
+          "recall": 0.9822732012513035,
+          "f1": 0.9863874345549738,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9822732012513035,
+      "positive_false_positive_rate": 0.014240506329113924,
+      "positive_pr_auc": 0.9983716440253511,
+      "confusion_matrix": [
+        [
+          623,
+          9
+        ],
+        [
+          17,
+          942
+        ]
+      ],
+      "truncated_rate": 0.32809553739786296,
+      "predict_ms_per_sample": 0.204
+    },
+    "test_email_P2+D1": {
+      "n": 1591,
+      "accuracy": 0.9855436832181018,
+      "macro_f1": 0.984949977893622,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.973561430793157,
+          "recall": 0.990506329113924,
+          "f1": 0.9819607843137255,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9936708860759493,
+          "recall": 0.9822732012513035,
+          "f1": 0.9879391714735186,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9822732012513035,
+      "positive_false_positive_rate": 0.00949367088607595,
+      "positive_pr_auc": 0.9985919318837775,
+      "confusion_matrix": [
+        [
+          626,
+          6
+        ],
+        [
+          17,
+          942
+        ]
+      ],
+      "truncated_rate": 0.32558139534883723,
+      "predict_ms_per_sample": 0.223
+    },
+    "test_email_P2_space+D1": {
+      "n": 1591,
+      "accuracy": 0.9861722187303583,
+      "macro_f1": 0.9855854446018515,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9780564263322884,
+          "recall": 0.9873417721518988,
+          "f1": 0.9826771653543307,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9916054564533053,
+          "recall": 0.9854014598540146,
+          "f1": 0.9884937238493724,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9854014598540146,
+      "positive_false_positive_rate": 0.012658227848101266,
+      "positive_pr_auc": 0.9987510577649814,
+      "confusion_matrix": [
+        [
+          624,
+          8
+        ],
+        [
+          14,
+          945
+        ]
+      ],
+      "truncated_rate": 0.32181018227529856,
+      "predict_ms_per_sample": 0.203
+    },
+    "test_email_P2_dot+D1": {
+      "n": 1591,
+      "accuracy": 0.9836580766813325,
+      "macro_f1": 0.9829735914913234,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9734375,
+          "recall": 0.9857594936708861,
+          "f1": 0.9795597484276729,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9905362776025236,
+          "recall": 0.9822732012513035,
+          "f1": 0.9863874345549738,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9822732012513035,
+      "positive_false_positive_rate": 0.014240506329113924,
+      "positive_pr_auc": 0.9986726628634466,
+      "confusion_matrix": [
+        [
+          623,
+          9
+        ],
+        [
+          17,
+          942
+        ]
+      ],
+      "truncated_rate": 0.32809553739786296,
+      "predict_ms_per_sample": 0.262
+    },
+    "test_email_P3+D1": {
+      "n": 1591,
+      "accuracy": 0.9836580766813325,
+      "macro_f1": 0.9829735914913234,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9734375,
+          "recall": 0.9857594936708861,
+          "f1": 0.9795597484276729,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9905362776025236,
+          "recall": 0.9822732012513035,
+          "f1": 0.9863874345549738,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9822732012513035,
+      "positive_false_positive_rate": 0.014240506329113924,
+      "positive_pr_auc": 0.9986726628634466,
+      "confusion_matrix": [
+        [
+          623,
+          9
+        ],
+        [
+          17,
+          942
+        ]
+      ],
+      "truncated_rate": 0.32809553739786296,
+      "predict_ms_per_sample": 0.224
+    },
+    "test_email_P3_lookalike+D1": {
+      "n": 1591,
+      "accuracy": 0.9836580766813325,
+      "macro_f1": 0.9829735914913234,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9734375,
+          "recall": 0.9857594936708861,
+          "f1": 0.9795597484276729,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9905362776025236,
+          "recall": 0.9822732012513035,
+          "f1": 0.9863874345549738,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9822732012513035,
+      "positive_false_positive_rate": 0.014240506329113924,
+      "positive_pr_auc": 0.9986726628634466,
+      "confusion_matrix": [
+        [
+          623,
+          9
+        ],
+        [
+          17,
+          942
+        ]
+      ],
+      "truncated_rate": 0.32809553739786296,
+      "predict_ms_per_sample": 0.204
+    },
+    "test_email_P3_zero_width+D1": {
+      "n": 1591,
+      "accuracy": 0.9836580766813325,
+      "macro_f1": 0.9829735914913234,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9734375,
+          "recall": 0.9857594936708861,
+          "f1": 0.9795597484276729,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9905362776025236,
+          "recall": 0.9822732012513035,
+          "f1": 0.9863874345549738,
+          "support": 959
+        }
+      },
+      "positive_label": "fraud",
+      "positive_recall": 0.9822732012513035,
+      "positive_false_positive_rate": 0.014240506329113924,
+      "positive_pr_auc": 0.9986726628634466,
+      "confusion_matrix": [
+        [
+          623,
+          9
+        ],
+        [
+          17,
+          942
+        ]
+      ],
+      "truncated_rate": 0.32809553739786296,
+      "predict_ms_per_sample": 0.204
+    }
+  }
+}

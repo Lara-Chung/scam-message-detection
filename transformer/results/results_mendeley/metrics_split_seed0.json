@@ -1,0 +1,106 @@
+{
+  "split": "split_seed0",
+  "train_seconds": 28.1,
+  "val": {
+    "accuracy": 0.9665948275862069,
+    "macro_f1": 0.8856831410229469,
+    "per_class": {
+      "ham": {
+        "precision": 0.9948119325551232,
+        "recall": 0.9909560723514211,
+        "f1": 0.9928802588996763,
+        "support": 774
+      },
+      "spam": {
+        "precision": 0.7671232876712328,
+        "recall": 0.8,
+        "f1": 0.7832167832167832,
+        "support": 70
+      },
+      "smishing": {
+        "precision": 0.8809523809523809,
+        "recall": 0.8809523809523809,
+        "f1": 0.8809523809523809,
+        "support": 84
+      }
+    },
+    "smishing_recall": 0.8809523809523809,
+    "smishing_false_positive_rate": 0.011848341232227487,
+    "smishing_pr_auc": 0.9501324570086538,
+    "confusion_matrix": {
+      "labels": [
+        "ham",
+        "spam",
+        "smishing"
+      ],
+      "rows_true_cols_pred": [
+        [
+          767,
+          7,
+          0
+        ],
+        [
+          4,
+          56,
+          10
+        ],
+        [
+          0,
+          10,
+          74
+        ]
+      ]
+    }
+  },
+  "test": {
+    "accuracy": 0.971551724137931,
+    "macro_f1": 0.89872575633914,
+    "per_class": {
+      "ham": {
+        "precision": 0.9938080495356038,
+        "recall": 0.9958634953464323,
+        "f1": 0.9948347107438017,
+        "support": 967
+      },
+      "spam": {
+        "precision": 0.8333333333333334,
+        "recall": 0.8045977011494253,
+        "f1": 0.8187134502923976,
+        "support": 87
+      },
+      "smishing": {
+        "precision": 0.8785046728971962,
+        "recall": 0.8867924528301887,
+        "f1": 0.8826291079812206,
+        "support": 106
+      }
+    },
+    "smishing_recall": 0.8867924528301887,
+    "smishing_false_positive_rate": 0.012333965844402278,
+    "smishing_pr_auc": 0.9533124435129795,
+    "confusion_matrix": {
+      "labels": [
+        "ham",
+        "spam",
+        "smishing"
+      ],
+      "rows_true_cols_pred": [
+        [
+          963,
+          4,
+          0
+        ],
+        [
+          4,
+          70,
+          13
+        ],
+        [
+          2,
+          10,
+          94
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "experiment": "E4",
+  "run": "E4_spamassassin_to_ceas_08_stripped_seed0",
+  "source": "spamassassin",
+  "target": "ceas_08",
+  "text": "stripped",
+  "seed": 42,
+  "overlap_removed": {
+    "train": {
+      "exact_text": 0,
+      "template": 3,
+      "removed": 3
+    },
+    "val": {
+      "exact_text": 0,
+      "template": 0,
+      "removed": 0
+    }
+  },
+  "config": {
+    "lr": 0.001,
+    "hidden": 64,
+    "dropout": 0.2,
+    "class_weights": true
+  },
+  "seq_len": 400,
+  "epochs_run": 6,
+  "best_epoch": 4,
+  "train_seconds": 15.7,
+  "train_counts": {
+    "legitimate": 2613,
+    "spam": 1078
+  },
+  "class_weights": {
+    "0": 0.7062763107539227,
+    "1": 1.7119666048237476
+  },
+  "eval": {
+    "val": {
+      "n": 924,
+      "accuracy": 0.9859307359307359,
+      "macro_f1": 0.983048623018141,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9923195084485407,
+          "recall": 0.9877675840978594,
+          "f1": 0.9900383141762452,
+          "support": 654
+        },
+        "spam": {
+          "precision": 0.9706959706959707,
+          "recall": 0.9814814814814815,
+          "f1": 0.9760589318600368,
+          "support": 270
+        }
+      },
+      "positive_label": "spam",
+      "positive_recall": 0.9814814814814815,
+      "positive_false_positive_rate": 0.012232415902140673,
+      "positive_pr_auc": 0.9969580853308722,
+      "confusion_matrix": [
+        [
+          646,
+          8
+        ],
+        [
+          5,
+          265
+        ]
+      ],
+      "truncated_rate": 0.16666666666666666,
+      "predict_ms_per_sample": 0.69
+    },
+    "test_spamassassin": {
+      "n": 1155,
+      "accuracy": 0.9800865800865801,
+      "macro_f1": 0.976094294576964,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9913473423980222,
+          "recall": 0.980440097799511,
+          "f1": 0.9858635525507068,
+          "support": 818
+        },
+        "spam": {
+          "precision": 0.953757225433526,
+          "recall": 0.9792284866468842,
+          "f1": 0.9663250366032211,
+          "support": 337
+        }
+      },
+      "positive_label": "spam",
+      "positive_recall": 0.9792284866468842,
+      "positive_false_positive_rate": 0.019559902200488997,
+      "positive_pr_auc": 0.9941659731558983,
+      "confusion_matrix": [
+        [
+          802,
+          16
+        ],
+        [
+          7,
+          330
+        ]
+      ],
+      "truncated_rate": 0.1800865800865801,
+      "predict_ms_per_sample": 0.212
+    },
+    "test_ceas_08": {
+      "n": 7589,
+      "accuracy": 0.5347213071550929,
+      "macro_f1": 0.50552720450593,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.48946757339525626,
+          "recall": 0.8669212690951822,
+          "f1": 0.6256758189335312,
+          "support": 3404
+        },
+        "spam": {
+          "precision": 0.7096153846153846,
+          "recall": 0.2645161290322581,
+          "f1": 0.385378590078329,
+          "support": 4185
+        }
+      },
+      "positive_label": "spam",
+      "positive_recall": 0.2645161290322581,
+      "positive_false_positive_rate": 0.13307873090481787,
+      "positive_pr_auc": 0.707374437265418,
+      "confusion_matrix": [
+        [
+          2951,
+          453
+        ],
+        [
+          3078,
+          1107
+        ]
+      ],
+      "truncated_rate": 0.09606008696797998,
+      "predict_ms_per_sample": 0.18
+    },
+    "test_ceas_08_without_dailytop": {
+      "n": 4659,
+      "accuracy": 0.8710023610216785,
+      "macro_f1": 0.8470410022536394,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.952242658922233,
+          "recall": 0.8669212690951822,
+          "f1": 0.9075811164078118,
+          "support": 3404
+        },
+        "spam": {
+          "precision": 0.7096153846153846,
+          "recall": 0.8820717131474104,
+          "f1": 0.7865008880994672,
+          "support": 1255
+        }
+      },
+      "positive_label": "spam",
+      "positive_recall": 0.8820717131474104,
+      "positive_false_positive_rate": 0.13307873090481787,
+      "positive_pr_auc": 0.7630745359217127,
+      "confusion_matrix": [
+        [
+          2951,
+          453
+        ],
+        [
+          148,
+          1107
+        ]
+      ]
+    }
+  }
+}
