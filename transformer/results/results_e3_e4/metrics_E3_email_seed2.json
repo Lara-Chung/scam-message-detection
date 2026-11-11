@@ -1,0 +1,175 @@
+{
+  "experiment": "E3",
+  "run": "E3_email_seed2",
+  "source": "email",
+  "seed": 2,
+  "overlap_removed": {
+    "email->test_sms": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    },
+    "email->test_phone": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    }
+  },
+  "train_seconds": 187.1,
+  "train_counts": {
+    "legitimate": 2021,
+    "fraud": 3070
+  },
+  "class_weights": [
+    1.259524941444397,
+    0.8291531205177307
+  ],
+  "eval": {
+    "source_val": {
+      "n": 1273,
+      "n_positive": 767,
+      "accuracy": 0.9882168106834249,
+      "macro_f1": 0.987736227742008,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9766990291262136,
+          "recall": 0.9940711462450593,
+          "f1": 0.9853085210577864,
+          "support": 506
+        },
+        "fraud": {
+          "precision": 0.996042216358839,
+          "recall": 0.984354628422425,
+          "f1": 0.9901639344262295,
+          "support": 767
+        }
+      },
+      "positive_recall": 0.984354628422425,
+      "positive_false_positive_rate": 0.005928853754940711,
+      "positive_pr_auc": 0.9991141047634352,
+      "confusion_matrix": [
+        [
+          503,
+          3
+        ],
+        [
+          12,
+          755
+        ]
+      ]
+    },
+    "test_sms": {
+      "n": 1072,
+      "n_positive": 105,
+      "accuracy": 0.6576492537313433,
+      "macro_f1": 0.5246751520789663,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9464285714285714,
+          "recall": 0.6577042399172699,
+          "f1": 0.7760829774252593,
+          "support": 967
+        },
+        "fraud": {
+          "precision": 0.1725,
+          "recall": 0.6571428571428571,
+          "f1": 0.2732673267326733,
+          "support": 105
+        }
+      },
+      "positive_recall": 0.6571428571428571,
+      "positive_false_positive_rate": 0.3422957600827301,
+      "positive_pr_auc": 0.5049938363282287,
+      "confusion_matrix": [
+        [
+          636,
+          331
+        ],
+        [
+          36,
+          69
+        ]
+      ]
+    },
+    "test_email": {
+      "n": 1591,
+      "n_positive": 959,
+      "accuracy": 0.9937146448774355,
+      "macro_f1": 0.9934444521358479,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9889937106918238,
+          "recall": 0.995253164556962,
+          "f1": 0.9921135646687698,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9968586387434555,
+          "recall": 0.9927007299270073,
+          "f1": 0.9947753396029259,
+          "support": 959
+        }
+      },
+      "positive_recall": 0.9927007299270073,
+      "positive_false_positive_rate": 0.004746835443037975,
+      "positive_pr_auc": 0.9998952729179855,
+      "confusion_matrix": [
+        [
+          629,
+          3
+        ],
+        [
+          7,
+          952
+        ]
+      ]
+    },
+    "test_phone": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 0.6401673640167364,
+      "macro_f1": 0.6383375563063063,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.4788732394366197,
+          "recall": 0.85,
+          "f1": 0.6126126126126126,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 0.8762886597938144,
+          "recall": 0.5345911949685535,
+          "f1": 0.6640625,
+          "support": 159
+        }
+      },
+      "positive_recall": 0.5345911949685535,
+      "positive_false_positive_rate": 0.15,
+      "positive_pr_auc": 0.8511397330719326,
+      "confusion_matrix": [
+        [
+          68,
+          12
+        ],
+        [
+          74,
+          85
+        ]
+      ]
+    }
+  }
+}

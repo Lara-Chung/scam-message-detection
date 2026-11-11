@@ -1,0 +1,96 @@
+{
+  "experiment": "E1",
+  "run": "E1_bothbosu_seed2",
+  "dataset": "bothbosu",
+  "seed": 42,
+  "config": {
+    "lr": 0.001,
+    "hidden": 64,
+    "dropout": 0.2,
+    "class_weights": true
+  },
+  "seq_len": 400,
+  "epochs_run": 10,
+  "best_epoch": 10,
+  "train_seconds": 8.9,
+  "train_counts": {
+    "non-scam": 511,
+    "scam": 512
+  },
+  "class_weights": {
+    "0": 1.0009784735812133,
+    "1": 0.9990234375
+  },
+  "eval": {
+    "val": {
+      "n": 256,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "non-scam": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 128
+        },
+        "scam": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 128
+        }
+      },
+      "positive_label": "scam",
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          128,
+          0
+        ],
+        [
+          0,
+          128
+        ]
+      ],
+      "truncated_rate": 0.01171875,
+      "predict_ms_per_sample": 1.203
+    },
+    "test": {
+      "n": 319,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "non-scam": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 160
+        },
+        "scam": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 159
+        }
+      },
+      "positive_label": "scam",
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 0.9999999999999999,
+      "confusion_matrix": [
+        [
+          160,
+          0
+        ],
+        [
+          0,
+          159
+        ]
+      ],
+      "truncated_rate": 0.012539184952978056,
+      "predict_ms_per_sample": 1.029
+    }
+  }
+}

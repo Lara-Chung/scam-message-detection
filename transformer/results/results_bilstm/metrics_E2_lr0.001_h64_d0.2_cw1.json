@@ -1,0 +1,76 @@
+{
+  "experiment": "E2",
+  "run": "E2_lr0.001_h64_d0.2_cw1",
+  "dataset": "mendeley",
+  "seed": 42,
+  "config": {
+    "lr": 0.001,
+    "hidden": 64,
+    "dropout": 0.2,
+    "class_weights": true
+  },
+  "seq_len": 100,
+  "epochs_run": 7,
+  "best_epoch": 5,
+  "train_seconds": 11.1,
+  "train_counts": {
+    "ham": 3093,
+    "spam": 278,
+    "smishing": 338
+  },
+  "class_weights": {
+    "0": 0.39971979739196034,
+    "1": 4.447242206235012,
+    "2": 3.657790927021696
+  },
+  "eval": {
+    "val": {
+      "n": 928,
+      "accuracy": 0.9622844827586207,
+      "macro_f1": 0.8861886185717481,
+      "per_class": {
+        "ham": {
+          "precision": 0.9896103896103896,
+          "recall": 0.9844961240310077,
+          "f1": 0.9870466321243523,
+          "support": 774
+        },
+        "spam": {
+          "precision": 0.7887323943661971,
+          "recall": 0.8,
+          "f1": 0.7943262411347518,
+          "support": 70
+        },
+        "smishing": {
+          "precision": 0.8620689655172413,
+          "recall": 0.8928571428571429,
+          "f1": 0.8771929824561403,
+          "support": 84
+        }
+      },
+      "positive_label": "smishing",
+      "positive_recall": 0.8928571428571429,
+      "positive_false_positive_rate": 0.014218009478672985,
+      "positive_pr_auc": 0.9427906914870807,
+      "confusion_matrix": [
+        [
+          762,
+          7,
+          5
+        ],
+        [
+          7,
+          56,
+          7
+        ],
+        [
+          1,
+          8,
+          75
+        ]
+      ],
+      "truncated_rate": 0.0,
+      "predict_ms_per_sample": 0.567
+    }
+  }
+}

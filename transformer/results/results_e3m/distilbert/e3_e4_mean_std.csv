@@ -1,0 +1,15 @@
+,,,macro_f1,macro_f1,macro_f1,pos_recall,pos_recall,pos_recall,pos_fpr,pos_fpr,pos_fpr,pos_pr_auc,pos_pr_auc,pos_pr_auc
+,,,mean,std,count,mean,std,count,mean,std,count,mean,std,count
+experiment,source,eval_set,,,,,,,,,,,,
+E3M,email+phone,source_val,0.9902,0.0022,3,0.9885,0.0039,3,0.0058,0.001,3,0.9995,0.0005,3
+E3M,email+phone,test_email,0.9902,0.0026,3,0.9896,0.0028,3,0.0079,0.0027,3,0.9996,0.0004,3
+E3M,email+phone,test_phone,1.0,0.0,3,1.0,0.0,3,0.0,0.0,3,1.0,0.0,3
+E3M,email+phone,test_sms,0.5916,0.0218,3,0.7878,0.1214,3,0.2823,0.0261,3,0.6165,0.0787,3
+E3M,sms+email,source_val,0.9933,0.0027,3,0.989,0.003,3,0.0034,0.0025,3,0.9984,0.0012,3
+E3M,sms+email,test_email,0.9908,0.0035,3,0.9917,0.0045,3,0.0095,0.0027,3,0.9992,0.0005,3
+E3M,sms+email,test_phone,0.7741,0.0439,3,0.74,0.1293,3,0.125,0.1635,3,0.9583,0.0083,3
+E3M,sms+email,test_sms,0.9938,0.0061,3,0.9905,0.0165,3,0.0014,0.0006,3,0.9987,0.0017,3
+E3M,sms+phone,source_val,0.9961,0.003,3,0.9953,0.0,3,0.002,0.0025,3,0.9998,0.0002,3
+E3M,sms+phone,test_email,0.5366,0.0218,3,0.9809,0.0066,3,0.8212,0.0281,3,0.7949,0.0402,3
+E3M,sms+phone,test_phone,1.0,0.0,3,1.0,0.0,3,0.0,0.0,3,1.0,0.0,3
+E3M,sms+phone,test_sms,0.9947,0.0046,3,0.9842,0.0145,3,0.0003,0.0006,3,0.9996,0.0004,3

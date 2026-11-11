@@ -1,0 +1,57 @@
+{
+  "dataset": "uci_replication",
+  "run": "first30_seed2",
+  "train_seed": 44,
+  "max_length": 256,
+  "train_seconds": 12.9,
+  "train_counts": {
+    "ham": 1435,
+    "spam": 237
+  },
+  "class_weights": [
+    0.5825784206390381,
+    3.527426242828369
+  ],
+  "train_truncated_rate": 0.0,
+  "test": {
+    "n": 3902,
+    "accuracy": 0.9892362890825218,
+    "macro_f1": 0.9759545889109755,
+    "per_class": {
+      "ham": {
+        "precision": 0.9912023460410557,
+        "recall": 0.9964622641509434,
+        "f1": 0.9938253454866216,
+        "support": 3392
+      },
+      "spam": {
+        "precision": 0.975609756097561,
+        "recall": 0.9411764705882353,
+        "f1": 0.9580838323353293,
+        "support": 510
+      }
+    },
+    "positive_label": "spam",
+    "positive_recall": 0.9411764705882353,
+    "positive_false_positive_rate": 0.003537735849056604,
+    "positive_pr_auc": 0.9867006190534211,
+    "confusion_matrix": {
+      "labels": [
+        "ham",
+        "spam"
+      ],
+      "rows_true_cols_pred": [
+        [
+          3380,
+          12
+        ],
+        [
+          30,
+          480
+        ]
+      ]
+    },
+    "truncated_rate": 0.0,
+    "predict_ms_per_sample": 0.78
+  }
+}

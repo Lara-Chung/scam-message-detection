@@ -1,0 +1,34 @@
+experiment,source,eval_set,distilbert_macro_f1,bilstm_macro_f1,mean_diff_macro_f1,seeds_distilbert_better,seeds_bilstm_better,seeds_no_significant_difference,max_mcnemar_p
+E1,mendeley,test,0.8873,0.8485,0.0388,1,0,2,0.14429205544010104
+E1,uci,test,0.9777,0.9424,0.0353,3,0,0,0.022655844688415527
+E1,uci_replication,test,0.9759,0.9456,0.0303,3,0,0,1.0280084075425782e-07
+E1,bothbosu,test,1.0,1.0,0.0,0,0,3,1.0
+E1,email_fraud,test,0.9917,0.9906,0.0011,0,0,3,0.7744140625
+E1,spamassassin,test,0.9888,0.9809,0.0079,0,0,3,0.30745625495910645
+E1,ceas_08,test,0.8556,0.8511,0.0045,3,0,0,7.340738534732005e-05
+E3,sms,test_sms,0.9938,0.9757,0.0181,2,0,1,0.5078125
+E3,sms,test_email,0.5564,0.5171,0.0393,2,1,0,3.7317622194762336e-07
+E3,sms,test_phone,0.329,0.5034,-0.1744,0,2,1,0.18859344218175958
+E3,email,test_sms,0.5638,0.5946,-0.0308,1,1,1,7.527026953408963e-05
+E3,email,test_email,0.9917,0.9865,0.0052,1,0,2,0.24821307898992026
+E3,email,test_phone,0.6616,0.6618,-0.0002,1,1,1,0.07299804543011573
+E3,phone,test_sms,0.561,0.3598,0.2012,3,0,0,1.9594663529843206e-63
+E3,phone,test_email,0.461,0.4782,-0.0172,1,0,2,0.8501067391385259
+E3,phone,test_phone,1.0,1.0,0.0,0,0,3,1.0
+E3,sms+email,test_sms,0.9921,0.9644,0.0277,3,0,0,0.021484375
+E3,sms+email,test_email,0.9906,0.9878,0.0028,0,0,3,0.803619384765625
+E3,sms+email,test_phone,0.747,0.5373,0.2097,3,0,0,0.0014183225546052349
+E3,sms+phone,test_sms,0.9956,0.9753,0.0203,2,0,1,1.0
+E3,sms+phone,test_email,0.5295,0.603,-0.0735,0,1,2,0.44395492854911456
+E3,sms+phone,test_phone,1.0,1.0,0.0,0,0,3,1.0
+E3,email+phone,test_sms,0.5994,0.6091,-0.0097,1,1,1,0.14346345513874031
+E3,email+phone,test_email,0.9917,0.9895,0.0022,0,0,3,1.0
+E3,email+phone,test_phone,0.9984,0.9984,0.0,0,0,3,1.0
+E4,spamassassin->ceas_08 (raw),test_spamassassin,0.9902,0.983,0.0072,0,0,3,0.359283447265625
+E4,spamassassin->ceas_08 (raw),test_ceas_08,0.7702,0.7205,0.0497,3,0,0,4.456573175118965e-14
+E4,spamassassin->ceas_08 (stripped),test_spamassassin,0.9899,0.9815,0.0084,1,0,2,0.3876953125
+E4,spamassassin->ceas_08 (stripped),test_ceas_08,0.7461,0.7171,0.029,2,0,1,6.806169985156414e-05
+E4,ceas_08->spamassassin (raw),test_ceas_08,0.8561,0.8508,0.0053,3,0,0,1.790579815739059e-05
+E4,ceas_08->spamassassin (raw),test_spamassassin,0.7273,0.7584,-0.0311,0,1,2,0.530620094065616
+E4,ceas_08->spamassassin (stripped),test_ceas_08,0.8538,0.8504,0.0034,2,0,1,0.5869195689340558
+E4,ceas_08->spamassassin (stripped),test_spamassassin,0.719,0.7148,0.0042,1,0,2,0.06532544046457499

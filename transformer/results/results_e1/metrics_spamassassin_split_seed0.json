@@ -1,0 +1,98 @@
+{
+  "dataset": "spamassassin",
+  "run": "split_seed0",
+  "train_seed": 42,
+  "max_length": 512,
+  "train_seconds": 146.2,
+  "train_counts": {
+    "legitimate": 2616,
+    "spam": 1078
+  },
+  "class_weights": [
+    0.7060397267341614,
+    1.7133580446243286
+  ],
+  "train_truncated_rate": 0.30644288034650785,
+  "val": {
+    "n": 924,
+    "accuracy": 0.9794372294372294,
+    "macro_f1": 0.9753304658067834,
+    "per_class": {
+      "legitimate": {
+        "precision": 0.990726429675425,
+        "recall": 0.9801223241590215,
+        "f1": 0.9853958493466565,
+        "support": 654
+      },
+      "spam": {
+        "precision": 0.9530685920577617,
+        "recall": 0.9777777777777777,
+        "f1": 0.9652650822669104,
+        "support": 270
+      }
+    },
+    "positive_label": "spam",
+    "positive_recall": 0.9777777777777777,
+    "positive_false_positive_rate": 0.019877675840978593,
+    "positive_pr_auc": 0.9948644134737193,
+    "confusion_matrix": {
+      "labels": [
+        "legitimate",
+        "spam"
+      ],
+      "rows_true_cols_pred": [
+        [
+          641,
+          13
+        ],
+        [
+          6,
+          264
+        ]
+      ]
+    },
+    "truncated_rate": 0.2943722943722944,
+    "predict_ms_per_sample": 5.23
+  },
+  "test": {
+    "n": 1155,
+    "accuracy": 0.9887445887445887,
+    "macro_f1": 0.9863710752735997,
+    "per_class": {
+      "legitimate": {
+        "precision": 0.9914529914529915,
+        "recall": 0.9926650366748166,
+        "f1": 0.9920586438607208,
+        "support": 818
+      },
+      "spam": {
+        "precision": 0.9821428571428571,
+        "recall": 0.9792284866468842,
+        "f1": 0.9806835066864784,
+        "support": 337
+      }
+    },
+    "positive_label": "spam",
+    "positive_recall": 0.9792284866468842,
+    "positive_false_positive_rate": 0.007334963325183374,
+    "positive_pr_auc": 0.9973078842626858,
+    "confusion_matrix": {
+      "labels": [
+        "legitimate",
+        "spam"
+      ],
+      "rows_true_cols_pred": [
+        [
+          812,
+          6
+        ],
+        [
+          7,
+          330
+        ]
+      ]
+    },
+    "truncated_rate": 0.3255411255411255,
+    "predict_ms_per_sample": 5.25
+  }
+}

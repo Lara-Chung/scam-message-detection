@@ -1,0 +1,145 @@
+{
+  "experiment": "E4",
+  "run": "E4_ceas_08_to_spamassassin_raw_seed2",
+  "source": "ceas_08",
+  "target": "spamassassin",
+  "text": "raw",
+  "seed": 42,
+  "overlap_removed": {
+    "train": {
+      "exact_text": 0,
+      "template": 0,
+      "removed": 0
+    },
+    "val": {
+      "exact_text": 0,
+      "template": 0,
+      "removed": 0
+    }
+  },
+  "config": {
+    "lr": 0.001,
+    "hidden": 64,
+    "dropout": 0.2,
+    "class_weights": true
+  },
+  "seq_len": 400,
+  "epochs_run": 4,
+  "best_epoch": 2,
+  "train_seconds": 56.3,
+  "train_counts": {
+    "legitimate": 10893,
+    "spam": 13393
+  },
+  "class_weights": {
+    "0": 1.114752593408611,
+    "1": 0.9066676622116031
+  },
+  "eval": {
+    "val": {
+      "n": 6071,
+      "accuracy": 0.9919288420359084,
+      "macro_f1": 0.9918508292400834,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9854756717501816,
+          "recall": 0.9966948218876239,
+          "f1": 0.9910534964396568,
+          "support": 2723
+        },
+        "spam": {
+          "precision": 0.9972867048537836,
+          "recall": 0.98805256869773,
+          "f1": 0.9926481620405101,
+          "support": 3348
+        }
+      },
+      "positive_label": "spam",
+      "positive_recall": 0.98805256869773,
+      "positive_false_positive_rate": 0.0033051781123760557,
+      "positive_pr_auc": 0.9994500333752134,
+      "confusion_matrix": [
+        [
+          2714,
+          9
+        ],
+        [
+          40,
+          3308
+        ]
+      ],
+      "truncated_rate": 0.109042991269972,
+      "predict_ms_per_sample": 0.189
+    },
+    "test_ceas_08": {
+      "n": 7592,
+      "accuracy": 0.9924920969441517,
+      "macro_f1": 0.9924154907008946,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9889018691588785,
+          "recall": 0.9944199706314244,
+          "f1": 0.9916532435202812,
+          "support": 3405
+        },
+        "spam": {
+          "precision": 0.9954414587332053,
+          "recall": 0.9909242894673991,
+          "f1": 0.9931777378815081,
+          "support": 4187
+        }
+      },
+      "positive_label": "spam",
+      "positive_recall": 0.9909242894673991,
+      "positive_false_positive_rate": 0.005580029368575624,
+      "positive_pr_auc": 0.9996223540333303,
+      "confusion_matrix": [
+        [
+          3386,
+          19
+        ],
+        [
+          38,
+          4149
+        ]
+      ],
+      "truncated_rate": 0.09602212855637512,
+      "predict_ms_per_sample": 0.11
+    },
+    "test_spamassassin": {
+      "n": 1154,
+      "accuracy": 0.8232235701906413,
+      "macro_f1": 0.7521394157878778,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.8209424083769633,
+          "recall": 0.9596083231334149,
+          "f1": 0.8848758465011287,
+          "support": 817
+        },
+        "spam": {
+          "precision": 0.8341708542713567,
+          "recall": 0.49258160237388726,
+          "f1": 0.6194029850746269,
+          "support": 337
+        }
+      },
+      "positive_label": "spam",
+      "positive_recall": 0.49258160237388726,
+      "positive_false_positive_rate": 0.04039167686658507,
+      "positive_pr_auc": 0.8079830360968855,
+      "confusion_matrix": [
+        [
+          784,
+          33
+        ],
+        [
+          171,
+          166
+        ]
+      ],
+      "truncated_rate": 0.16724436741767765,
+      "predict_ms_per_sample": 0.222
+    }
+  }
+}

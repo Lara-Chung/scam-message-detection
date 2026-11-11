@@ -1,0 +1,175 @@
+{
+  "experiment": "E3",
+  "run": "E3_email_seed0",
+  "source": "email",
+  "seed": 0,
+  "overlap_removed": {
+    "email->test_sms": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    },
+    "email->test_phone": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    }
+  },
+  "train_seconds": 185.7,
+  "train_counts": {
+    "legitimate": 2022,
+    "fraud": 3069
+  },
+  "class_weights": [
+    1.2589020729064941,
+    0.8294232487678528
+  ],
+  "eval": {
+    "source_val": {
+      "n": 1273,
+      "n_positive": 768,
+      "accuracy": 0.992930086410055,
+      "macro_f1": 0.9926321211735358,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.984375,
+          "recall": 0.998019801980198,
+          "f1": 0.9911504424778761,
+          "support": 505
+        },
+        "fraud": {
+          "precision": 0.9986859395532195,
+          "recall": 0.9895833333333334,
+          "f1": 0.9941137998691956,
+          "support": 768
+        }
+      },
+      "positive_recall": 0.9895833333333334,
+      "positive_false_positive_rate": 0.0019801980198019802,
+      "positive_pr_auc": 0.9997833569880864,
+      "confusion_matrix": [
+        [
+          504,
+          1
+        ],
+        [
+          8,
+          760
+        ]
+      ]
+    },
+    "test_sms": {
+      "n": 1073,
+      "n_positive": 106,
+      "accuracy": 0.5936626281453867,
+      "macro_f1": 0.4987055848441987,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9633507853403142,
+          "recall": 0.5708376421923474,
+          "f1": 0.7168831168831169,
+          "support": 967
+        },
+        "fraud": {
+          "precision": 0.17,
+          "recall": 0.8018867924528302,
+          "f1": 0.28052805280528054,
+          "support": 106
+        }
+      },
+      "positive_recall": 0.8018867924528302,
+      "positive_false_positive_rate": 0.42916235780765255,
+      "positive_pr_auc": 0.4151015754345117,
+      "confusion_matrix": [
+        [
+          552,
+          415
+        ],
+        [
+          21,
+          85
+        ]
+      ]
+    },
+    "test_email": {
+      "n": 1591,
+      "n_positive": 959,
+      "accuracy": 0.994343180389692,
+      "macro_f1": 0.9941015745199883,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.989010989010989,
+          "recall": 0.9968354430379747,
+          "f1": 0.9929078014184397,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9979035639412998,
+          "recall": 0.9927007299270073,
+          "f1": 0.9952953476215368,
+          "support": 959
+        }
+      },
+      "positive_recall": 0.9927007299270073,
+      "positive_false_positive_rate": 0.0031645569620253164,
+      "positive_pr_auc": 0.9998827497778701,
+      "confusion_matrix": [
+        [
+          630,
+          2
+        ],
+        [
+          7,
+          952
+        ]
+      ]
+    },
+    "test_phone": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 0.6778242677824268,
+      "macro_f1": 0.6456668656256619,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.5172413793103449,
+          "recall": 0.5625,
+          "f1": 0.5389221556886228,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 0.7697368421052632,
+          "recall": 0.7358490566037735,
+          "f1": 0.752411575562701,
+          "support": 159
+        }
+      },
+      "positive_recall": 0.7358490566037735,
+      "positive_false_positive_rate": 0.4375,
+      "positive_pr_auc": 0.8726323338600934,
+      "confusion_matrix": [
+        [
+          45,
+          35
+        ],
+        [
+          42,
+          117
+        ]
+      ]
+    }
+  }
+}

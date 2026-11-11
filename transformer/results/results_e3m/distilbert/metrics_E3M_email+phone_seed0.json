@@ -1,0 +1,207 @@
+{
+  "experiment": "E3M",
+  "run": "E3M_email+phone_seed0",
+  "source": "email+phone",
+  "seed": 0,
+  "overlap_removed": {
+    "email->test_sms": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    },
+    "email->test_phone": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    },
+    "phone->test_sms": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    },
+    "phone->test_email": {
+      "train": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      },
+      "val": {
+        "exact_text": 0,
+        "template": 0,
+        "removed": 0
+      }
+    }
+  },
+  "n_train": 5091,
+  "size_matched": {
+    "n_train": 5091,
+    "per_channel": {
+      "email": 4441,
+      "phone": 650
+    }
+  },
+  "train_seconds": 191.0,
+  "train_counts": {
+    "legitimate": 1957,
+    "fraud": 3134
+  },
+  "class_weights": [
+    1.3007153272628784,
+    0.8122208118438721
+  ],
+  "eval": {
+    "source_val": {
+      "n": 1472,
+      "n_positive": 896,
+      "accuracy": 0.9925271739130435,
+      "macro_f1": 0.9921637520295989,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9879101899827288,
+          "recall": 0.9930555555555556,
+          "f1": 0.9904761904761905,
+          "support": 576
+        },
+        "fraud": {
+          "precision": 0.9955207166853304,
+          "recall": 0.9921875,
+          "f1": 0.9938513135830073,
+          "support": 896
+        }
+      },
+      "positive_recall": 0.9921875,
+      "positive_false_positive_rate": 0.006944444444444444,
+      "positive_pr_auc": 0.9997460881410618,
+      "confusion_matrix": [
+        [
+          572,
+          4
+        ],
+        [
+          7,
+          889
+        ]
+      ]
+    },
+    "test_sms": {
+      "n": 1073,
+      "n_positive": 106,
+      "accuracy": 0.7045666356011183,
+      "macro_f1": 0.5861291496167806,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9779411764705882,
+          "recall": 0.687693898655636,
+          "f1": 0.8075288403157256,
+          "support": 967
+        },
+        "fraud": {
+          "precision": 0.23155216284987276,
+          "recall": 0.8584905660377359,
+          "f1": 0.36472945891783565,
+          "support": 106
+        }
+      },
+      "positive_recall": 0.8584905660377359,
+      "positive_false_positive_rate": 0.31230610134436404,
+      "positive_pr_auc": 0.6786077670570004,
+      "confusion_matrix": [
+        [
+          665,
+          302
+        ],
+        [
+          15,
+          91
+        ]
+      ]
+    },
+    "test_email": {
+      "n": 1591,
+      "n_positive": 959,
+      "accuracy": 0.9930861093651792,
+      "macro_f1": 0.9927908133022079,
+      "per_class": {
+        "legitimate": {
+          "precision": 0.9874411302982732,
+          "recall": 0.995253164556962,
+          "f1": 0.9913317572892041,
+          "support": 632
+        },
+        "fraud": {
+          "precision": 0.9968553459119497,
+          "recall": 0.9916579770594369,
+          "f1": 0.9942498693152118,
+          "support": 959
+        }
+      },
+      "positive_recall": 0.9916579770594369,
+      "positive_false_positive_rate": 0.004746835443037975,
+      "positive_pr_auc": 0.9998686967854097,
+      "confusion_matrix": [
+        [
+          629,
+          3
+        ],
+        [
+          8,
+          951
+        ]
+      ]
+    },
+    "test_phone": {
+      "n": 239,
+      "n_positive": 159,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "legitimate": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 80
+        },
+        "fraud": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 159
+        }
+      },
+      "positive_recall": 1.0,
+      "positive_false_positive_rate": 0.0,
+      "positive_pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          80,
+          0
+        ],
+        [
+          0,
+          159
+        ]
+      ]
+    }
+  }
+}
