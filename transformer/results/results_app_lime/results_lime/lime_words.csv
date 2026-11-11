@@ -1,0 +1,487 @@
+sample_id,experiment,model,eval_set,failure,rank,word,weight_fraud
+bothbosu_test_298,E3,email,test_phone,false alarm,1,caller,0.35946719492331813
+bothbosu_test_298,E3,email,test_phone,false alarm,2,receiver,0.33138857937171073
+bothbosu_test_298,E3,email,test_phone,false alarm,3,the,-0.22095372892914658
+bothbosu_test_298,E3,email,test_phone,false alarm,4,residence,0.21820633869625675
+bothbosu_test_298,E3,email,test_phone,false alarm,5,John,-0.20955000440334107
+bothbosu_test_298,E3,email,test_phone,false alarm,6,is,-0.1623796348896755
+bothbosu_test_298,E3,email,test_phone,false alarm,7,phone,0.15499034486234778
+bothbosu_test_298,E3,email,test_phone,false alarm,8,number,0.15093545173076736
+bothbosu_test_298,E3,email,test_phone,false alarm,9,you,0.14381281750608657
+bothbosu_test_298,E3,email,test_phone,false alarm,10,s,-0.13204785476532988
+bothbosu_test_94,E3,email,test_phone,missed scam,1,John,-0.06634154948111941
+bothbosu_test_94,E3,email,test_phone,missed scam,2,a,-0.041652482599296804
+bothbosu_test_94,E3,email,test_phone,missed scam,3,is,-0.035609310384894996
+bothbosu_test_94,E3,email,test_phone,missed scam,4,your,0.03312515192336773
+bothbosu_test_94,E3,email,test_phone,missed scam,5,computer,0.031481477662628474
+bothbosu_test_94,E3,email,test_phone,missed scam,6,caller,0.03076438215336589
+bothbosu_test_94,E3,email,test_phone,missed scam,7,tech,-0.02656188817166411
+bothbosu_test_94,E3,email,test_phone,missed scam,8,receiver,0.024366521040237787
+bothbosu_test_94,E3,email,test_phone,missed scam,9,team,-0.022909613017692024
+bothbosu_test_94,E3,email,test_phone,missed scam,10,check,0.01561047107005613
+mendeley_5640,E3,email,test_sms,false alarm,1,my,0.3018704969911963
+mendeley_5640,E3,email,test_sms,false alarm,2,hppnss,-0.2188256185441642
+mendeley_5640,E3,email,test_sms,false alarm,3,heart,0.2113926746898998
+mendeley_5640,E3,email,test_sms,false alarm,4,Ur,0.12523337477877255
+mendeley_5640,E3,email,test_sms,false alarm,5,is,-0.08676951253258933
+mendeley_5640,E3,email,test_sms,false alarm,6,sorrow,0.0805058134928086
+mendeley_5640,E3,email,test_sms,false alarm,7,GOODFRIEND,0.07689875653113173
+mendeley_5640,E3,email,test_sms,false alarm,8,U,-0.07177458486016758
+mendeley_5640,E3,email,test_sms,false alarm,9,smile,0.06468787778061028
+mendeley_5640,E3,email,test_sms,false alarm,10,tear,0.06361372795509555
+mendeley_2873,E3,email,test_sms,missed scam,1,COVID,-0.04427375775076613
+mendeley_2873,E3,email,test_sms,missed scam,2,contact,0.03049576284400626
+mendeley_2873,E3,email,test_sms,missed scam,3,Someone,-0.027747961473302017
+mendeley_2873,E3,email,test_sms,missed scam,4,recommends,-0.02731944774578364
+mendeley_2873,E3,email,test_sms,missed scam,5,anon,-0.01938542108641813
+mendeley_2873,E3,email,test_sms,missed scam,6,you,0.018453554442404166
+mendeley_2873,E3,email,test_sms,missed scam,7,shown,-0.01664624513825465
+mendeley_2873,E3,email,test_sms,missed scam,8,positive,0.016471878066694524
+mendeley_2873,E3,email,test_sms,missed scam,9,at,-0.015100282792983597
+mendeley_2873,E3,email,test_sms,missed scam,10,tested,-0.012675800226696328
+nazario_5_263,E3,phone,test_email,false alarm,1,to,0.0007225054335726938
+nazario_5_263,E3,phone,test_email,false alarm,2,ENRON_DEVELOPMENT,0.000717200709466298
+nazario_5_263,E3,phone,test_email,false alarm,3,presentation,0.0006475553364173736
+nazario_5_263,E3,phone,test_email,false alarm,4,Oman,0.000637331777527178
+nazario_5_263,E3,phone,test_email,false alarm,5,give,0.0006152056415108942
+nazario_5_263,E3,phone,test_email,false alarm,6,cost,0.0005711851872810063
+nazario_5_263,E3,phone,test_email,false alarm,7,we,0.0005585294834375553
+nazario_5_263,E3,phone,test_email,false alarm,8,19,0.0005082136897288552
+nazario_5_263,E3,phone,test_email,false alarm,9,Sorry,2.5332574384554768e-05
+nazario_5_263,E3,phone,test_email,false alarm,10,Dubai,1.7441948339974747e-05
+nazario_5_2323,E3,phone,test_email,missed scam,1,org,0.1742583516251357
+nazario_5_2323,E3,phone,test_email,missed scam,2,Please,-0.1656175721270187
+nazario_5_2323,E3,phone,test_email,missed scam,3,verify,0.09983099060715336
+nazario_5_2323,E3,phone,test_email,missed scam,4,verification,0.08397047236962424
+nazario_5_2323,E3,phone,test_email,missed scam,5,HelloApple,-0.059346847147728976
+nazario_5_2323,E3,phone,test_email,missed scam,6,jose,-0.04111494700105543
+nazario_5_2323,E3,phone,test_email,missed scam,7,monkey,-0.03252277109076593
+nazario_5_2323,E3,phone,test_email,missed scam,8,the,-0.026833972660561894
+nazario_5_2323,E3,phone,test_email,missed scam,9,need,0.01579752171161312
+nazario_5_2323,E3,phone,test_email,missed scam,10,open,0.009659486307882059
+mendeley_4155,E3,phone,test_sms,false alarm,1,of,0.023140980233217562
+mendeley_4155,E3,phone,test_sms,false alarm,2,u,0.016315412144749197
+mendeley_4155,E3,phone,test_sms,false alarm,3,x,0.01587859788999919
+mendeley_4155,E3,phone,test_sms,false alarm,4,Thinking,0.009583132520421516
+mendeley_5076,E3,phone,test_sms,missed scam,1,prizes,0.08120840083129786
+mendeley_5076,E3,phone,test_sms,missed scam,2,soon,-0.05620208752000027
+mendeley_5076,E3,phone,test_sms,missed scam,3,visit,-0.049112551929156166
+mendeley_5076,E3,phone,test_sms,missed scam,4,so,-0.04281082618108755
+mendeley_5076,E3,phone,test_sms,missed scam,5,uk,-0.04148867683251665
+mendeley_5076,E3,phone,test_sms,missed scam,6,on,-0.0372292770066335
+mendeley_5076,E3,phone,test_sms,missed scam,7,WIN,0.02423286081926282
+mendeley_5076,E3,phone,test_sms,missed scam,8,or,0.022401342847373124
+mendeley_5076,E3,phone,test_sms,missed scam,9,an,0.02126326010166649
+mendeley_5076,E3,phone,test_sms,missed scam,10,winner,0.018283419931505562
+nigerian_5_183,E3,sms,test_email,false alarm,1,__________,-0.01090375869440992
+nigerian_5_183,E3,sms,test_email,false alarm,2,gave,0.006000398215377341
+nigerian_5_183,E3,sms,test_email,false alarm,3,TRAINING,0.0051467829656893175
+nigerian_5_183,E3,sms,test_email,false alarm,4,C,0.004548549176929999
+nigerian_5_183,E3,sms,test_email,false alarm,5,a0a4k3d6x0_,0.002850252014762896
+nigerian_5_183,E3,sms,test_email,false alarm,6,NO,-0.0021994650527107644
+nigerian_5_183,E3,sms,test_email,false alarm,7,NEWS,0.0017439101596408017
+nigerian_5_183,E3,sms,test_email,false alarm,8,letter,-0.001030659736842382
+nigerian_5_183,E3,sms,test_email,false alarm,9,Leave,0.0004838512462190564
+nigerian_5_183,E3,sms,test_email,false alarm,10,prohibited,0.0004797712126516247
+nazario_5_2502,E3,sms,test_email,missed scam,1,your,-0.28878002756270277
+nazario_5_2502,E3,sms,test_email,missed scam,2,luo4ckedd,-0.20135907466365033
+nazario_5_2502,E3,sms,test_email,missed scam,3,th7e,-0.1991508153694722
+nazario_5_2502,E3,sms,test_email,missed scam,4,vewriwfy,-0.19114329298334057
+nazario_5_2502,E3,sms,test_email,missed scam,5,the,-0.1800475246319785
+nazario_5_2502,E3,sms,test_email,missed scam,6,oUnusuyal,-0.16204824165769882
+nazario_5_2502,E3,sms,test_email,missed scam,7,22w019,0.12679453403878546
+nazario_5_2502,E3,sms,test_email,missed scam,8,S1ecuritcy,0.089813209688234
+nazario_5_2502,E3,sms,test_email,missed scam,9,Ctu1st7omer,0.06714224356921991
+nazario_5_2502,E3,sms,test_email,missed scam,10,Expseriie0nfc1ew,0.0460447728245855
+bothbosu_test_176,E3,sms,test_phone,false alarm,1,1234567890,0.2919507182816733
+bothbosu_test_176,E3,sms,test_phone,false alarm,2,caller,0.2872850290534656
+bothbosu_test_176,E3,sms,test_phone,false alarm,3,receiver,0.15626259577616813
+bothbosu_test_176,E3,sms,test_phone,false alarm,4,you,0.14135171299380941
+bothbosu_test_176,E3,sms,test_phone,false alarm,5,s,0.13655791208097307
+bothbosu_test_176,E3,sms,test_phone,false alarm,6,really,0.10697003356911162
+bothbosu_test_176,E3,sms,test_phone,false alarm,7,delivered,0.10331719112551925
+bothbosu_test_176,E3,sms,test_phone,false alarm,8,confirm,0.08418150013735116
+bothbosu_test_176,E3,sms,test_phone,false alarm,9,number,-0.052406874288798005
+bothbosu_test_176,E3,sms,test_phone,false alarm,10,is,-0.03832300061241795
+bothbosu_test_21,E3,sms,test_phone,missed scam,1,caller,0.0025727078608552213
+bothbosu_test_21,E3,sms,test_phone,missed scam,2,receiver,0.0023723211426342206
+bothbosu_test_21,E3,sms,test_phone,missed scam,3,847219,0.0023546221381465756
+bothbosu_test_21,E3,sms,test_phone,missed scam,4,need,0.0020542715575992167
+bothbosu_test_21,E3,sms,test_phone,missed scam,5,fee,0.0018177414045940708
+bothbosu_test_21,E3,sms,test_phone,missed scam,6,a,-0.0005042017674934574
+bothbosu_test_21,E3,sms,test_phone,missed scam,7,I,-0.00041448747137052183
+bothbosu_test_21,E3,sms,test_phone,missed scam,8,just,-0.0003529120932807609
+bothbosu_test_21,E3,sms,test_phone,missed scam,9,not,-2.7262775810034413e-05
+bothbosu_test_21,E3,sms,test_phone,missed scam,10,about,1.7415205414772924e-05
+bothbosu_test_184,E3,email,test_phone,false alarm,1,Dell,-0.26794874763009996
+bothbosu_test_184,E3,email,test_phone,false alarm,2,caller,0.2568450320848442
+bothbosu_test_184,E3,email,test_phone,false alarm,3,laptop,0.2482134431479163
+bothbosu_test_184,E3,email,test_phone,false alarm,4,the,-0.2241342633821011
+bothbosu_test_184,E3,email,test_phone,false alarm,5,package,0.2042990563249964
+bothbosu_test_184,E3,email,test_phone,false alarm,6,your,0.19500643926346833
+bothbosu_test_184,E3,email,test_phone,false alarm,7,receiver,0.1896836457355948
+bothbosu_test_184,E3,email,test_phone,false alarm,8,a,-0.1832158581628629
+bothbosu_test_184,E3,email,test_phone,false alarm,9,XYZ,-0.17759038301384006
+bothbosu_test_184,E3,email,test_phone,false alarm,10,you,0.17291872439585482
+bothbosu_test_106,E3,email,test_phone,missed scam,1,John,-0.2558271637327366
+bothbosu_test_106,E3,email,test_phone,missed scam,2,your,0.15249481242904642
+bothbosu_test_106,E3,email,test_phone,missed scam,3,a,-0.10310210712141603
+bothbosu_test_106,E3,email,test_phone,missed scam,4,from,-0.09376851561056929
+bothbosu_test_106,E3,email,test_phone,missed scam,5,caller,0.08876894990791948
+bothbosu_test_106,E3,email,test_phone,missed scam,6,receiver,0.07849301394516636
+bothbosu_test_106,E3,email,test_phone,missed scam,7,that,-0.07662080277513542
+bothbosu_test_106,E3,email,test_phone,missed scam,8,Windows,-0.06980619339079476
+bothbosu_test_106,E3,email,test_phone,missed scam,9,my,0.06056881369825171
+bothbosu_test_106,E3,email,test_phone,missed scam,10,identity,0.04122002096538623
+mendeley_2079,E3,email,test_sms,false alarm,1,MojiBiola,0.029676006699083365
+mendeley_2079,E3,email,test_sms,false alarm,2,sir,0.028281013151547362
+mendeley_2079,E3,email,test_sms,false alarm,3,wonderful,0.017902330254434606
+mendeley_2079,E3,email,test_sms,false alarm,4,yesterday,-0.016253586962973392
+mendeley_2079,E3,email,test_sms,false alarm,5,enjoyed,-0.0162108468118904
+mendeley_2079,E3,email,test_sms,false alarm,6,you,0.014968469152721568
+mendeley_2079,E3,email,test_sms,false alarm,7,burial,0.01367084392618424
+mendeley_2079,E3,email,test_sms,false alarm,8,have,-0.013340906371452526
+mendeley_2079,E3,email,test_sms,false alarm,9,the,-0.013240911464404018
+mendeley_2079,E3,email,test_sms,false alarm,10,Hope,0.006805696566041323
+mendeley_3591,E3,email,test_sms,missed scam,1,Congrats,-0.3536918710053024
+mendeley_3591,E3,email,test_sms,missed scam,2,yours,0.26657403863952284
+mendeley_3591,E3,email,test_sms,missed scam,3,mobile,0.251942689557229
+mendeley_3591,E3,email,test_sms,missed scam,4,Videophones,0.21371917674741747
+mendeley_3591,E3,email,test_sms,missed scam,5,09063458120,0.17979039736158828
+mendeley_3591,E3,email,test_sms,missed scam,6,java,-0.17343519664847096
+mendeley_3591,E3,email,test_sms,missed scam,7,R,-0.13192970414738603
+mendeley_3591,E3,email,test_sms,missed scam,8,games,-0.11855820063218146
+mendeley_3591,E3,email,test_sms,missed scam,9,2,0.09722813531512153
+mendeley_3591,E3,email,test_sms,missed scam,10,mates,-0.08587917995586639
+nazario_5_1032,E3,phone,test_email,false alarm,1,vulnerability,0.032937040180433926
+nazario_5_1032,E3,phone,test_email,false alarm,2,web,0.02874380641665547
+nazario_5_1032,E3,phone,test_email,false alarm,3,that,0.02736158466392349
+nazario_5_1032,E3,phone,test_email,false alarm,4,happen,0.022259487872387733
+nazario_5_1032,E3,phone,test_email,false alarm,5,application,0.01971873146320484
+nazario_5_1032,E3,phone,test_email,false alarm,6,is,0.019416547735998574
+nazario_5_1032,E3,phone,test_email,false alarm,7,system,0.018553509785529228
+nazario_5_1032,E3,phone,test_email,false alarm,8,unfair,0.01611281383023917
+nazario_5_1032,E3,phone,test_email,false alarm,9,a,0.015169471077989789
+nazario_5_1032,E3,phone,test_email,false alarm,10,8,-0.004465421039084447
+nazario_5_1614,E3,phone,test_email,missed scam,1,message,-0.10614846022094811
+nazario_5_1614,E3,phone,test_email,missed scam,2,my,-0.007657641872448064
+mendeley_278,E3,phone,test_sms,false alarm,1,job,0.11453741308185676
+mendeley_278,E3,phone,test_sms,false alarm,2,have,0.0705626714363459
+mendeley_278,E3,phone,test_sms,false alarm,3,i,-0.05973836384154409
+mendeley_278,E3,phone,test_sms,false alarm,4,my,-0.05297597125065372
+mendeley_278,E3,phone,test_sms,false alarm,5,only,0.047393961298883
+mendeley_278,E3,phone,test_sms,false alarm,6,and,0.046720698903528875
+mendeley_278,E3,phone,test_sms,false alarm,7,car,-0.04077681547577673
+mendeley_278,E3,phone,test_sms,false alarm,8,parents,-0.027986342932161384
+mendeley_278,E3,phone,test_sms,false alarm,9,in,0.027338024955872214
+mendeley_278,E3,phone,test_sms,false alarm,10,house,-0.0164857692156834
+mendeley_2971,E3,phone,test_sms,missed scam,1,pleased,-0.11606725189526958
+mendeley_2971,E3,phone,test_sms,missed scam,2,awarded,0.0803278619070399
+mendeley_2971,E3,phone,test_sms,missed scam,3,call,-0.07119463700923903
+mendeley_2971,E3,phone,test_sms,missed scam,4,000,0.0600569849217239
+mendeley_2971,E3,phone,test_sms,missed scam,5,you,-0.057435717806907385
+mendeley_2971,E3,phone,test_sms,missed scam,6,customer,0.05716973561986917
+mendeley_2971,E3,phone,test_sms,missed scam,7,Prize,0.05146803328763227
+mendeley_2971,E3,phone,test_sms,missed scam,8,Mobile,-0.049837884825988596
+mendeley_2971,E3,phone,test_sms,missed scam,9,8536074310,-0.03808129756462234
+mendeley_2971,E3,phone,test_sms,missed scam,10,I,-0.035732058748451354
+nigerian_5_426,E3,sms,test_email,false alarm,1,2,0.1539267253200832
+nigerian_5_426,E3,sms,test_email,false alarm,2,088,0.15269913286518275
+nigerian_5_426,E3,sms,test_email,false alarm,3,purchase,0.15009117033722635
+nigerian_5_426,E3,sms,test_email,false alarm,4,Paso,0.14439964590370802
+nigerian_5_426,E3,sms,test_email,false alarm,5,2000,0.1426248859226715
+nigerian_5_426,E3,sms,test_email,false alarm,6,31,0.142585059351243
+nigerian_5_426,E3,sms,test_email,false alarm,7,P,0.13671047474399803
+nigerian_5_426,E3,sms,test_email,false alarm,8,2003,0.1322820621542903
+nigerian_5_426,E3,sms,test_email,false alarm,9,MMcf,0.1280141973658226
+nigerian_5_426,E3,sms,test_email,false alarm,10,230,0.11564046642265603
+nigerian_5_4580,E3,sms,test_email,missed scam,1,I,-4.0644611559601374e-05
+nigerian_5_4580,E3,sms,test_email,missed scam,2,contact,3.8259961636723384e-05
+nigerian_5_4580,E3,sms,test_email,missed scam,3,Million,3.270908177431593e-05
+nigerian_5_4580,E3,sms,test_email,missed scam,4,Williams,2.9881148194301185e-05
+nigerian_5_4580,E3,sms,test_email,missed scam,5,A,2.703669012373721e-05
+nigerian_5_4580,E3,sms,test_email,missed scam,6,invest,2.29502854808417e-05
+nigerian_5_4580,E3,sms,test_email,missed scam,7,please,2.2877933945337338e-05
+nigerian_5_4580,E3,sms,test_email,missed scam,8,E,-1.1090747102867607e-05
+nigerian_5_4580,E3,sms,test_email,missed scam,9,and,-7.125254086774391e-06
+nigerian_5_4580,E3,sms,test_email,missed scam,10,me,-3.1542566604860774e-06
+bothbosu_test_194,E3,sms,test_phone,false alarm,1,1234567890,0.383294561128453
+bothbosu_test_194,E3,sms,test_phone,false alarm,2,caller,0.36461686211164224
+bothbosu_test_194,E3,sms,test_phone,false alarm,3,receiver,0.15491899651542176
+bothbosu_test_194,E3,sms,test_phone,false alarm,4,re,0.08603769292238295
+bothbosu_test_194,E3,sms,test_phone,false alarm,5,5000,0.07066460731945465
+bothbosu_test_194,E3,sms,test_phone,false alarm,6,I,-0.05820561800779111
+bothbosu_test_194,E3,sms,test_phone,false alarm,7,that,-0.05809157017879575
+bothbosu_test_194,E3,sms,test_phone,false alarm,8,XYZ,-0.05008724269112812
+bothbosu_test_194,E3,sms,test_phone,false alarm,9,ha,-0.014557907471081443
+bothbosu_test_194,E3,sms,test_phone,false alarm,10,at,-0.010580683373936873
+bothbosu_test_149,E3,sms,test_phone,missed scam,1,caller,0.0003111688769964008
+bothbosu_test_149,E3,sms,test_phone,missed scam,2,receiver,0.00021530628485538571
+bothbosu_test_149,E3,sms,test_phone,missed scam,3,you,0.00016725716883179257
+bothbosu_test_149,E3,sms,test_phone,missed scam,4,customers,0.0001658020750435591
+bothbosu_test_149,E3,sms,test_phone,missed scam,5,card,0.00015394229536435676
+bothbosu_test_149,E3,sms,test_phone,missed scam,6,do,0.0001427946911416586
+bothbosu_test_149,E3,sms,test_phone,missed scam,7,selected,0.00014189758786185196
+bothbosu_test_149,E3,sms,test_phone,missed scam,8,confirm,0.00012679164455238245
+bothbosu_test_149,E3,sms,test_phone,missed scam,9,to,3.0323083276827536e-05
+bothbosu_test_149,E3,sms,test_phone,missed scam,10,But,2.2946298652649303e-05
+bothbosu_test_171,E3,email,test_phone,false alarm,1,caller,0.30771878634271876
+bothbosu_test_171,E3,email,test_phone,false alarm,2,your,0.24369802426731083
+bothbosu_test_171,E3,email,test_phone,false alarm,3,receiver,0.23808575243593494
+bothbosu_test_171,E3,email,test_phone,false alarm,4,XYZ,-0.2046546838416547
+bothbosu_test_171,E3,email,test_phone,false alarm,5,package,0.1858655380594329
+bothbosu_test_171,E3,email,test_phone,false alarm,6,Delivery,0.152216498659704
+bothbosu_test_171,E3,email,test_phone,false alarm,7,the,-0.1341313255372414
+bothbosu_test_171,E3,email,test_phone,false alarm,8,that,-0.12261903897933978
+bothbosu_test_171,E3,email,test_phone,false alarm,9,Service,0.12139405526710254
+bothbosu_test_171,E3,email,test_phone,false alarm,10,Tiffany,-0.10144032470060162
+nazario_5_2204,E5,email,test_email_P1,flip after perturbation,1,and,-0.2681313505810946
+nazario_5_2204,E5,email,test_email_P1,flip after perturbation,2,the,-0.2373979730767064
+nazario_5_2204,E5,email,test_email_P1,flip after perturbation,3,ne3d,-0.2028814656904189
+nazario_5_2204,E5,email,test_email_P1,flip after perturbation,4,Your,0.188647130636914
+nazario_5_2204,E5,email,test_email_P1,flip after perturbation,5,tools,-0.18275417659051302
+nazario_5_2204,E5,email,test_email_P1,flip after perturbation,6,Documents,0.14829632185001168
+nazario_5_2204,E5,email,test_email_P1,flip after perturbation,7,Microsoft,0.14095931219766325
+nazario_5_2204,E5,email,test_email_P1,flip after perturbation,8,you,0.1334196535226517
+nazario_5_2204,E5,email,test_email_P1,flip after perturbation,9,Reader,0.1234462354625534
+nazario_5_2204,E5,email,test_email_P1,flip after perturbation,10,security,0.10973264697762854
+nazario_5_1631,E5,email,test_email_P2,flip after perturbation,1,l,-0.32606612527855167
+nazario_5_1631,E5,email,test_email_P2,flip after perturbation,2,the,-0.3073881696385777
+nazario_5_1631,E5,email,test_email_P2,flip after perturbation,3,account,0.3068886405249348
+nazario_5_1631,E5,email,test_email_P2,flip after perturbation,4,framework,-0.2532587257857306
+nazario_5_1631,E5,email,test_email_P2,flip after perturbation,5,you,0.19982158327767136
+nazario_5_1631,E5,email,test_email_P2,flip after perturbation,6,a,-0.19134164098315284
+nazario_5_1631,E5,email,test_email_P2,flip after perturbation,7,your,0.08824037864072481
+nazario_5_1631,E5,email,test_email_P2,flip after perturbation,8,mailbox,0.08461655097202221
+nazario_5_1631,E5,email,test_email_P2,flip after perturbation,9,email,0.06135994489077946
+nazario_5_1631,E5,email,test_email_P2,flip after perturbation,10,systemuqdatepanelpad0011,-0.013208148062046884
+nazario_5_3054,E5,email,test_email_P2_dot,flip after perturbation,1,jose,0.03959932410421586
+nazario_5_3054,E5,email,test_email_P2_dot,flip after perturbation,2,Hi,-0.025381725948465304
+nazario_5_3054,E5,email,test_email_P2_dot,flip after perturbation,3,do,-0.02524760326516934
+nazario_5_3054,E5,email,test_email_P2_dot,flip after perturbation,4,monkey,0.022682862703032654
+nazario_5_3054,E5,email,test_email_P2_dot,flip after perturbation,5,org,0.020545005655532973
+nazario_5_3054,E5,email,test_email_P2_dot,flip after perturbation,6,recommend,-0.019092971577280016
+nazario_5_3054,E5,email,test_email_P2_dot,flip after perturbation,7,mailbox,0.015383216437851217
+nazario_5_3054,E5,email,test_email_P2_dot,flip after perturbation,8,that,-0.014513928076976641
+nazario_5_3054,E5,email,test_email_P2_dot,flip after perturbation,9,2022,0.011118837464676894
+nazario_5_3054,E5,email,test_email_P2_dot,flip after perturbation,10,you,0.010228129651150358
+nazario_5_2204,E5,email,test_email_P2_space,flip after perturbation,1,account,0.4128430081970685
+nazario_5_2204,E5,email,test_email_P2_space,flip after perturbation,2,Your,0.22903589070926608
+nazario_5_2204,E5,email,test_email_P2_space,flip after perturbation,3,the,-0.20380378843770955
+nazario_5_2204,E5,email,test_email_P2_space,flip after perturbation,4,a,-0.18917439609730083
+nazario_5_2204,E5,email,test_email_P2_space,flip after perturbation,5,and,-0.17567672622285438
+nazario_5_2204,E5,email,test_email_P2_space,flip after perturbation,6,s,-0.14891255337349785
+nazario_5_2204,E5,email,test_email_P2_space,flip after perturbation,7,Adobe,-0.14796201903578474
+nazario_5_2204,E5,email,test_email_P2_space,flip after perturbation,8,Secured,0.14409434719358463
+nazario_5_2204,E5,email,test_email_P2_space,flip after perturbation,9,you,0.14276308454600548
+nazario_5_2204,E5,email,test_email_P2_space,flip after perturbation,10,e,0.06279142439127249
+nazario_5_2332,E5,email,test_email_P3,flip after perturbation,1,Password,0.3909566294551261
+nazario_5_2332,E5,email,test_email_P3,flip after perturbation,2,expire,0.3348221363850473
+nazario_5_2332,E5,email,test_email_P3,flip after perturbation,3,Outlook,0.27471776367294537
+nazario_5_2332,E5,email,test_email_P3,flip after perturbation,4,valіdation,-0.26068647533643097
+nazario_5_2332,E5,email,test_email_P3,flip after perturbation,5,clіck,-0.2366543263213455
+nazario_5_2332,E5,email,test_email_P3,flip after perturbation,6,Microsoft,-0.23059853878616995
+nazario_5_2332,E5,email,test_email_P3,flip after perturbation,7,link,0.16856649760236442
+nazario_5_2332,E5,email,test_email_P3,flip after perturbation,8,today,-0.11666576894173235
+nazario_5_2332,E5,email,test_email_P3,flip after perturbation,9,the,-0.0957137864516385
+nazario_5_2332,E5,email,test_email_P3,flip after perturbation,10,for,-0.09361377887929906
+nazario_5_2080,E5,email,test_email_P3_lookalike,flip after perturbation,1,revised,-0.47508381902529073
+nazario_5_2080,E5,email,test_email_P3_lookalike,flip after perturbation,2,the,-0.36321492020411483
+nazario_5_2080,E5,email,test_email_P3_lookalike,flip after perturbation,3,pleаse,0.2489955296127476
+nazario_5_2080,E5,email,test_email_P3_lookalike,flip after perturbation,4,Best,-0.2336964937045794
+nazario_5_2080,E5,email,test_email_P3_lookalike,flip after perturbation,5,you,0.23084648312191333
+nazario_5_2080,E5,email,test_email_P3_lookalike,flip after perturbation,6,Beѕt,0.1815926113400205
+nazario_5_2080,E5,email,test_email_P3_lookalike,flip after perturbation,7,PI,-0.17118986832262495
+nazario_5_2080,E5,email,test_email_P3_lookalike,flip after perturbation,8,ThThank,0.11978576231123145
+nazario_5_2080,E5,email,test_email_P3_lookalike,flip after perturbation,9,regards,0.10996235999002461
+nazario_5_2080,E5,email,test_email_P3_lookalike,flip after perturbation,10,Kіndly,0.10617382994887285
+mendeley_5859,E5,sms,test_sms_P2,flip after perturbation,1,uk,0.09631617855634775
+mendeley_5859,E5,sms,test_sms_P2,flip after perturbation,2,netvision,0.08348421736538734
+mendeley_5859,E5,sms,test_sms_P2,flip after perturbation,3,com,0.08308705983909796
+mendeley_5859,E5,sms,test_sms_P2,flip after perturbation,4,customersqueries,0.08264754122936714
+mendeley_5859,E5,sms,test_sms_P2,flip after perturbation,5,a,0.07190744593485354
+mendeley_5859,E5,sms,test_sms_P2,flip after perturbation,6,i,-0.06991144123395014
+mendeley_5859,E5,sms,test_sms_P2,flip after perturbation,7,l,0.05235736381040007
+mendeley_5859,E5,sms,test_sms_P2,flip after perturbation,8,network,0.05075383566678813
+mendeley_5859,E5,sms,test_sms_P2,flip after perturbation,9,to,-0.04926168955927594
+mendeley_5859,E5,sms,test_sms_P2,flip after perturbation,10,e,-0.04265498234458363
+mendeley_4792,E5,sms,test_sms_P2_dot,flip after perturbation,1,i,-0.010717802358057039
+mendeley_4792,E5,sms,test_sms_P2_dot,flip after perturbation,2,Refused,-0.010572038908283827
+mendeley_4792,E5,sms,test_sms_P2_dot,flip after perturbation,3,free,0.008684503116164047
+mendeley_4792,E5,sms,test_sms_P2_dot,flip after perturbation,4,get,0.008566650927635179
+mendeley_4792,E5,sms,test_sms_P2_dot,flip after perturbation,5,or,-0.008311301091087754
+mendeley_4792,E5,sms,test_sms_P2_dot,flip after perturbation,6,0800,0.007808105802047959
+mendeley_4792,E5,sms,test_sms_P2_dot,flip after perturbation,7,e,0.007501094735640225
+mendeley_4792,E5,sms,test_sms_P2_dot,flip after perturbation,8,text,0.007106508979745082
+mendeley_4792,E5,sms,test_sms_P2_dot,flip after perturbation,9,195,0.006982677122424534
+mendeley_4792,E5,sms,test_sms_P2_dot,flip after perturbation,10,Unsecured,0.006653059217495853
+mendeley_2998,E5,sms,test_sms_P2_space,flip after perturbation,1,process,-0.5868163283333625
+mendeley_2998,E5,sms,test_sms_P2_space,flip after perturbation,2,http,0.3717557009658619
+mendeley_2998,E5,sms,test_sms_P2_space,flip after perturbation,3,i,-0.10280908222681318
+mendeley_2998,E5,sms,test_sms_P2_space,flip after perturbation,4,has,0.048647165221756314
+mendeley_2998,E5,sms,test_sms_P2_space,flip after perturbation,5,received,0.048587987356190236
+mendeley_2998,E5,sms,test_sms_P2_space,flip after perturbation,6,n,-0.045689417489842565
+mendeley_2998,E5,sms,test_sms_P2_space,flip after perturbation,7,out,0.04098091463976914
+mendeley_2998,E5,sms,test_sms_P2_space,flip after perturbation,8,t,-0.04012879988583335
+mendeley_2998,E5,sms,test_sms_P2_space,flip after perturbation,9,Reply,0.039795773313106214
+mendeley_2998,E5,sms,test_sms_P2_space,flip after perturbation,10,u,-0.03746961221933459
+mendeley_2728,E5,sms,test_sms_P3,flip after perturbation,1,meеt,-0.028847006678679572
+mendeley_2728,E5,sms,test_sms_P3,flip after perturbation,2,msg,0.02123775455531884
+mendeley_2728,E5,sms,test_sms_P3,flip after perturbation,3,REPLY,0.02105328177555686
+mendeley_2728,E5,sms,test_sms_P3,flip after perturbation,4,18,0.018803691763726944
+mendeley_2728,E5,sms,test_sms_P3,flip after perturbation,5,Text,0.018526058061338953
+mendeley_2728,E5,sms,test_sms_P3,flip after perturbation,6,a,0.016808289810339185
+mendeley_2728,E5,sms,test_sms_P3,flip after perturbation,7,just,-0.010307886811602213
+mendeley_2728,E5,sms,test_sms_P3,flip after perturbation,8,eg,-0.009957556495490426
+mendeley_2728,E5,sms,test_sms_P3,flip after perturbation,9,thirtyeight,-0.009734450855652672
+mendeley_2728,E5,sms,test_sms_P3,flip after perturbation,10,someone,-0.00894138022003055
+mendeley_2728,E5,sms,test_sms_P3_lookalike,flip after perturbation,1,Text,0.00023819684310148634
+mendeley_2728,E5,sms,test_sms_P3_lookalike,flip after perturbation,2,msg,0.00020814167010368723
+mendeley_2728,E5,sms,test_sms_P3_lookalike,flip after perturbation,3,10p,0.00020702965975824157
+mendeley_2728,E5,sms,test_sms_P3_lookalike,flip after perturbation,4,pеnce,-0.00018994702799664126
+mendeley_2728,E5,sms,test_sms_P3_lookalike,flip after perturbation,5,datе,-0.0001777685052050522
+mendeley_2728,E5,sms,test_sms_P3_lookalike,flip after perturbation,6,just,-0.00017024622629269862
+mendeley_2728,E5,sms,test_sms_P3_lookalike,flip after perturbation,7,18,0.00016605160230508478
+mendeley_2728,E5,sms,test_sms_P3_lookalike,flip after perturbation,8,thirtyeight,0.00013506511261612183
+mendeley_2728,E5,sms,test_sms_P3_lookalike,flip after perturbation,9,find,0.00012133106833596874
+mendeley_2728,E5,sms,test_sms_P3_lookalike,flip after perturbation,10,today,0.00011378342692192532
+nazario_5_2506,E5,email,test_email_P1,flip after perturbation,1,samples,-0.15433224893256076
+nazario_5_2506,E5,email,test_email_P1,flip after perturbation,2,new5letter,-0.09055497318969336
+nazario_5_2506,E5,email,test_email_P1,flip after perturbation,3,gift,0.07581313402134436
+nazario_5_2506,E5,email,test_email_P1,flip after perturbation,4,You,0.06121264533116005
+nazario_5_2506,E5,email,test_email_P1,flip after perturbation,5,5hipment,0.056207247608611954
+nazario_5_2506,E5,email,test_email_P1,flip after perturbation,6,SHIPMENT,0.051158018525180204
+nazario_5_2506,E5,email,test_email_P1,flip after perturbation,7,CA,-0.050544644008012236
+nazario_5_2506,E5,email,test_email_P1,flip after perturbation,8,toward5,-0.05045485423797735
+nazario_5_2506,E5,email,test_email_P1,flip after perturbation,9,Blvd,0.0383450764813383
+nazario_5_2506,E5,email,test_email_P1,flip after perturbation,10,Member,0.03313022357408171
+nazario_5_3054,E5,email,test_email_P2,flip after perturbation,1,jose,0.05645512597524978
+nazario_5_3054,E5,email,test_email_P2,flip after perturbation,2,monkey,0.04129225503279426
+nazario_5_3054,E5,email,test_email_P2,flip after perturbation,3,has,-0.03479769965986478
+nazario_5_3054,E5,email,test_email_P2,flip after perturbation,4,org,0.0323938341129143
+nazario_5_3054,E5,email,test_email_P2,flip after perturbation,5,approved,-0.031813879095330594
+nazario_5_3054,E5,email,test_email_P2,flip after perturbation,6,Hi,-0.02513063062378486
+nazario_5_3054,E5,email,test_email_P2,flip after perturbation,7,mailbox,0.024797473985916384
+nazario_5_3054,E5,email,test_email_P2,flip after perturbation,8,verification,-0.0237198230950911
+nazario_5_3054,E5,email,test_email_P2,flip after perturbation,9,your,0.02357225574791245
+nazario_5_3054,E5,email,test_email_P2,flip after perturbation,10,A,-0.01775953047641686
+nazario_5_2332,E5,email,test_email_P2_dot,flip after perturbation,1,Microsoft,-0.38821647502201584
+nazario_5_2332,E5,email,test_email_P2_dot,flip after perturbation,2,expire,0.2971442048038109
+nazario_5_2332,E5,email,test_email_P2_dot,flip after perturbation,3,Password,0.273866685896207
+nazario_5_2332,E5,email,test_email_P2_dot,flip after perturbation,4,c,-0.24759724727808188
+nazario_5_2332,E5,email,test_email_P2_dot,flip after perturbation,5,i,-0.2393413948201917
+nazario_5_2332,E5,email,test_email_P2_dot,flip after perturbation,6,today,-0.23042150468812844
+nazario_5_2332,E5,email,test_email_P2_dot,flip after perturbation,7,Outlook,0.1922256212935914
+nazario_5_2332,E5,email,test_email_P2_dot,flip after perturbation,8,l,-0.11026354534154767
+nazario_5_2332,E5,email,test_email_P2_dot,flip after perturbation,9,on,-0.08110741309589271
+nazario_5_2332,E5,email,test_email_P2_dot,flip after perturbation,10,92,-0.07014764801728729
+nazario_5_3054,E5,email,test_email_P2_space,flip after perturbation,1,jose,0.13762865932020288
+nazario_5_3054,E5,email,test_email_P2_space,flip after perturbation,2,monkey,0.08897900479309799
+nazario_5_3054,E5,email,test_email_P2_space,flip after perturbation,3,org,0.07017203164846152
+nazario_5_3054,E5,email,test_email_P2_space,flip after perturbation,4,a,-0.06395825429524339
+nazario_5_3054,E5,email,test_email_P2_space,flip after perturbation,5,c,-0.0606130250251947
+nazario_5_3054,E5,email,test_email_P2_space,flip after perturbation,6,that,-0.057067546835542465
+nazario_5_3054,E5,email,test_email_P2_space,flip after perturbation,7,2022,0.05096620396120302
+nazario_5_3054,E5,email,test_email_P2_space,flip after perturbation,8,l,-0.050389601538676915
+nazario_5_3054,E5,email,test_email_P2_space,flip after perturbation,9,approved,-0.0472168484426135
+nazario_5_3054,E5,email,test_email_P2_space,flip after perturbation,10,Hi,-0.04430524337925298
+mendeley_3330,E5,sms,test_sms_P2,flip after perturbation,1,0800345,0.00019469814600781607
+mendeley_3330,E5,sms,test_sms_P2,flip after perturbation,2,i,-0.0001729264549973893
+mendeley_3330,E5,sms,test_sms_P2,flip after perturbation,3,9999,0.00014159042304690925
+mendeley_3330,E5,sms,test_sms_P2,flip after perturbation,4,ALERT,0.00011186177888154156
+mendeley_3330,E5,sms,test_sms_P2,flip after perturbation,5,you,-3.8296963829618846e-05
+mendeley_3330,E5,sms,test_sms_P2,flip after perturbation,6,m,-3.414713259610017e-05
+mendeley_3330,E5,sms,test_sms_P2,flip after perturbation,7,been,-2.9623377621559948e-05
+mendeley_3330,E5,sms,test_sms_P2,flip after perturbation,8,fine,-1.677622432270852e-05
+mendeley_3330,E5,sms,test_sms_P2,flip after perturbation,9,Due,-1.3610717728465509e-05
+mendeley_3330,E5,sms,test_sms_P2,flip after perturbation,10,taken,-9.151066297288639e-06
+mendeley_2873,E5,sms,test_sms_P2_dot,flip after perturbation,1,com,0.0002248459576745477
+mendeley_2873,E5,sms,test_sms_P2_dot,flip after perturbation,2,19,0.00014868114361745978
+mendeley_2873,E5,sms,test_sms_P2_dot,flip after perturbation,3,alert,0.00014860353128260038
+mendeley_2873,E5,sms,test_sms_P2_dot,flip after perturbation,4,More,-0.00014728713229833818
+mendeley_2873,E5,sms,test_sms_P2_dot,flip after perturbation,5,recommends,0.0001450965304447415
+mendeley_2873,E5,sms,test_sms_P2_dot,flip after perturbation,6,symptoms,0.00014436421267517677
+mendeley_2873,E5,sms,test_sms_P2_dot,flip after perturbation,7,get,-0.0001268618390207831
+mendeley_2873,E5,sms,test_sms_P2_dot,flip after perturbation,8,COVID,0.00010813403162050615
+mendeley_2873,E5,sms,test_sms_P2_dot,flip after perturbation,9,I,-0.00010218868579143225
+mendeley_2873,E5,sms,test_sms_P2_dot,flip after perturbation,10,you,-9.060534403929337e-05
+mendeley_2873,E5,sms,test_sms_P2_space,flip after perturbation,1,i,-0.2082496324339799
+mendeley_2873,E5,sms,test_sms_P2_space,flip after perturbation,2,com,0.1616484493888839
+mendeley_2873,E5,sms,test_sms_P2_space,flip after perturbation,3,alert,0.15780263051018692
+mendeley_2873,E5,sms,test_sms_P2_space,flip after perturbation,4,e,-0.11856381153500638
+mendeley_2873,E5,sms,test_sms_P2_space,flip after perturbation,5,19,0.11134123357363557
+mendeley_2873,E5,sms,test_sms_P2_space,flip after perturbation,6,recommends,0.09953581132087536
+mendeley_2873,E5,sms,test_sms_P2_space,flip after perturbation,7,I,-0.09280803489304132
+mendeley_2873,E5,sms,test_sms_P2_space,flip after perturbation,8,tested,0.08632747317141369
+mendeley_2873,E5,sms,test_sms_P2_space,flip after perturbation,9,symptoms,0.07857014356142847
+mendeley_2873,E5,sms,test_sms_P2_space,flip after perturbation,10,you,-0.06392860709426004
+nazario_5_3054,E5,email,test_email_P1,flip after perturbation,1,jose,0.33200746223661753
+nazario_5_3054,E5,email,test_email_P1,flip after perturbation,2,monkey,0.15759157916395694
+nazario_5_3054,E5,email,test_email_P1,flip after perturbation,3,org,0.12539889258225964
+nazario_5_3054,E5,email,test_email_P1,flip after perturbation,4,your,0.08071179905068503
+nazario_5_3054,E5,email,test_email_P1,flip after perturbation,5,the,-0.07884671532448057
+nazario_5_3054,E5,email,test_email_P1,flip after perturbation,6,of,-0.07490312062026888
+nazario_5_3054,E5,email,test_email_P1,flip after perturbation,7,occur,-0.06604864909792178
+nazario_5_3054,E5,email,test_email_P1,flip after perturbation,8,mailbox,0.05906655834301861
+nazario_5_3054,E5,email,test_email_P1,flip after perturbation,9,2022,0.04913265729577074
+nazario_5_3054,E5,email,test_email_P1,flip after perturbation,10,remov,0.04257133310988457
+nazario_5_2901,E5,email,test_email_P2,flip after perturbation,1,the,-0.23999632858417297
+nazario_5_2901,E5,email,test_email_P2,flip after perturbation,2,Team,-0.21602437508884495
+nazario_5_2901,E5,email,test_email_P2,flip after perturbation,3,on,-0.2130397682451464
+nazario_5_2901,E5,email,test_email_P2,flip after perturbation,4,Document,0.2129064049698331
+nazario_5_2901,E5,email,test_email_P2,flip after perturbation,5,Patents,-0.19559453250414804
+nazario_5_2901,E5,email,test_email_P2,flip after perturbation,6,Proposal,-0.1765322417238153
+nazario_5_2901,E5,email,test_email_P2,flip after perturbation,7,A,-0.1762631904463723
+nazario_5_2901,E5,email,test_email_P2,flip after perturbation,8,Onedrive,-0.1725300959151356
+nazario_5_2901,E5,email,test_email_P2,flip after perturbation,9,document,0.16278552003579289
+nazario_5_2901,E5,email,test_email_P2,flip after perturbation,10,2022,0.15261139168563512
+nigerian_5_4634,E5,email,test_email_P2_dot,flip after perturbation,1,2007,-0.12578899377038535
+nigerian_5_4634,E5,email,test_email_P2_dot,flip after perturbation,2,a,-0.10416028579191619
+nigerian_5_4634,E5,email,test_email_P2_dot,flip after perturbation,3,o,-0.09059384873619092
+nigerian_5_4634,E5,email,test_email_P2_dot,flip after perturbation,4,for,-0.0890110848456691
+nigerian_5_4634,E5,email,test_email_P2_dot,flip after perturbation,5,the,-0.07910478444318968
+nigerian_5_4634,E5,email,test_email_P2_dot,flip after perturbation,6,your,0.058605136445866235
+nigerian_5_4634,E5,email,test_email_P2_dot,flip after perturbation,7,you,0.03280318739013242
+nigerian_5_4634,E5,email,test_email_P2_dot,flip after perturbation,8,Bank,-0.013533114564914088
+nigerian_5_4634,E5,email,test_email_P2_dot,flip after perturbation,9,Your,0.012863753748624723
+nigerian_5_4634,E5,email,test_email_P2_dot,flip after perturbation,10,fund,0.010652365544327058
+nazario_5_2127,E5,email,test_email_P2_space,flip after perturbation,1,Review,-0.08529493374465993
+nazario_5_2127,E5,email,test_email_P2_space,flip after perturbation,2,summary,-0.08042842809547977
+nazario_5_2127,E5,email,test_email_P2_space,flip after perturbation,3,a,-0.06791637845983167
+nazario_5_2127,E5,email,test_email_P2_space,flip after perturbation,4,Your,0.060765409400913774
+nazario_5_2127,E5,email,test_email_P2_space,flip after perturbation,5,Powered,-0.053050451683483865
+nazario_5_2127,E5,email,test_email_P2_space,flip after perturbation,6,your,0.04537923273824169
+nazario_5_2127,E5,email,test_email_P2_space,flip after perturbation,7,information,0.044946413107439534
+nazario_5_2127,E5,email,test_email_P2_space,flip after perturbation,8,Case,0.036482052790211
+nazario_5_2127,E5,email,test_email_P2_space,flip after perturbation,9,12A9FJAK94JF9AK,0.03524608989941035
+nazario_5_2127,E5,email,test_email_P2_space,flip after perturbation,10,you,0.03149557230727547
+mendeley_2873,E5,sms,test_sms_P2,flip after perturbation,1,you,-0.011332476603587955
+mendeley_2873,E5,sms,test_sms_P2,flip after perturbation,2,i,-0.010996045948293337
+mendeley_2873,E5,sms,test_sms_P2,flip after perturbation,3,or,-0.010319546744938382
+mendeley_2873,E5,sms,test_sms_P2,flip after perturbation,4,c,-0.01010874464231324
+mendeley_2873,E5,sms,test_sms_P2,flip after perturbation,5,com,0.009698468591057061
+mendeley_2873,E5,sms,test_sms_P2,flip after perturbation,6,alert,0.00871402105482301
+mendeley_2873,E5,sms,test_sms_P2,flip after perturbation,7,m,-0.008610844525282307
+mendeley_2873,E5,sms,test_sms_P2,flip after perturbation,8,19,0.008212307701196579
+mendeley_2873,E5,sms,test_sms_P2,flip after perturbation,9,anon,0.007567156656197716
+mendeley_2873,E5,sms,test_sms_P2,flip after perturbation,10,v,0.007103632545396562
+mendeley_2728,E5,sms,test_sms_P2_dot,flip after perturbation,1,10p,2.351871816074851e-05
+mendeley_2728,E5,sms,test_sms_P2_dot,flip after perturbation,2,n,-1.763177505119837e-05
+mendeley_2728,E5,sms,test_sms_P2_dot,flip after perturbation,3,msg,1.761993913895066e-05
+mendeley_2728,E5,sms,test_sms_P2_dot,flip after perturbation,4,Text,1.6876463810858226e-05
+mendeley_2728,E5,sms,test_sms_P2_dot,flip after perturbation,5,18,1.6145720052400963e-05
+mendeley_2728,E5,sms,test_sms_P2_dot,flip after perturbation,6,i,-1.5674735400056822e-05
+mendeley_2728,E5,sms,test_sms_P2_dot,flip after perturbation,7,someone,-1.5295151816708e-05
+mendeley_2728,E5,sms,test_sms_P2_dot,flip after perturbation,8,just,-1.5228234751089602e-05
+mendeley_2728,E5,sms,test_sms_P2_dot,flip after perturbation,9,e,1.4029199238618275e-05
+mendeley_2728,E5,sms,test_sms_P2_dot,flip after perturbation,10,pence,1.2181535695428406e-05
+mendeley_4993,E5,sms,test_sms_P2_space,flip after perturbation,1,9999060692,0.7727408703767845
+mendeley_4993,E5,sms,test_sms_P2_space,flip after perturbation,2,i,-0.21343942881539035
+mendeley_4993,E5,sms,test_sms_P2_space,flip after perturbation,3,y,-0.17404020215259625
+mendeley_4993,E5,sms,test_sms_P2_space,flip after perturbation,4,Yamuna,-0.12963144912421604
+mendeley_4993,E5,sms,test_sms_P2_space,flip after perturbation,5,e,-0.12629885567487792
+mendeley_4993,E5,sms,test_sms_P2_space,flip after perturbation,6,a,-0.09753596465365655
+mendeley_4993,E5,sms,test_sms_P2_space,flip after perturbation,7,Xpandabl,0.08860857410967442
+mendeley_4993,E5,sms,test_sms_P2_space,flip after perturbation,8,Revsng,-0.08481851076957402
+mendeley_4993,E5,sms,test_sms_P2_space,flip after perturbation,9,2200,0.07346162219787415
+mendeley_4993,E5,sms,test_sms_P2_space,flip after perturbation,10,sf,-0.06750467813069748

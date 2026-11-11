@@ -1,0 +1,6 @@
+category,category_name,E3,E5
+A,Uninformative: score saturated (LIME weights ~0),5,6
+B,Corpus artefact (jose@monkey.org recipient),1,4
+C,"Channel format (caller / receiver tags, placeholder numbers)",5,0
+D,Perturbed or split words lose their scam signal,0,15
+E,Unfamiliar vocabulary of another channel,14,0

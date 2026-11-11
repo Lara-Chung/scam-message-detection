@@ -1,0 +1,5 @@
+experiment,run,source,seed,eval_set,n,macro_f1,accuracy,positive,pos_recall,pos_fpr,pos_pr_auc,truncated_rate,train_seconds,best_epoch
+APP,APP_sms+email+phone_seed0,sms+email+phone,0,val,2330,0.9894181095657111,0.9896995708154507,fraud,0.9826530612244898,0.005185185185185185,0.9981936010434577,0.1759656652360515,30.4,3
+APP,APP_sms+email+phone_seed0,sms+email+phone,0,test_sms,1073,0.9838905014513062,0.994408201304753,fraud,0.9433962264150944,0.0,0.9801261855635207,0.0,30.4,3
+APP,APP_sms+email+phone_seed0,sms+email+phone,0,test_email,1591,0.9875608859839097,0.9880578252671276,fraud,0.9854014598540146,0.007911392405063292,0.9992651583188913,0.3211816467630421,30.4,3
+APP,APP_sms+email+phone_seed0,sms+email+phone,0,test_phone,239,1.0,1.0,fraud,1.0,0.0,1.0,0.016736401673640166,30.4,3
