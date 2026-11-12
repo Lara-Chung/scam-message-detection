@@ -1,25 +1,19 @@
-"""Linear SVM scam classifier (word TF-IDF), following the EE6405 proposal v2.
+"""Multinomial Naive Bayes scam classifier, following the EE6405 proposal v2.
 
-Same protocol as nb_scam.py and lr_scam.py so the models are directly comparable:
-template-grouped 80/20 splits (5.4) or an official train/test split, TF-IDF +
-LinearSVC inside a Pipeline, class_weight="balanced" (4.2), GridSearchCV with 5-fold
-CV over C in {0.1, 1, 10} and n-gram range {(1,1), (1,2)} (4.3), metrics with
-bootstrap CIs (5.3), efficiency numbers, and optional cost-based thresholds (5.5).
-Assumes the CSV is already preprocessed.
-
-Note: a linear SVM has no probabilities. Predictions use the highest decision score,
-PR-AUC is computed from decision scores (it only needs a ranking), and the cost-based
-thresholds are in decision-score units (0 = the SVM's default boundary), not 0-1.
+Assumes the CSV is already preprocessed (cleaned, de-duplicated). Implements:
+template-grouped 80/20 splits (5.4) or an official train/test split, word TF-IDF +
+MultinomialNB inside a Pipeline, class weighting (4.2), GridSearchCV tuning (4.3),
+metrics with bootstrap CIs (5.3), efficiency numbers, and optional cost-based
+thresholds (5.5).
 
 Usage (random grouped splits):
-    python3 svm_scam.py --data my_data.csv --label-col label_orig \
-        --positive-label scam --splits 3 --compare-weights
+    python3 baselines/nb_scam.py --data my_data.csv --label-col label_orig --positive-label scam --splits 3 --compare-weights
 
-Usage (official split):
-    python3 svm_scam.py --data train.csv --test-data test.csv --label-col label_orig
+Usage (official split, e.g. BothBosu train/test files):
+    python3 baselines/nb_scam.py --data train.csv --test-data test.csv --label-col label_orig
 
-Outputs (in --out-dir, default outputs_svm): saved models, svm_results.json,
-results_table.csv, grid_*.csv, sensitivity_*.png, weight_comparison.csv.
+Outputs (in --out-dir): saved models, nb_results.json, results_table.csv,
+grid_*.csv, sensitivity_*.png, weight_comparison.csv (with --compare-weights).
 """
 from __future__ import annotations
 
@@ -38,16 +32,17 @@ from sklearn.metrics import (average_precision_score, classification_report,
                              confusion_matrix, f1_score, precision_recall_fscore_support)
 from sklearn.model_selection import (GridSearchCV, GroupShuffleSplit,
                                      StratifiedGroupKFold, cross_val_predict)
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import label_binarize
-from sklearn.svm import LinearSVC
+from sklearn.utils.class_weight import compute_sample_weight
 
 # --------------------------------------------------------------------------
 # Config (the proposal keeps these in config.yaml; edit here or use CLI flags)
 # --------------------------------------------------------------------------
 PARAM_GRID = {
     "tfidf__ngram_range": [(1, 1), (1, 2)],
-    "clf__C": [0.1, 1, 10],
+    "nb__alpha": [0.01, 0.1, 0.5, 1.0],
 }
 URL_RE = re.compile(r"https?://\S+|www\.\S+")
 DIGITS_RE = re.compile(r"\d+")
@@ -98,31 +93,32 @@ def grouped_split(df: pd.DataFrame, seed: int, test_size: float = 0.2):
 # --------------------------------------------------------------------------
 # Model
 # --------------------------------------------------------------------------
-def build_pipeline(class_weighted: bool, seed: int = 42) -> Pipeline:
-    """Word TF-IDF + linear SVM. The vectoriser sits inside the Pipeline so it never
-    sees validation folds. class_weight="balanced" is native to LinearSVC.
-    (The course notebook uses SVC with an RBF kernel; the proposal switches it to
-    linear. LinearSVC is the fast linear-kernel implementation.)"""
+def build_pipeline() -> Pipeline:
+    """Word TF-IDF + MultinomialNB. The vectoriser sits inside the Pipeline so it
+    never sees validation folds."""
     return Pipeline([
         ("tfidf", TfidfVectorizer(lowercase=True, sublinear_tf=True, min_df=1)),
-        ("clf", LinearSVC(class_weight="balanced" if class_weighted else None,
-                          max_iter=10000, random_state=seed)),
+        ("nb", MultinomialNB()),
     ])
 
 
-def class_scores(model: Pipeline, texts) -> np.ndarray:
-    """Decision scores as an (n_samples, n_classes) array. Binary decision_function
-    returns one column (for classes_[1]), so we add its negation for classes_[0]."""
-    d = model.decision_function(texts)
-    return np.column_stack([-d, d]) if d.ndim == 1 else d
+def fit_pipeline(pipe: Pipeline, texts, labels, class_weighted: bool) -> Pipeline:
+    """MultinomialNB has no class_weight argument, so 'balanced' weights are passed
+    as sample_weight (inversely proportional to class frequency)."""
+    kwargs = {}
+    if class_weighted:
+        kwargs["nb__sample_weight"] = compute_sample_weight("balanced", labels)
+    return pipe.fit(texts, labels, **kwargs)
 
 
 def tune(train: pd.DataFrame, class_weighted: bool, seed: int) -> GridSearchCV:
     """GridSearchCV, 5-fold, stratified and grouped by template."""
     cv = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=seed)
-    gs = GridSearchCV(build_pipeline(class_weighted, seed), PARAM_GRID, cv=cv,
-                      scoring="f1_macro", n_jobs=-1)
-    gs.fit(train["text"], train["label"], groups=train["group"])
+    gs = GridSearchCV(build_pipeline(), PARAM_GRID, cv=cv, scoring="f1_macro", n_jobs=-1)
+    fit_params = {}
+    if class_weighted:
+        fit_params["nb__sample_weight"] = compute_sample_weight("balanced", train["label"])
+    gs.fit(train["text"], train["label"], groups=train["group"], **fit_params)
     return gs
 
 
@@ -131,7 +127,7 @@ def grid_table(gs: GridSearchCV) -> pd.DataFrame:
     r = gs.cv_results_
     return pd.DataFrame({
         "ngram_range": [str(v) for v in r["param_tfidf__ngram_range"]],
-        "C": [float(v) for v in r["param_clf__C"]],
+        "alpha": [float(v) for v in r["param_nb__alpha"]],
         "mean_cv_macro_f1": r["mean_test_score"],
         "std_cv_macro_f1": r["std_test_score"],
     })
@@ -140,13 +136,12 @@ def grid_table(gs: GridSearchCV) -> pd.DataFrame:
 # --------------------------------------------------------------------------
 # Evaluation
 # --------------------------------------------------------------------------
-def pr_auc(y_true, scores: np.ndarray, classes: list[str]) -> float:
-    """Binary: PR-AUC of the second class. Multiclass: one-vs-rest, macro-averaged.
-    Works on decision scores because PR-AUC only needs a ranking."""
+def pr_auc(y_true, proba: np.ndarray, classes: list[str]) -> float:
+    """Binary: PR-AUC of the second class. Multiclass: one-vs-rest, macro-averaged."""
     if len(classes) == 2:
-        return float(average_precision_score(y_true == classes[1], scores[:, 1]))
+        return float(average_precision_score(y_true == classes[1], proba[:, 1]))
     y_bin = label_binarize(y_true, classes=classes)
-    return float(average_precision_score(y_bin, scores, average="macro"))
+    return float(average_precision_score(y_bin, proba, average="macro"))
 
 
 def bootstrap_ci(y_true, y_pred, n: int = 1000, seed: int = 0) -> tuple[float, float]:
@@ -163,9 +158,9 @@ def bootstrap_ci(y_true, y_pred, n: int = 1000, seed: int = 0) -> tuple[float, f
 def evaluate(pipe: Pipeline, test: pd.DataFrame, seed: int) -> dict:
     classes = list(pipe.classes_)
     t0 = time.perf_counter()
-    scores = class_scores(pipe, test["text"])
+    proba = pipe.predict_proba(test["text"])
     infer_ms = (time.perf_counter() - t0) / len(test) * 1000
-    pred = np.array(classes)[scores.argmax(axis=1)]
+    pred = np.array(classes)[proba.argmax(axis=1)]
     y = test["label"].to_numpy()
 
     p, r, f, _ = precision_recall_fscore_support(y, pred, labels=classes, zero_division=0)
@@ -173,7 +168,7 @@ def evaluate(pipe: Pipeline, test: pd.DataFrame, seed: int) -> dict:
     return {
         "macro_f1": float(f1_score(y, pred, average="macro", zero_division=0)),
         "macro_f1_ci95": [lo, hi],
-        "pr_auc": pr_auc(y, scores, classes),
+        "pr_auc": pr_auc(y, proba, classes),
         "per_class": {c: {"precision": float(p[i]), "recall": float(r[i]), "f1": float(f[i])}
                       for i, c in enumerate(classes)},
         "confusion_matrix": confusion_matrix(y, pred, labels=classes).tolist(),
@@ -198,7 +193,7 @@ def summarise(runs: list[dict]) -> dict:
 
 
 # --------------------------------------------------------------------------
-# Cost-based threshold (section 5.5) - scam-vs-rest decision score
+# Cost-based threshold (section 5.5) - scam-vs-rest score
 # --------------------------------------------------------------------------
 def expected_cost(y_pos: np.ndarray, score: np.ndarray, t: float,
                   c_fn: float, c_fp: float, p: float) -> float:
@@ -211,9 +206,8 @@ def expected_cost(y_pos: np.ndarray, score: np.ndarray, t: float,
 
 def threshold_study(val_y_pos, val_score, test_y_pos, test_score,
                     c_fns=(1, 10, 50), ps=(0.01, 0.10), c_fp: float = 1.0) -> list[dict]:
-    """Choose t on validation scores, apply to test; report counts per 10,000 messages.
-    Candidate thresholds are quantiles of the validation decision scores."""
-    grid = np.unique(np.quantile(val_score, np.linspace(0, 1, 201)))
+    """Choose t on validation scores, apply to test; report counts per 10,000 messages."""
+    grid = np.linspace(0.01, 0.99, 99)
     rows = []
     for p in ps:
         for c_fn in c_fns:
@@ -225,7 +219,7 @@ def threshold_study(val_y_pos, val_score, test_y_pos, test_score,
             recall = 1 - fnr
             denom = recall * p + fpr * (1 - p)
             rows.append({
-                "scam_rate": p, "C_FN": c_fn, "C_FP": c_fp, "threshold_score": t,
+                "scam_rate": p, "C_FN": c_fn, "C_FP": c_fp, "threshold": t,
                 "recall": recall, "FPR": fpr,
                 "precision_at_p": float(recall * p / denom) if denom > 0 else float("nan"),
                 "missed_per_10k": 10_000 * p * fnr,
@@ -235,19 +229,22 @@ def threshold_study(val_y_pos, val_score, test_y_pos, test_score,
 
 
 def out_of_fold_scores(best_params: dict, train: pd.DataFrame, weighted: bool, seed: int) -> np.ndarray:
-    """Cross-validated decision scores on the training data (for threshold choice)."""
+    """Cross-validated class probabilities on the training data (for threshold choice)."""
     cv = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=seed)
-    pipe = build_pipeline(weighted, seed).set_params(**best_params)
-    d = cross_val_predict(pipe, train["text"], train["label"], groups=train["group"],
-                          cv=cv, method="decision_function")
-    return np.column_stack([-d, d]) if d.ndim == 1 else d
+    pipe = build_pipeline().set_params(**best_params)
+    weights = {"nb__sample_weight": compute_sample_weight("balanced", train["label"])} if weighted else {}
+    kwargs = dict(groups=train["group"], cv=cv, method="predict_proba")
+    try:  # scikit-learn >= 1.4
+        return cross_val_predict(pipe, train["text"], train["label"], params=weights or None, **kwargs)
+    except TypeError:  # older scikit-learn
+        return cross_val_predict(pipe, train["text"], train["label"], fit_params=weights or None, **kwargs)
 
 
 # --------------------------------------------------------------------------
 # Reporting: tables and plots
 # --------------------------------------------------------------------------
 def save_sensitivity_plot(grids: list[pd.DataFrame], path: Path, title: str) -> None:
-    """Macro-F1 versus C for each n-gram range, averaged over splits."""
+    """Macro-F1 versus alpha for each n-gram range, averaged over splits."""
     try:
         import matplotlib
         matplotlib.use("Agg")
@@ -255,15 +252,15 @@ def save_sensitivity_plot(grids: list[pd.DataFrame], path: Path, title: str) -> 
     except ImportError:
         print("matplotlib not installed; skipping sensitivity plot (pip install matplotlib).")
         return
-    g = pd.concat(grids).groupby(["ngram_range", "C"], as_index=False).agg(
+    g = pd.concat(grids).groupby(["ngram_range", "alpha"], as_index=False).agg(
         f1=("mean_cv_macro_f1", "mean"), sd=("mean_cv_macro_f1", "std"))
     fig, ax = plt.subplots(figsize=(6, 4))
     for ngram, sub in g.groupby("ngram_range"):
-        sub = sub.sort_values("C")
-        ax.errorbar(sub["C"], sub["f1"], yerr=sub["sd"].fillna(0), marker="o",
+        sub = sub.sort_values("alpha")
+        ax.errorbar(sub["alpha"], sub["f1"], yerr=sub["sd"].fillna(0), marker="o",
                     capsize=3, label=f"ngram {ngram}")
     ax.set_xscale("log")
-    ax.set_xlabel("C (inverse regularisation strength)")
+    ax.set_xlabel("alpha (Laplace smoothing)")
     ax.set_ylabel("CV macro-F1 (mean over splits)")
     ax.set_title(title)
     ax.grid(alpha=0.3)
@@ -328,19 +325,19 @@ def run(args: argparse.Namespace) -> None:
             grids[tag].append(grid)
 
             t0 = time.perf_counter()
-            model = build_pipeline(weighted, seed).set_params(**gs.best_params_)
-            model.fit(train["text"], train["label"])
+            model = fit_pipeline(build_pipeline().set_params(**gs.best_params_),
+                                 train["text"], train["label"], weighted)
             train_s = time.perf_counter() - t0
 
             res = evaluate(model, test, seed)
             res.update({"split_seed": seed, "best_params": {k: str(v) for k, v in gs.best_params_.items()},
                         "tune_seconds": tune_s, "train_seconds": train_s})
 
-            model_path = out / f"svm_{tag}_split{i}.joblib"
+            model_path = out / f"nb_{tag}_split{i}.joblib"
             joblib.dump(model, model_path)  # reuse later, no retraining
             res["model_size_mb"] = model_path.stat().st_size / 1e6
 
-            # Optional cost-based threshold analysis (scam-vs-rest decision score)
+            # Optional cost-based threshold analysis (scam-vs-rest score)
             if args.positive_label:
                 pos = args.positive_label
                 if pos not in model.classes_:
@@ -349,7 +346,7 @@ def run(args: argparse.Namespace) -> None:
                 oof = out_of_fold_scores(gs.best_params_, train, weighted, seed)
                 res["thresholds"] = threshold_study(
                     (train["label"] == pos).to_numpy(), oof[:, col],
-                    (test["label"] == pos).to_numpy(), class_scores(model, test["text"])[:, col])
+                    (test["label"] == pos).to_numpy(), model.predict_proba(test["text"])[:, col])
 
             all_results[tag].append(res)
             print(f"[{tag}] split {i}: macro-F1={res['macro_f1']:.4f} "
@@ -370,7 +367,7 @@ def run(args: argparse.Namespace) -> None:
     results_table(summaries).to_csv(out / "results_table.csv", index=False)
 
     for tag, g in grids.items():
-        save_sensitivity_plot(g, out / f"sensitivity_{tag}.png", f"Linear SVM sensitivity ({tag})")
+        save_sensitivity_plot(g, out / f"sensitivity_{tag}.png", f"Naive Bayes sensitivity ({tag})")
 
     if args.compare_weights:
         wc = weight_comparison(summaries, classes)
@@ -378,8 +375,8 @@ def run(args: argparse.Namespace) -> None:
         print("\n=== Class weights: weighted vs unweighted (mean over splits) ===")
         print(wc.to_string(index=False, float_format=lambda v: f"{v:.4f}"))
 
-    (out / "svm_results.json").write_text(json.dumps({"runs": all_results, "summary": summaries}, indent=2))
-    print(f"\nSaved models, tables, plots and svm_results.json to {out}/")
+    (out / "nb_results.json").write_text(json.dumps({"runs": all_results, "summary": summaries}, indent=2))
+    print(f"\nSaved models, tables, plots and nb_results.json to {out}/")
 
 
 def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
@@ -395,7 +392,7 @@ def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--compare-weights", action="store_true",
                     help="Also run without class weights (E2 comparison)")
-    ap.add_argument("--out-dir", default="outputs_svm")
+    ap.add_argument("--out-dir", default="outputs")
     return ap.parse_args(argv)
 
 

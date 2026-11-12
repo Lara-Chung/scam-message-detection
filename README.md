@@ -1,60 +1,117 @@
 # Scam Message Detection
 
-Robust scam message detection across SMS, email and phone dialogue.
+Scam message detection across SMS, email and phone dialogue. The project includes traditional classifiers, DistilBERT and bidirectional long short-term memory (BiLSTM) models. It also includes an AI agent that investigates suspicious messages and cites supporting evidence.
 
-## Setup
-
-```
-conda create -n scam-detection python=3.11 -y && conda run -n scam-detection pip install -r requirements.txt
-```
-
-Using venv instead also works: create an environment with Python 3.11 and run `pip install -r requirements.txt`.
-
-## Layout
+## Project structure
 
 | Path | Content |
 |---|---|
-| `data/raw/` | Downloaded datasets (not committed) |
-| `data/processed/` | Cleaned CSVs and `splits.csv` |
-| `src/` | Shared modules |
-| `notebooks/` | One notebook per experiment (E1 to E6) and `00_data_summary.ipynb` |
-| `tests/` | pytest tests |
-| `app/` | Streamlit app |
+| `baselines/` | Traditional classifier training scripts |
+| `transformer/` | DistilBERT and BiLSTM training, notebooks, inference and results |
+| `src/` | Shared data processing and the `src/agent/` backend |
+| `scripts/` | Agent data preparation, evaluation and reporting tools |
+| `configs/` | Agent runtime configuration |
+| `data/` | Raw data, split assignments and processed exports |
+| `notebooks/` | Shared data summary notebook |
+| `docs/` | Agent design, integration guides and validation reports |
+| `tests/` | Automated tests using pytest |
+| `app/` | Reserved for the frontend; currently contains only `.gitkeep` |
 
-## Using the splits
+## Setup
 
-`data/processed/splits.csv` gives each row a split (train / val / test) for seeds 0, 1 and 2.
+Run commands from the repository root.
 
-| Split | Use for | Do not use for |
-|---|---|---|
-| train | Fitting models, vectorisers (e.g. TF-IDF) and any other learned step | — |
-| val | Hyperparameter selection and threshold tuning | Reporting final results |
-| test | Final evaluation only | Tuning, model selection or threshold choice |
+| Component | Environment and instructions |
+|---|---|
+| Main project and traditional classifiers | Python 3.11 with `requirements.txt` |
+| Agent backend | Python 3.12 in a separate environment with `requirements-agent.txt`; see the [frontend handoff](docs/agent_frontend_handoff.md) |
+| DistilBERT and BiLSTM training | Kaggle setup and execution in the [Transformer guide](transformer/README.md) |
+| DistilBERT inference | Dependencies, model placement and usage in the [prediction interface](transformer/INTERFACE_for_frontend.md) |
 
-Cross-dataset tests (E3, E4): tune on the source dataset's val split only. Do not use target labels to choose a model or threshold. Before training, call `remove_overlap(source, target)` from `src/splits.py` to drop source rows that also appear in the target test set.
+Create the main environment with conda:
 
-CEAS_08: one spam campaign ("THE DAILY TOP 10 from CNN", 2,930 emails) is in the test split for seed 0, where it makes up about 39% of it, and in the train split for seeds 1 and 2. Report CEAS_08 seed 0 test results with and without this campaign; its rows are those whose `template` starts with `thedailytop`.
+```sh
+set -o pipefail && conda create -n scam-detection python=3.11 -y && conda run -n scam-detection pip install -r requirements.txt
+```
 
-If a model is retrained on train + val after tuning, the threshold chosen on val may no longer fit; re-check it on a held-out part of the training data.
+Alternatively, create a Python 3.11 virtual environment and install `requirements.txt`. Keep the Agent environment separate: saved Agent models check the package versions recorded during training.
 
 ## Data
 
-Raw data sources. Download each dataset into `data/raw/`:
+### Raw datasets
 
-| Dataset | Source | Save as |
+Download each raw dataset from its original source linked below and save it under `data/raw/`. Raw datasets are not included in this repository.
+
+| Dataset | Original source | Save as |
 |---|---|---|
-| SMS Phishing Dataset (Mendeley) | https://doi.org/10.17632/f45bkkt8pr.1 (`Dataset_5971.zip`) | `data/raw/mendeley/Dataset_5971.csv` |
-| UCI SMS Spam Collection | https://archive.ics.uci.edu/dataset/228/sms+spam+collection | `data/raw/uci/SMSSpamCollection` |
-| Nazario_5, Nigerian_5, CEAS_08, SpamAssassin | https://doi.org/10.5281/zenodo.8339691 | `data/raw/zenodo/<file name>.csv` |
-| BothBosu/scam-dialogue | Downloaded automatically by `load_bothbosu()` from Hugging Face (pinned revision) | `data/raw/hf_cache/` |
+| SMS Phishing Dataset (Mendeley) | [Dataset_5971.zip](https://doi.org/10.17632/f45bkkt8pr.1) | `data/raw/mendeley/Dataset_5971.csv` |
+| UCI SMS Spam Collection | [UCI dataset page](https://archive.ics.uci.edu/dataset/228/sms+spam+collection) | `data/raw/uci/SMSSpamCollection` |
+| Nazario_5, Nigerian_5, CEAS_08, SpamAssassin | [Zenodo dataset](https://doi.org/10.5281/zenodo.8339691) | `data/raw/zenodo/` |
+| BothBosu/scam-dialogue | Downloaded by `load_bothbosu()` from Hugging Face at a pinned revision | `data/raw/hf_cache/` |
 
-To build the processed data from the raw files, run:
+### Build splits and exports
 
+Only run this when rebuilding processed data from the raw datasets:
+
+```sh
+set -o pipefail && python -m src.splits && python -m src.export
 ```
-python -m src.splits && python -m src.export
+
+`src.splits` writes `data/processed/splits.csv` and checks for leakage. `src.export` writes the processed datasets to `data/processed/export/`.
+
+### Split rules
+
+`splits.csv` records train, validation and test membership for seeds 0, 1 and 2. Standard exports store these as `split_seed0`, `split_seed1` and `split_seed2`.
+
+`uci_replication.csv.gz` retains the original UCI row order and duplicates for the published 30/70 protocol. It has no split columns.
+
+| Split | Use for |
+|---|---|
+| train | Fitting models, TF-IDF vectorisers and other learned steps |
+| validation | Hyperparameter selection and threshold tuning |
+| test | Final evaluation |
+
+- For cross-dataset experiments E3 and E4, tune on the source dataset's validation split only. Before training, call `remove_overlap(source, target)` from `src/splits.py` to remove source-training overlap with the target test set.
+- CEAS_08 contains 2,930 emails from the "THE DAILY TOP 10 from CNN" campaign. They are all in test for seed 0 and train for seeds 1 and 2. Report seed 0 results with and without this campaign, identified by `template` starting with `thedailytop`.
+- After retraining on train + validation, re-check the selected threshold on a held-out part of the training data.
+
+## Usage
+
+### Traditional classifiers
+
+| Entry point | Model |
+|---|---|
+| `baselines/lr_scam.py` | Logistic Regression |
+| `baselines/nb_scam.py` | Naive Bayes |
+| `baselines/svm_word_scam.py` | Word TF-IDF + Support Vector Machine (SVM) |
+| `baselines/svm_char_scam.py` | Character TF-IDF + SVM |
+
+The scripts read preprocessed CSVs. Arguments select the text and label columns, test data and output directory. Each help command runs independently:
+
+```sh
+python baselines/lr_scam.py --help
+python baselines/nb_scam.py --help
+python baselines/svm_word_scam.py --help
+python baselines/svm_char_scam.py --help
 ```
 
-`src.splits` writes `data/processed/splits.csv` and checks for leakage; `src.export` writes the processed files to `data/processed/export/`.
+These scripts use their own grouped splits or a supplied test file; they do not automatically apply `splits.csv`. Check that datasets and split protocols match before comparing results.
+
+### DistilBERT and BiLSTM
+
+Training and analysis scripts are in `transformer/scripts/`. Run notebooks are in `transformer/notebooks/`, and saved results are in `transformer/results/`.
+
+The DistilBERT prediction interface is `transformer/inference/predict.py`. Model weights are shared separately and are not committed to Git. See the [Transformer guide](transformer/README.md) and [prediction interface](transformer/INTERFACE_for_frontend.md).
+
+## Tests
+
+Run tests in the environment for the component being checked:
+
+```sh
+python -m pytest -q
+```
+
+Some tests require separately downloaded raw data or prepared local models.
 
 ## Agent backend
 

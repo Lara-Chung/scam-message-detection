@@ -12,11 +12,10 @@ PR-AUC is computed from decision scores (it only needs a ranking), and the cost-
 thresholds are in decision-score units (0 = the SVM's default boundary), not 0-1.
 
 Usage (random grouped splits):
-    python3 svm_char_scam.py --data my_data.csv --label-col label_orig \
-        --positive-label scam --splits 3 --compare-weights
+    python3 baselines/svm_char_scam.py --data my_data.csv --label-col label_orig --positive-label scam --splits 3 --compare-weights
 
 Usage (official split):
-    python3 svm_char_scam.py --data train.csv --test-data test.csv --label-col label_orig
+    python3 baselines/svm_char_scam.py --data train.csv --test-data test.csv --label-col label_orig
 
 Outputs (in --out-dir, default outputs_svm_char): saved models, svm_char_results.json,
 results_table.csv, grid_*.csv, sensitivity_*.png, weight_comparison.csv.

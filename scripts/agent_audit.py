@@ -9,7 +9,7 @@ import sklearn
 
 from src.agent.data import CHANNEL_DATASETS, EXPORT, eligible, file_hash, load_channel
 from src.splits import leakage_counts
-from lr_scam import grouped_split, template_key
+from baselines.lr_scam import grouped_split, template_key
 
 
 def main():
