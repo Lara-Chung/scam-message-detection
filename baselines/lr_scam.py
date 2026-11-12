@@ -8,11 +8,10 @@ metrics with bootstrap CIs (5.3), efficiency numbers, and optional cost-based
 thresholds (5.5). Assumes the CSV is already preprocessed.
 
 Usage (random grouped splits):
-    python3 lr_scam.py --data my_data.csv --label-col label_orig \
-        --positive-label scam --splits 3 --compare-weights
+    python3 baselines/lr_scam.py --data my_data.csv --label-col label_orig --positive-label scam --splits 3 --compare-weights
 
 Usage (official split):
-    python3 lr_scam.py --data train.csv --test-data test.csv --label-col label_orig
+    python3 baselines/lr_scam.py --data train.csv --test-data test.csv --label-col label_orig
 
 Outputs (in --out-dir, default outputs_lr): saved models, lr_results.json,
 results_table.csv, grid_*.csv, sensitivity_*.png, weight_comparison.csv.
