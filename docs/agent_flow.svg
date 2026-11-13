@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <title>How the agent checks a message</title>
+  <defs>
+    <marker id="head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8C959F"/>
+    </marker>
+  </defs>
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+  <rect x="600" y="96" width="640" height="460" rx="8" fill="#F0F6FF" stroke="#B6D4FE" stroke-width="1.5"/>
+  
+  <rect id="token-a" x="-7" y="-7" width="14" height="14" rx="2" fill="#1F6FEB" opacity="0">
+    <animateMotion dur="13.5s" repeatCount="indefinite" calcMode="linear"
+      path="M330,74 L330,124 L330,124 L330,234 L330,234 L330,502 L330,502 L330,600 L640,600 L640,646" keyPoints="0;0.0000;0.0567;0.0567;0.1814;0.1814;0.4853;0.4853;0.5964;0.9478;1.0000;1" keyTimes="0;0.0222;0.0593;0.0889;0.1259;0.1481;0.2074;0.2519;0.2741;0.3111;0.3333;1"/>
+    <animate attributeName="opacity" dur="13.5s" repeatCount="indefinite" calcMode="discrete"
+      values="0;1;0" keyTimes="0;0.0222;0.3433"/>
+  </rect>
+  
+  <rect id="token-b" x="-7" y="-7" width="14" height="14" rx="2" fill="#1F6FEB" opacity="0">
+    <animateMotion dur="13.5s" repeatCount="indefinite" calcMode="linear"
+      path="M330,74 L330,124 L330,234 L330,234 L560,234 L560,307 L754,307 L754,307 L884,290 L968,290 L968,290 L968,330 L884,330 L754,330 L754,330 L884,290 L968,290 L968,290 L968,330 L884,330 L754,330 L754,440 L754,440 L660,440 L660,528 L920,528 L920,600 L640,600 L640,646" keyPoints="0;0.0000;0.0196;0.0627;0.0627;0.1529;0.1816;0.2576;0.2576;0.3090;0.3420;0.3420;0.3577;0.3906;0.4416;0.4416;0.4949;0.5279;0.5279;0.5436;0.5765;0.6275;0.6706;0.6706;0.7075;0.7420;0.8439;0.8722;0.9820;1.0000;1" keyTimes="0;0.3407;0.3704;0.4074;0.4222;0.4519;0.4741;0.5037;0.5259;0.5481;0.5704;0.5926;0.6074;0.6296;0.6519;0.6667;0.6889;0.7111;0.7333;0.7481;0.7704;0.7926;0.8222;0.8296;0.8444;0.8667;0.8889;0.9111;0.9407;0.9630;1"/>
+    <animate attributeName="opacity" dur="13.5s" repeatCount="indefinite" calcMode="discrete"
+      values="0;1;0" keyTimes="0;0.3407;0.9730"/>
+  </rect>
+  <text x="40" y="30" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" letter-spacing="1.5" fill="#57606A">HOW THE AGENT CHECKS A MESSAGE</text>
+  <text x="330" y="64" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" letter-spacing="1" fill="#57606A">REQUEST</text>
+  <path d="M330,70 L330,90" fill="none" stroke="#8C959F" stroke-width="1.5" marker-end="url(#head)"/>
+  <rect x="170" y="92" width="320" height="64" rx="6" fill="#FFFFFF" stroke="#D0D7DE" stroke-width="1.5"><animate attributeName="stroke" dur="13.5s" repeatCount="indefinite" calcMode="discrete" values="#D0D7DE;#1F6FEB;#D0D7DE;#1F6FEB;#D0D7DE" keyTimes="0;0.0444;0.1037;0.3556;0.3926"/></rect>
+  <text x="330.0" y="118.0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#24292F">Normalise + local classifier</text>
+  <text x="330.0" y="140.0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#57606A">first section · free</text>
+  <path d="M330,156 L330,194" fill="none" stroke="#8C959F" stroke-width="1.5" marker-end="url(#head)"/>
+  <rect x="170" y="196" width="320" height="76" rx="6" fill="#FFFFFF" stroke="#D0D7DE" stroke-width="1.5"><animate attributeName="stroke" dur="13.5s" repeatCount="indefinite" calcMode="discrete" values="#D0D7DE;#1F6FEB;#D0D7DE;#1F6FEB;#D0D7DE" keyTimes="0;0.1111;0.1630;0.3926;0.4370"/></rect>
+  <text x="330.0" y="228.0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#24292F">Escalate?</text>
+  <text x="330.0" y="250.0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#57606A">long text · near boundary · models disagree</text>
+  <path d="M330,272 L330,468" fill="none" stroke="#8C959F" stroke-width="1.5" marker-end="url(#head)"/>
+  <text x="350" y="300" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1" fill="#57606A">NO<animate attributeName="fill" dur="13.5s" repeatCount="indefinite" calcMode="discrete" values="#57606A;#1F6FEB;#57606A" keyTimes="0;0.1259;0.2148"/></text>
+  <rect x="170" y="470" width="320" height="64" rx="6" fill="#FFFFFF" stroke="#D0D7DE" stroke-width="1.5"><animate attributeName="stroke" dur="13.5s" repeatCount="indefinite" calcMode="discrete" values="#D0D7DE;#1F6FEB;#D0D7DE" keyTimes="0;0.2074;0.2593"/></rect>
+  <text x="330.0" y="496.0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#24292F">Return local result</text>
+  <text x="330.0" y="518.0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#57606A">no API call</text>
+  <path d="M490,234 L560,234 L560,307 L622,307" fill="none" stroke="#8C959F" stroke-width="1.5" marker-end="url(#head)"/>
+  <text x="526" y="224" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1" fill="#57606A">YES<animate attributeName="fill" dur="13.5s" repeatCount="indefinite" calcMode="discrete" values="#57606A;#1F6FEB;#57606A" keyTimes="0;0.4222;0.4815"/></text>
+  <text x="624" y="130" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#24292F">Single agent loop</text>
+  <text x="624" y="152" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#57606A">LLM · up to 4 turns and 6 tool calls</text>
+  <rect x="624" y="172" width="220" height="50" rx="6" fill="#FFFFFF" stroke="#D0D7DE" stroke-width="1.5"></rect>
+  <text x="734.0" y="203.0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#24292F">One system prompt</text>
+  <path d="M734,222 L734,260" fill="none" stroke="#8C959F" stroke-width="1.5" marker-end="url(#head)"/>
+  <rect x="624" y="262" width="260" height="90" rx="6" fill="#FFFFFF" stroke="#D0D7DE" stroke-width="1.5"></rect>
+  <text x="754.0" y="313.0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#24292F">Model</text>
+  <text x="980" y="178" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#57606A">4 tools</text>
+  <rect x="980" y="190" width="236" height="50" rx="6" fill="#FFFFFF" stroke="#D0D7DE" stroke-width="1.5"><animate attributeName="fill" dur="13.5s" repeatCount="indefinite" calcMode="discrete" values="#FFFFFF;#1F6FEB;#FFFFFF" keyTimes="0;0.5704;0.6148"/></rect>
+  <text x="1098" y="220" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#24292F">inspect_section<animate attributeName="fill" dur="13.5s" repeatCount="indefinite" calcMode="discrete" values="#24292F;#FFFFFF;#24292F" keyTimes="0;0.5704;0.6148"/></text>
+  <rect x="980" y="250" width="236" height="50" rx="6" fill="#FFFFFF" stroke="#D0D7DE" stroke-width="1.5"><animate attributeName="fill" dur="13.5s" repeatCount="indefinite" calcMode="discrete" values="#FFFFFF;#1F6FEB;#FFFFFF" keyTimes="0;0.7111;0.7556"/></rect>
+  <text x="1098" y="280" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#24292F">cross_check<animate attributeName="fill" dur="13.5s" repeatCount="indefinite" calcMode="discrete" values="#24292F;#FFFFFF;#24292F" keyTimes="0;0.7111;0.7556"/></text>
+  <rect x="980" y="310" width="236" height="50" rx="6" fill="#FFFFFF" stroke="#D0D7DE" stroke-width="1.5"></rect>
+  <text x="1098" y="340" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#24292F">retrieve_similar_cases</text>
+  <rect x="980" y="370" width="236" height="50" rx="6" fill="#FFFFFF" stroke="#D0D7DE" stroke-width="1.5"></rect>
+  <text x="1098" y="400" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#24292F">request_clarification</text>
+  <path d="M884,290 L966,290" fill="none" stroke="#8C959F" stroke-width="1.5" marker-end="url(#head)"/>
+  <text x="926" y="280" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1" fill="#57606A">TOOL CALLS</text>
+  <path d="M968,330 L886,330" fill="none" stroke="#8C959F" stroke-width="1.5" marker-end="url(#head)"/>
+  <text x="926" y="350" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="1" fill="#57606A">RESULTS</text>
+  <path d="M754,352 L754,438" fill="none" stroke="#8C959F" stroke-width="1.5" marker-end="url(#head)"/>
+  <rect x="624" y="440" width="592" height="96" rx="6" fill="#FFFFFF" stroke="#D0D7DE" stroke-width="1.5"><animate attributeName="stroke" dur="13.5s" repeatCount="indefinite" calcMode="discrete" values="#D0D7DE;#1F6FEB;#D0D7DE" keyTimes="0;0.8222;0.8963"/></rect>
+  <text x="920.0" y="474.0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#24292F">Output guardrails</text>
+  <text x="920.0" y="496.0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#57606A">evidence quoted by the backend · label must match a classifier</text>
+  <text x="920.0" y="515.0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#57606A">conflicts or unread text → review or abstain</text>
+  <path d="M330,534 L330,600 L640,600 M920,536 L920,600 L640,600" fill="none" stroke="#8C959F" stroke-width="1.5"/>
+  <path d="M640,600 L640,640" fill="none" stroke="#8C959F" stroke-width="1.5" marker-end="url(#head)"/>
+  <text x="640" y="664" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" letter-spacing="1" fill="#57606A">ANSWER</text>
+  <text x="640" y="686" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#57606A">decision · evidence · review flag</text>
+</svg>

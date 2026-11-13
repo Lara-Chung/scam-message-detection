@@ -4,6 +4,10 @@
 
 Scam message detection across SMS, email and phone dialogue. The project includes traditional classifiers, DistilBERT and bidirectional long short-term memory (BiLSTM) models. It also includes an AI agent that investigates suspicious messages and cites supporting evidence.
 
+![How the agent checks a message: ordinary messages use the local classifier with no API call; hard messages go to a single agent loop with four tools and output guardrails](docs/agent_flow.svg)
+
+*How the agent checks a message (`adaptive_agent` mode, see [Agent backend](#agent-backend)).*
+
 ## Project structure
 
 | Path | Content |
