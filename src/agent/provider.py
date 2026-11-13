@@ -97,6 +97,14 @@ class DeepSeekProvider:
             raise
         except httpx.TimeoutException as exc:
             raise AgentError('timeout', 'Provider request timed out.') from exc
+        except httpx.HTTPStatusError as exc:
+            messages = {
+                401: 'DeepSeek rejected the API key. Check or replace it and try again.',
+                402: 'DeepSeek reports insufficient balance for this API key.',
+                429: 'DeepSeek rate limit reached. Wait a moment and try again.',
+            }
+            message = messages.get(exc.response.status_code, 'Provider request failed. Check the endpoint and model settings.')
+            raise AgentError('provider_failure', message) from exc
         except Exception as exc:
             # Do not echo HTTP bodies, headers, credentials or provider diagnostics.
             raise AgentError('provider_failure', 'Provider request failed; inspect endpoint/configuration privately.') from exc

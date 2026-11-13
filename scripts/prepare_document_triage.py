@@ -22,7 +22,7 @@ def main():
     if OUTPUT.exists():
         raise FileExistsError('Document policy exists; no automatic overwrite or retuning.')
     # The public profile requires no credentials for preparation.
-    service=ScamAgentService.from_config(ROOT/'configs/agent.yaml')
+    service=ScamAgentService.from_config(ROOT/'configs/agent.yaml', enable_provider=False)
     engine=RouterEngine(service.config,service.limits)
     catalog=copy.deepcopy(engine.catalog)
     catalog['triage_policy_version']=1

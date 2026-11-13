@@ -39,7 +39,7 @@ def batch(engine,ch,texts):
 def validate_design():
     if BASE.exists() or CATALOG.parent.exists():raise FileExistsError('Use a fresh experiment/catalog; no overwrite.')
     BASE.mkdir(parents=True);CATALOG.parent.mkdir(parents=True)
-    service=ScamAgentService.from_config(ROOT/'configs/agent.local.yaml');engine=RouterEngine(service.config,service.limits)
+    service=ScamAgentService.from_config(ROOT/'configs/agent.yaml', enable_provider=False);engine=RouterEngine(service.config,service.limits)
     catalog=copy.deepcopy(engine.catalog);catalog['boundary_policy_version']=1;catalog['inference_normalisation']=True
     catalog['rule_feature']='normalisation_profile';diagnostics={};all_records=[]
     for ch,info in catalog['channels'].items():

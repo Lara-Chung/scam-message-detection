@@ -23,7 +23,7 @@ def main():
         response = subprocess.run(['osascript', '-e', '''
             tell application "System Events"
                 activate
-                set answer to display dialog "请在此粘贴 DeepSeek API key。密钥仅保存至 macOS 钥匙串，不会进入代码或聊天。" default answer "" with hidden answer buttons {"取消", "保存"} default button "保存" with title "EE6405 DeepSeek 本地配置"
+                set answer to display dialog "Paste the DeepSeek API key to store it in macOS Keychain." default answer "" with hidden answer buttons {"Cancel", "Save"} default button "Save" with title "EE6405 DeepSeek Local Setup"
                 return text returned of answer
             end tell
         '''], capture_output=True, text=True)

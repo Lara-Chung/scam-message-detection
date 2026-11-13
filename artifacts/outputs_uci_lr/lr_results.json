@@ -1,0 +1,164 @@
+{
+  "runs": {
+    "weighted": [
+      {
+        "macro_f1": 0.9643713088688103,
+        "macro_f1_ci95": [
+          0.9468755449549249,
+          0.9794854793437429
+        ],
+        "pr_auc": 0.9828273820950787,
+        "per_class": {
+          "ham": {
+            "precision": 0.9889135254988913,
+            "recall": 0.9922135706340378,
+            "f1": 0.9905607995558023
+          },
+          "spam": {
+            "precision": 0.9485294117647058,
+            "recall": 0.9280575539568345,
+            "f1": 0.9381818181818182
+          }
+        },
+        "confusion_matrix": [
+          [
+            892,
+            7
+          ],
+          [
+            10,
+            129
+          ]
+        ],
+        "classes": [
+          "ham",
+          "spam"
+        ],
+        "infer_ms_per_msg": 0.009189216287264703,
+        "split_seed": 42,
+        "best_params": {
+          "clf__C": "10",
+          "tfidf__ngram_range": "(1, 1)"
+        },
+        "tune_seconds": 2.7285016030073166,
+        "train_seconds": 0.06725078821182251,
+        "model_size_mb": 0.219108
+      },
+      {
+        "macro_f1": 0.9565094843147485,
+        "macro_f1_ci95": [
+          0.9369438199630832,
+          0.973014886004799
+        ],
+        "pr_auc": 0.9826856438301096,
+        "per_class": {
+          "ham": {
+            "precision": 0.9888392857142857,
+            "recall": 0.987736900780379,
+            "f1": 0.9882877858337981
+          },
+          "spam": {
+            "precision": 0.9214285714285714,
+            "recall": 0.9280575539568345,
+            "f1": 0.9247311827956989
+          }
+        },
+        "confusion_matrix": [
+          [
+            886,
+            11
+          ],
+          [
+            10,
+            129
+          ]
+        ],
+        "classes": [
+          "ham",
+          "spam"
+        ],
+        "infer_ms_per_msg": 0.08060575937528638,
+        "split_seed": 43,
+        "best_params": {
+          "clf__C": "10",
+          "tfidf__ngram_range": "(1, 2)"
+        },
+        "tune_seconds": 3.8366794688627124,
+        "train_seconds": 2.2487174225971103,
+        "model_size_mb": 1.32986
+      },
+      {
+        "macro_f1": 0.9598492993895671,
+        "macro_f1_ci95": [
+          0.9411334030638691,
+          0.9771999905189901
+        ],
+        "pr_auc": 0.9709345493676014,
+        "per_class": {
+          "ham": {
+            "precision": 0.9911111111111112,
+            "recall": 0.9889135254988913,
+            "f1": 0.9900110987791343
+          },
+          "spam": {
+            "precision": 0.9224806201550387,
+            "recall": 0.937007874015748,
+            "f1": 0.9296875
+          }
+        },
+        "confusion_matrix": [
+          [
+            892,
+            10
+          ],
+          [
+            8,
+            119
+          ]
+        ],
+        "classes": [
+          "ham",
+          "spam"
+        ],
+        "infer_ms_per_msg": 0.07523587598049954,
+        "split_seed": 44,
+        "best_params": {
+          "clf__C": "10",
+          "tfidf__ngram_range": "(1, 2)"
+        },
+        "tune_seconds": 2.7321861311793327,
+        "train_seconds": 1.7506175618618727,
+        "model_size_mb": 1.33586
+      }
+    ]
+  },
+  "summary": {
+    "weighted": {
+      "n_splits": 3,
+      "macro_f1_mean": 0.960243364191042,
+      "macro_f1_std": 0.0032216493323072243,
+      "pr_auc_mean": 0.9788158584309299,
+      "pr_auc_std": 0.0055732274819125065,
+      "infer_ms_per_msg_mean": 0.05501028388101687,
+      "infer_ms_per_msg_std": 0.03247446780155969,
+      "train_seconds_mean": 1.3555285908902686,
+      "train_seconds_std": 0.9333704660964368,
+      "tune_seconds_mean": 3.0991224010164538,
+      "tune_seconds_std": 0.5215337733930823,
+      "model_size_mb_mean": 0.9616093333333334,
+      "model_size_mb_std": 0.5250334417928909,
+      "precision_ham_mean": 0.9896213074414294,
+      "precision_ham_std": 0.001053886178880343,
+      "recall_ham_mean": 0.989621332304436,
+      "recall_ham_std": 0.0018948854143273743,
+      "f1_ham_mean": 0.9896198947229116,
+      "f1_ham_std": 0.0009683072189165219,
+      "precision_spam_mean": 0.930812867782772,
+      "precision_spam_std": 0.012534848746024368,
+      "recall_spam_mean": 0.9310409939764724,
+      "recall_spam_std": 0.004219221338298476,
+      "f1_spam_mean": 0.9308668336591723,
+      "f1_spam_std": 0.005554158741119077
+    }
+  }
+}

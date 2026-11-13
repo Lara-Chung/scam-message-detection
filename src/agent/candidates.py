@@ -99,7 +99,8 @@ def train(output):
             tick=time.perf_counter();pred=pipeline.predict(val_texts).astype(int)
             infer_ms=(time.perf_counter()-tick)*1000/len(val)
             preds[name]=pred
-            info['models'][name]={'path':str(path),'model_id':f'router_{channel}_{name}_seed0_v1','provenance':'canonical_train_verified',
+            artifact_path=path.relative_to(ROOT) if path.is_relative_to(ROOT) else path
+            info['models'][name]={'path':artifact_path.as_posix(),'model_id':f'router_{channel}_{name}_seed0_v1','provenance':'canonical_train_verified',
                 'label_map':{'0':'legitimate','1':'fraud'},'preprocessing':'Canonical TRAIN-fitted TF-IDF; common original 8000-character prefix.',
                 'validation':metrics(truth,pred),'batch_inference_ms_per_case':infer_ms,'training_seconds':time.perf_counter()-started,
                 'feature_family':'character 3-5 grams within word boundaries' if name=='char_svm' else 'word 1-2 grams',

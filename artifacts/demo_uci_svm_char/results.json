@@ -1,0 +1,87 @@
+{
+  "runs": {
+    "weighted": [
+      {
+        "macro_f1": 0.9873862780203666,
+        "macro_f1_ci95": [
+          0.9762054839124745,
+          0.9959918137235972
+        ],
+        "pr_auc": 0.9933055974286137,
+        "per_class": {
+          "ham": {
+            "precision": 0.9944629014396457,
+            "recall": 0.9988876529477196,
+            "f1": 0.9966703662597114
+          },
+          "spam": {
+            "precision": 0.9925925925925926,
+            "recall": 0.9640287769784173,
+            "f1": 0.9781021897810219
+          }
+        },
+        "confusion_matrix": [
+          [
+            898,
+            1
+          ],
+          [
+            5,
+            134
+          ]
+        ],
+        "classes": [
+          "ham",
+          "spam"
+        ],
+        "infer_ms_per_msg": 0.11664392581892633,
+        "split_seed": 42,
+        "best_params": {
+          "settings": "Fixed demo parameters; not tuned. See scripts/train_demo_models.py",
+          "calibration": "3-fold template-grouped train-only sigmoid calibration"
+        },
+        "tune_seconds": 0.0,
+        "train_seconds": 2.6194681030001448,
+        "model_size_mb": 1.747136
+      }
+    ]
+  },
+  "summary": {
+    "weighted": {
+      "n_splits": 1,
+      "macro_f1_mean": 0.9873862780203666,
+      "macro_f1_std": 0.0,
+      "pr_auc_mean": 0.9933055974286137,
+      "pr_auc_std": 0.0,
+      "infer_ms_per_msg_mean": 0.11664392581892633,
+      "infer_ms_per_msg_std": 0.0,
+      "train_seconds_mean": 2.6194681030001448,
+      "train_seconds_std": 0.0,
+      "tune_seconds_mean": 0.0,
+      "tune_seconds_std": 0.0,
+      "model_size_mb_mean": 1.747136,
+      "model_size_mb_std": 0.0,
+      "precision_ham_mean": 0.9944629014396457,
+      "precision_ham_std": 0.0,
+      "recall_ham_mean": 0.9988876529477196,
+      "recall_ham_std": 0.0,
+      "f1_ham_mean": 0.9966703662597114,
+      "f1_ham_std": 0.0,
+      "precision_spam_mean": 0.9925925925925926,
+      "precision_spam_std": 0.0,
+      "recall_spam_mean": 0.9640287769784173,
+      "recall_spam_std": 0.0,
+      "f1_spam_mean": 0.9781021897810219,
+      "f1_spam_std": 0.0
+    }
+  },
+  "provenance": {
+    "kind": "supplementary_demo_training",
+    "not_team_original_outputs": true,
+    "seed": 42,
+    "n_train": 4121,
+    "n_test": 1038,
+    "test_usage": "Final reporting only; fixed parameters; calibration fits train OOF predictions only",
+    "sklearn_version": "1.7.2"
+  }
+}
