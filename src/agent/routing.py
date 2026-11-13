@@ -68,7 +68,9 @@ class RouterEngine:
             key=(channel,model_id)
             if key not in self._models:
                 info=self.catalog['channels'][channel]
-                spec=info['models'][model_id]
+                spec=dict(info['models'][model_id])
+                root=Path(self.config.get('project_root', Path(__file__).resolve().parents[2]))
+                spec['path']=str((root/spec['path']).resolve())
                 adapter=ModelAdapter.load(spec,channel,Path(self.config['export_dir']))
                 if adapter.provenance!='canonical_train_verified':raise AgentError('routing_provenance_invalid','Routing rejects unverified artifacts.')
                 if membership_hash(adapter.training_rows.id)!=info['train_ids_sha256']:

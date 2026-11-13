@@ -36,7 +36,7 @@ def test_count_includes_full_history_and_tool_schema():
 
 
 def test_byte_fallback_remains_available():
-    body={'messages':[{'role':'user','content':'你好'}],'tools':[]}
+    body={'messages':[{'role':'user','content':'\u4f60\u597d'}],'tools':[]}
     assert PromptBudget().estimate(body['messages'],[])==len(json.dumps(body,ensure_ascii=False).encode())+1024
 
 

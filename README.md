@@ -1,5 +1,7 @@
 # Scam Message Detection
 
+**Streamlit demo:** See [START_HERE.md](START_HERE.md) for setup, included local models and neural checkpoint placement.
+
 Scam message detection across SMS, email and phone dialogue. The project includes traditional classifiers, DistilBERT and bidirectional long short-term memory (BiLSTM) models. It also includes an AI agent that investigates suspicious messages and cites supporting evidence.
 
 ## Project structure
@@ -15,7 +17,7 @@ Scam message detection across SMS, email and phone dialogue. The project include
 | `notebooks/` | Shared data summary notebook |
 | `docs/` | Agent design, integration guides and validation reports |
 | `tests/` | Automated tests using pytest |
-| `app/` | Reserved for the frontend; currently contains only `.gitkeep` |
+| `app/` | Streamlit demo (`streamlit_app.py`); see [START_HERE.md](START_HERE.md) |
 
 ## Setup
 

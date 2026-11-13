@@ -64,10 +64,11 @@ class ScamAgentService:
         self._models, self._model_lock, self._request_lock = {}, threading.Lock(), threading.Lock()
 
     @classmethod
-    def from_config(cls, path='configs/agent.yaml'):
+    def from_config(cls, path='configs/agent.yaml', *, enable_provider=True):
         config_path = Path(path).resolve()
         config = yaml.safe_load(config_path.read_text())
         root = (config_path.parent/config.get('project_root', '..')).resolve()
+        config['project_root'] = str(root)
         for spec in config.get('models', {}).values():
             spec['path'] = str((root/spec['path']).resolve())
         if config.get('routing_catalog_path'):
@@ -79,7 +80,8 @@ class ScamAgentService:
             raise ValueError('Only deepseek_chat is supported; no provider switching.')
         if config['provider'].get('tokenizer_path'):
             config['provider']['tokenizer_path'] = str((root/config['provider']['tokenizer_path']).resolve())
-        return cls(config, DeepSeekProvider.from_config(config['provider']))
+        provider = DeepSeekProvider.from_config(config['provider']) if enable_provider else None
+        return cls(config, provider)
 
     def adapter(self, channel):
         with self._model_lock:
