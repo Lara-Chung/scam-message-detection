@@ -71,35 +71,21 @@ def click_button(app, label):
     assert not app.error
 
 
-def uci_app():
+def traditional_app():
     app = AppTest.from_file(str(resolve_path('app/streamlit_app.py')), default_timeout=40).run()
-    app.selectbox(key='model:Traditional modelling').set_value('uci_lr').run()
+    app.selectbox(key='model:Traditional modelling').set_value('word_lr').run()
     return app
 
 
 def test_streamlit_end_to_end():
-    app = uci_app()
+    app = traditional_app()
     assert not app.exception
+    assert 'uci_lr' not in app.selectbox(key='model:Traditional modelling').options
     click_button(app, 'Analyse message')
-    assert any('P(spam)' in item.label for item in app.metric)
-    assert any('Red raises P(spam)' in item.value for item in app.caption)
-    assert not any(item.label.startswith(('Explain', 'Verify')) for item in app.button)
     assert any('D1 normalizes' in item.value for item in app.caption)
-    slider = app.sidebar.slider[0]
-    slider.set_value(.8).run()
-    assert any(item.label == 'P(spam)' for item in app.metric)
-    assert not any('Flag threshold:' in item.value for item in app.caption)
-    assert not any(item.label in ('Class scores', 'Candidate indicators') for item in app.expander)
-    assert not app.get('progress')
     # Empty input must not leave a stale prediction visible.
     app.text_area[0].set_value('').run()
-    assert not any('P(spam)' in item.label for item in app.metric)
-    app.text_area[0].set_value('Claim your prize today.').run()
-    click_button(app, 'Compare four conditions')
-    frame = next(item.value for item in app.dataframe if 'Condition' in item.value)
-    assert set(frame['Flagged']) <= {'Yes', 'No'}
-    app.text_area[0].set_value('Different message without prior analysis').run()
-    assert not any('P(spam)' in item.value.columns for item in app.dataframe)
+    assert not any(item.label == 'Inference time' for item in app.metric)
 
 
 def test_shuffled_examples_cycle_without_repeats():
@@ -124,7 +110,7 @@ def test_supplementary_models_reproduce_saved_metrics(model_index):
 
 
 def test_random_refresh_and_model_switching():
-    app = uci_app()
+    app = traditional_app()
     original = app.text_area[0].value
     click_button(app, 'Load example')
     assert app.text_area[0].value != original

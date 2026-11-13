@@ -74,7 +74,8 @@ PERTURBATIONS = ['P1', 'P2 spaces', 'P2 dots', 'P3 look-alikes', 'P3 zero-width'
 def model_options(family: str) -> dict:
     """List model names with the architecture and documented training task."""
     if family == 'Traditional modelling':
-        return TRADITIONAL | {'uci_lr': next(item['name'] for item in registry() if item['id'] == 'uci_lr')}
+        # The UCI spam/ham model is not offered: it is not a fraud model like the other four.
+        return dict(TRADITIONAL)
     architecture = 'BiLSTM' if family == 'RNN' else 'DistilBERT'
     models = neural_models(family)
     labels = ['fraud across SMS, email and phone', 'three-class Mendeley SMS']
