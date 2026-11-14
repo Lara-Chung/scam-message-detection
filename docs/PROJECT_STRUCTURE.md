@@ -67,7 +67,7 @@ into its component. It does not retrain neural models or change experiment resul
 
 ## Reorganisation checks
 
-- Full suite: **236 passed, 7 raw-data-dependent skips**.
+- Full suite: **236 passed**.
 - All 891 files in the saved neural-results tree retain their original bytes.
 - All 4 moved notebooks retain their code, metadata and executed outputs.
 - Traditional training syntax trees are unchanged after excluding usage docstrings.
