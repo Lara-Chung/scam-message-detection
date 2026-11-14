@@ -64,15 +64,3 @@ docs/                        Integration, validation and experiment guides
 
 This change organises code and extracts the existing BiLSTM prediction logic
 into its component. It does not retrain neural models or change experiment results.
-
-## Reorganisation checks
-
-- Full suite: **236 passed**.
-- All 891 files in the saved neural-results tree retain their original bytes.
-- All 4 moved notebooks retain their code, metadata and executed outputs.
-- Traditional training syntax trees are unchanged after excluding usage docstrings.
-- CLI aliases, saved-model inference, frontend navigation/evaluation and shared
-  analysis discovery passed their checks.
-- The extracted BiLSTM interface was checked for class order, input prefix,
-  64-message batching, thresholds and checkpoint-path compatibility. No neural
-  models were retrained and no paid provider calls were made.
