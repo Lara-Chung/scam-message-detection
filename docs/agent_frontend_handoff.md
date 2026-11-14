@@ -97,8 +97,8 @@ as zero usage. Avoid automatic retries after such errors.
 
 ## Result contract
 
-Authoritative schema: [`src/agent/schema.json`](../src/agent/schema.json). This
-section describes version `1.0`. The LLM submits the smaller [`final_schema.json`](../src/agent/final_schema.json);
+Authoritative schema: [`agent/runtime/schema.json`](../agent/runtime/schema.json). This
+section describes version `1.0`. The LLM submits the smaller [`final_schema.json`](../agent/runtime/final_schema.json);
 the backend fills IDs, actual scores, timings, trace, usage and errors itself.
 
 | Fields | Frontend meaning |
@@ -375,7 +375,7 @@ observations use `tool_trace.source="triage_gate"`; mandatory initial cross-chec
 use `boundary_policy`; authentic LLM choices use `model_tool_call`. Keep these
 sources distinct in the UI. Fixed-schedule calls use `fixed_workflow`.
 
-Final internal responses use [triage_final_schema.json](../src/agent/triage_final_schema.json).
+Final internal responses use [triage_final_schema.json](../agent/runtime/triage_final_schema.json).
 The LLM selects an executed assessment and existing evidence IDs; the backend
 copies exact stored quotes/spans and rejects invented IDs or binary label
 overrides. Evidence may span inspected sections, but a binary decision needs

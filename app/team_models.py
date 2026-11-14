@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import json
-import os
 import re
 import time
 from pathlib import Path
@@ -11,6 +10,7 @@ import numpy as np
 import streamlit as st
 
 from app.core import ROOT
+from src.project_paths import neural_checkpoint_dir, neural_model_roots, neural_models_root
 
 CHANNELS = {'sms': 'SMS', 'email': 'Email', 'phone': 'Phone transcript'}
 TRADITIONAL = {
@@ -37,9 +37,7 @@ METRICS = {
 
 def model_root(family: str) -> Path:
     """Find the configured checkpoint directory."""
-    directory = 'models_bilstm' if family == 'RNN' else 'models'
-    env = 'BILSTM_MODELS_DIR' if family == 'RNN' else 'MODELS_DIR'
-    return Path(os.getenv(env, ROOT / 'transformer' / directory)).resolve()
+    return neural_models_root(family)
 
 
 def neural_domain(model_id: str) -> str | None:
@@ -59,14 +57,15 @@ def neural_models(family: str) -> list[str]:
     """List documented runs and compatible local checkpoints."""
     featured = NEURAL[family]
     prefix = 'bilstm_' if family == 'RNN' else 'distilbert_'
-    extras = sorted(path.parent.name for path in model_root(family).glob('*/task_config.json')
+    extras = sorted(path.parent.name for directory in neural_model_roots(family)
+                    for path in directory.glob('*/task_config.json')
                     if path.parent.name.startswith(prefix) and neural_domain(path.parent.name))
     return list(dict.fromkeys((*featured, *extras)))
 
 
 def neural_requirements(family: str, model_id: str) -> list[str]:
     """Find missing checkpoint files."""
-    folder = model_root(family) / model_id
+    folder = neural_checkpoint_dir(family, model_id)
     required = ['task_config.json', 'model.keras'] if family == 'RNN' else [
         'task_config.json', 'config.json', 'tokenizer_config.json'
     ]
@@ -117,15 +116,9 @@ def traditional_batch(model_id: str, channel: str, texts: list[str], defence: bo
 @st.cache_resource
 def load_bilstm(directory: str):
     """Load a Keras checkpoint and its task metadata."""
-    import tensorflow as tf
+    from recurrent.inference.predict import load_model
 
-    folder = Path(directory)
-    config = json.loads((folder / 'task_config.json').read_text(encoding='utf-8'))
-    model = tf.keras.models.load_model(folder / 'model.keras', compile=False, safe_mode=True)
-    # Calling a Keras model eagerly costs ~0.3-1.4 s per call on CPU; a traced graph costs ~10 ms.
-    # reduce_retracing lets one graph serve every batch size.
-    compiled = tf.function(lambda inputs: model(inputs, training=False), reduce_retracing=True)
-    return tf, compiled, config
+    return load_model(directory)
 
 
 def neural_batch(family: str, model_id: str, texts: list[str], threshold: float | None) -> list[dict]:
@@ -145,31 +138,10 @@ def neural_batch(family: str, model_id: str, texts: list[str], threshold: float 
             'threshold': output['threshold'], 'inference_ms': output['inference_ms'],
         } for output in outputs]
 
-    tf, model, config = load_bilstm(str(model_root(family) / model_id))
-    labels, positives = config['labels'], config['positive_labels']
-    start = time.perf_counter()
-    inputs = [config['input_prefix'] + text for text in texts]
-    scores = np.concatenate([
-        np.asarray(model(tf.constant(inputs[start:start + 64], dtype=tf.string)), dtype=float)
-        for start in range(0, len(inputs), 64)
-    ])
-    elapsed = (time.perf_counter() - start) * 1000 / len(texts)
-    if scores.shape != (len(texts), len(labels)) or not np.isfinite(scores).all():
-        raise ValueError('BiLSTM scores do not match the saved class metadata.')
-    limit = config['seq_len']
-    threshold = config.get('default_threshold', .5) if threshold is None else threshold
-    results = []
-    for text, row in zip(inputs, scores, strict=True):
-        by_label = dict(zip(labels, row.tolist(), strict=True))
-        risk = sum(by_label[label] for label in positives)
-        results.append({
-            'model_id': model_id, 'label': max(by_label, key=by_label.get), 'scores': by_label,
-            'score': risk, 'score_name': f"{' + '.join(positives)} class score",
-            'flagged': risk >= threshold, 'threshold': threshold,
-            'truncated': None, 'possible_truncation': len(text.split()) > limit,
-            'inference_ms': elapsed,
-        })
-    return results
+    from recurrent.inference.predict import predict_batch
+
+    return predict_batch(texts, model_id, threshold=threshold,
+                         models_dir=neural_checkpoint_dir(family, model_id).parent)
 
 
 class NeuralProbabilities:
@@ -178,7 +150,7 @@ class NeuralProbabilities:
     def __init__(self, family: str, model_id: str) -> None:
         """Read the class order from the checkpoint's task metadata."""
         self.family, self.model_id = family, model_id
-        config = json.loads((model_root(family) / model_id / 'task_config.json').read_text(encoding='utf-8'))
+        config = json.loads((neural_checkpoint_dir(family, model_id) / 'task_config.json').read_text(encoding='utf-8'))
         self.classes_ = np.asarray(config['labels'])
         self.positive_label = config['positive_labels'][0]
 

@@ -11,9 +11,10 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from app.core import ROOT, results_for
+from src.project_paths import NEURAL_RESULTS
 from app.team_models import METRICS, router
 
-RESULTS = ROOT / 'transformer' / 'results'
+RESULTS = NEURAL_RESULTS
 APP_RESULTS = RESULTS / 'results_app_lime'
 AGENT_REPORTS = {
     'routing': ('classifier_router_report.md', 'Frozen TEST pilot', 'Frozen test pilot on 12 canonical cases'),

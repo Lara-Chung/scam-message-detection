@@ -12,16 +12,21 @@ Scam message detection across SMS, email and phone dialogue. The project include
 
 | Path | Content |
 |---|---|
-| `baselines/` | Traditional classifier training scripts |
-| `transformer/` | DistilBERT and BiLSTM training, notebooks, inference and results |
-| `src/` | Shared data processing and the `src/agent/` backend |
-| `scripts/` | Agent data preparation, evaluation and reporting tools |
+| `traditional/` | TF-IDF + LR, NB, word SVM and character SVM training |
+| `transformer/` | DistilBERT training, notebooks and inference |
+| `recurrent/` | BiLSTM training, notebook and inference |
+| `agent/` | Agent runtime, tools, preparation and evaluation commands |
+| `analysis/neural/` | Shared neural analysis, notebooks and preserved results |
+| `src/` | Shared data processing, defences and compatibility imports |
+| `scripts/` | Shared demo commands and compatibility imports for Agent commands |
 | `configs/` | Agent runtime configuration |
 | `data/` | Raw data, split assignments and processed exports |
 | `notebooks/` | Shared data summary notebook |
 | `docs/` | Agent design, integration guides and validation reports |
 | `tests/` | Automated tests using pytest |
 | `app/` | Streamlit demo (`streamlit_app.py`); see [START_HERE.md](START_HERE.md) |
+
+See the [directory guide](docs/PROJECT_STRUCTURE.md) for entry points and compatibility paths.
 
 ## Setup
 
@@ -31,7 +36,7 @@ Run commands from the repository root.
 |---|---|
 | Main project and traditional classifiers | Python 3.11 with `requirements.txt` |
 | Agent backend | Python 3.12 in a separate environment with `requirements-agent.txt`; see the [frontend handoff](docs/agent_frontend_handoff.md) |
-| DistilBERT and BiLSTM training | Kaggle setup and execution in the [Transformer guide](transformer/README.md) |
+| DistilBERT and BiLSTM training | Component guides: [Transformer](transformer/README.md), [Recurrent](recurrent/README.md); [shared experiments](analysis/neural/README.md) |
 | DistilBERT inference | Dependencies, model placement and usage in the [prediction interface](transformer/INTERFACE_for_frontend.md) |
 
 Create the main environment with conda:
@@ -87,27 +92,29 @@ set -o pipefail && python -m src.splits && python -m src.export
 
 | Entry point | Model |
 |---|---|
-| `baselines/lr_scam.py` | Logistic Regression |
-| `baselines/nb_scam.py` | Naive Bayes |
-| `baselines/svm_word_scam.py` | Word TF-IDF + Support Vector Machine (SVM) |
-| `baselines/svm_char_scam.py` | Character TF-IDF + SVM |
+| `traditional/lr_scam.py` | Logistic Regression |
+| `traditional/nb_scam.py` | Naive Bayes |
+| `traditional/svm_word_scam.py` | Word TF-IDF + Support Vector Machine (SVM) |
+| `traditional/svm_char_scam.py` | Character TF-IDF + SVM |
 
 The scripts read preprocessed CSVs. Arguments select the text and label columns, test data and output directory. Each help command runs independently:
 
 ```sh
-python baselines/lr_scam.py --help
-python baselines/nb_scam.py --help
-python baselines/svm_word_scam.py --help
-python baselines/svm_char_scam.py --help
+python traditional/lr_scam.py --help
+python traditional/nb_scam.py --help
+python traditional/svm_word_scam.py --help
+python traditional/svm_char_scam.py --help
 ```
 
 These scripts use their own grouped splits or a supplied test file; they do not automatically apply `splits.csv`. Check that datasets and split protocols match before comparing results.
 
 ### DistilBERT and BiLSTM
 
-Training and analysis scripts are in `transformer/scripts/`. Run notebooks are in `transformer/notebooks/`, and saved results are in `transformer/results/`.
+DistilBERT code is in `transformer/`; BiLSTM code is in `recurrent/`. Shared
+threshold, significance, robustness and LIME analyses are in `analysis/neural/`.
+Original neural results are preserved under `analysis/neural/results/`.
 
-The DistilBERT prediction interface is `transformer/inference/predict.py`. Model weights are shared separately and are not committed to Git. See the [Transformer guide](transformer/README.md) and [prediction interface](transformer/INTERFACE_for_frontend.md).
+The DistilBERT prediction interface is `transformer/inference/predict.py`. Model weights are shared separately and are not committed to Git. See the [Transformer guide](transformer/README.md), [BiLSTM guide](recurrent/README.md) and [prediction interface](transformer/INTERFACE_for_frontend.md).
 
 ## Tests
 
@@ -160,7 +167,9 @@ the frontend handoff. Git ignores keys, artifacts and traces. The CLI defaults
 to the configured adaptive mode; use `--mode document_classifier` for
 an explicitly offline path. The Python service provides the frontend integration interface.
 
-The UI-independent entry point is `src.agent.service.ScamAgentService`.
+The implementation is grouped in `agent/runtime/` and `agent/scripts/`.
+The UI-independent entry point remains `src.agent.service.ScamAgentService`;
+`python -m agent` is the direct CLI entry point.
 Use the separate `requirements-agent.txt` environment with the delivered splits
 to preserve compatibility with the saved models.
 See [frontend setup and JSON contract](docs/agent_frontend_handoff.md),

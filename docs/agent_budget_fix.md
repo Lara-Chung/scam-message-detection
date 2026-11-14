@@ -9,7 +9,7 @@ unchanged. No additional paid calls were made after the three-message run below.
 
 The previous reservation used serialized UTF-8 bytes as tokens. That is a safe
 fallback but rejected affordable continuations after tool results accumulated.
-`src/agent/budget.py` now supplies one shared `PromptBudget` instance to the
+`agent/runtime/budget.py` now supplies one shared `PromptBudget` instance to the
 service and durable meter:
 
 1. Load the official DeepSeek V4 tokenizer data from the explicitly configured

@@ -32,13 +32,15 @@ The Evaluation workspace reads saved team results independently of the live chec
 
 | Model | Default directory | Required files |
 | --- | --- | --- |
-| BiLSTM on fraud across channels | `transformer/models_bilstm/bilstm_fraud_allchannels_seed0/` | `model.keras` and `task_config.json` |
-| BiLSTM on Mendeley SMS | `transformer/models_bilstm/bilstm_mendeley_seed0/` | `model.keras` and `task_config.json` |
+| BiLSTM on fraud across channels | `recurrent/models/bilstm_fraud_allchannels_seed0/` | `model.keras` and `task_config.json` |
+| BiLSTM on Mendeley SMS | `recurrent/models/bilstm_mendeley_seed0/` | `model.keras` and `task_config.json` |
 | DistilBERT on fraud across channels | `transformer/models/distilbert_fraud_allchannels_v1/` | Hugging Face weights, configuration, tokenizer and `task_config.json` |
 | DistilBERT on Mendeley SMS | `transformer/models/distilbert_mendeley_3class_v1/` | Hugging Face weights, configuration, tokenizer and `task_config.json` |
 | DistilBERT per channel (optional) | `transformer/models/distilbert_fraud_{sms,email,phone}_v1/` | Same as above; listed automatically when present |
 
-The weights are not in Git (`models/` and `*.keras` are ignored). Ask the Transformer owner for `app_models.zip` (all-channel and per-channel models) and `mendeley_models.zip`, unzip them, and copy the `models/` and `models_bilstm/` sub-folders into `transformer/`.
+The weights are not in Git (`models/` and `*.keras` are ignored). Ask the Transformer owner for `app_models.zip` (all-channel and per-channel models) and `mendeley_models.zip`, unzip them, copy the `models/` contents into `transformer/models/`, and copy the
+`models_bilstm/` contents into `recurrent/models/`. Existing
+`transformer/models_bilstm/` installations also remain supported.
 
 Set `BILSTM_MODELS_DIR` or `MODELS_DIR` before startup to use another checkpoint parent directory. Install the corresponding runtime in the same virtual environment.
 
@@ -49,7 +51,7 @@ python -m pip install torch transformers==5.16.1
 
 On the RNN and Transformer pages:
 
-- **Prediction settings** offers three review thresholds: *Cost-based* (default; reads `transformer/results/results_app_lime/results_report/app_thresholds.json`, chosen on seed 0 validation predictions to minimise C_FN·p·FNR + (1−p)·FPR, proposal 5.5), *Model default* (0.50) and *Custom*. Changing the threshold re-flags the current result without rerunning the model.
+- **Prediction settings** offers three review thresholds: *Cost-based* (default; reads `analysis/neural/results/results_app_lime/results_report/app_thresholds.json`, chosen on seed 0 validation predictions to minimise C_FN·p·FNR + (1−p)·FPR, proposal 5.5), *Model default* (0.50) and *Custom*. Changing the threshold re-flags the current result without rerunning the model.
 - After a prediction, the message is shown with candidate indicators highlighted, and **Explain with LIME** runs a 500-sample LIME explanation (proposal 5.7). It takes about a second for BiLSTM and a few seconds for DistilBERT on CPU.
 - The first prediction with each model loads it from disk and takes a few seconds; later predictions reuse the loaded model.
 
@@ -76,4 +78,4 @@ python -m scripts.prepare_boundary_router validation
 python -m scripts.prepare_agent_tokenizer
 ```
 
-See `README.md` and `transformer/README.md` for the full experiment commands.
+See `README.md`, `recurrent/README.md` and `analysis/neural/README.md` for the full experiment commands.

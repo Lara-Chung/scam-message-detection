@@ -1,6 +1,6 @@
 """Cost-based review thresholds for the neural models (proposal section 5.5).
 
-Reads the thresholds that transformer/scripts/lime_threshold_report.py selected on
+Reads the thresholds that analysis/neural/scripts/lime_threshold_report.py selected on
 split_seed0 validation predictions and lets the user pick one in the sidebar of the
 RNN and Transformer pages. Each threshold minimises
 
@@ -27,13 +27,13 @@ from typing import Optional
 import pandas as pd
 import streamlit as st
 
-from app.core import ROOT
+from src.project_paths import NEURAL_RESULTS
 from app.team_models import CHANNELS
 
 # --------------------------------------------------------------------------
 # Config
 # --------------------------------------------------------------------------
-REPORT_DIR = ROOT / 'transformer' / 'results' / 'results_app_lime' / 'results_report'
+REPORT_DIR = NEURAL_RESULTS / 'results_app_lime' / 'results_report'
 THRESHOLDS_JSON = REPORT_DIR / 'app_thresholds.json'
 THRESHOLDS_CSV = REPORT_DIR / 'app_thresholds.csv'
 MODES = ('Model default', 'Cost-based', 'Custom')

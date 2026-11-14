@@ -90,7 +90,7 @@ measured usage, not a claim about a charged currency amount.
 
 ## Durable budget and saved evidence
 
-`src/agent/live_meter.py` wraps the actual provider. It writes a reservation to
+`agent/runtime/live_meter.py` wraps the actual provider. It writes a reservation to
 disk before each network request; after a valid response it replaces the
 reservation with provider-reported usage. A failed request or missing usage
 freezes later spending. Existing ledger/output paths block accidental reruns.
